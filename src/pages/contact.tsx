@@ -425,15 +425,23 @@ export default function Contact() {
               </div>
 
               {/* Map Placeholder Graphic */}
-              <div className="bg-slate-900/5 rounded-3xl border border-slate-200 aspect-video relative overflow-hidden flex flex-col items-center justify-center p-6 text-center">
-                <MapPin className="h-10 w-10 text-primary mb-3 animate-bounce" />
-                <h4 className="font-bold text-slate-900 font-heading text-sm mb-1">Embedded Map Location</h4>
+              <a
+                href="https://goo.gl/maps/iyYKMaa8TgvGcjEu8?g_st=ac"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-slate-900/5 hover:bg-slate-900/10 transition-all rounded-3xl border border-slate-200 aspect-video relative overflow-hidden flex flex-col items-center justify-center p-6 text-center group cursor-pointer"
+              >
+                <MapPin className="h-10 w-10 text-primary mb-3 group-hover:scale-110 transition-transform animate-bounce" />
+                <h4 className="font-bold text-slate-900 font-heading text-sm mb-1 group-hover:text-primary transition-colors">Embedded Map Location</h4>
                 <p className="text-slate-500 text-xs max-w-xs leading-relaxed">
                   PSR Heights, Hitech City Road. Opposite Timmidkunta Lake, near Shilparamam Art Gallery and Hitech City Junction.
                 </p>
+                <span className="text-[10px] font-bold text-primary mt-2 block underline opacity-0 group-hover:opacity-100 transition-opacity">
+                  Click for Directions
+                </span>
                 {/* Visual grid overlay for map feel */}
                 <div className="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#000_1px,transparent_1px),linear-gradient(to_bottom,#000_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none"></div>
-              </div>
+              </a>
 
               {/* WhatsApp Quick CTA */}
               <a

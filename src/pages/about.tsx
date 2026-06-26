@@ -11,69 +11,100 @@ export default function AboutUs() {
     mission_desc: "To simplify corporate scaling and wealth management by offering pre-vetted investments, competitive financing options, and legal due diligence tools within a single, integrated platform.",
     vision_title: "Our Vision",
     vision_desc: "To become India's leading platform for multi-service business growth, trusted by 100,000+ partners to secure their operations and deploy capital efficiently.",
+    values_title: "Our Core Values",
+    values_subtitle: "The operational rules that guide every audit we conduct and term sheet we structure.",
+    value1_title: "Client-Centricity",
+    value1_desc: "Our clients' milestones drive our advisory directives. We align our success with their financial security.",
+    value2_title: "Fiduciary Integrity",
+    value2_desc: "No conflict of interest. We deliver unbiased property legal checks and brand due diligence.",
+    value3_title: "Operational Excellence",
+    value3_desc: "We enforce high operational standards in every project layout we audit or debt we syndicate.",
+    value4_title: "Collaborative Growth",
+    value4_desc: "We empower local partnerships and build regional franchise holdings that scale ecosystems.",
+    timeline1_year: "2006",
+    timeline1_title: "PSR Consultancy Formed",
+    timeline1_desc: "Started as a boutique regional financial consulting agency in Hyderabad.",
+    timeline2_year: "2012",
+    timeline2_title: "Debt Syndication Growth",
+    timeline2_desc: "Expanded services into corporate loan matchmaking, funding ₹10 Cr+ capital.",
+    timeline3_year: "2018",
+    timeline3_title: "Franchise & Property Advisory",
+    timeline3_desc: "Launched franchise match-making and property legal vetting, scaling client returns.",
+    timeline4_year: "2024",
+    timeline4_title: "Rebranding to PSR ONE",
+    timeline4_desc: "Consolidated all 5 business verticals under a unified multi-service digital platform.",
+    team1_name: "Siddharth Reddy",
+    team1_role: "Founder & Managing Director",
+    team1_bio: "Siddharth has over 20 years of experience in corporate debt syndication and startup capital modeling.",
+    team2_name: "Anjali Mehta",
+    team2_role: "Head of Risk & Insurance",
+    team2_bio: "Anjali oversees corporate health portfolios and liability underwriting audits for medium businesses.",
+    team3_name: "Ramesh Sharma",
+    team3_role: "Lead Real Estate Counsel",
+    team3_bio: "Ramesh directs commercial land vetting and property layout RERA compliance validations."
   });
 
   const values = [
     {
-      title: "Client-Centricity",
-      desc: "Our clients' milestones drive our advisory directives. We align our success with their financial security.",
+      title: content.value1_title,
+      desc: content.value1_desc,
       icon: Heart,
     },
     {
-      title: "Fiduciary Integrity",
-      desc: "No conflict of interest. We deliver unbiased property legal checks and brand due diligence.",
+      title: content.value2_title,
+      desc: content.value2_desc,
       icon: Shield,
     },
     {
-      title: "Operational Excellence",
-      desc: "We enforce high operational standards in every project layout we audit or debt we syndicate.",
+      title: content.value3_title,
+      desc: content.value3_desc,
       icon: Award,
     },
     {
-      title: "Collaborative Growth",
-      desc: "We empower local partnerships and build regional franchise holdings that scale ecosystems.",
+      title: content.value4_title,
+      desc: content.value4_desc,
       icon: Users,
     },
   ];
 
   const timeline = [
     {
-      year: "2006",
-      title: "PSR Consultancy Formed",
-      desc: "Started as a boutique regional financial consulting agency in Hyderabad.",
+      year: content.timeline1_year,
+      title: content.timeline1_title,
+      desc: content.timeline1_desc,
     },
     {
-      year: "2012",
-      title: "Debt Syndication Growth",
-      desc: "Expanded services into corporate loan matchmaking, funding ₹10 Cr+ capital.",
+      year: content.timeline2_year,
+      title: content.timeline2_title,
+      desc: content.timeline2_desc,
     },
     {
-      year: "2018",
-      title: "Franchise & Property Advisory",
-      desc: "Launched franchise match-making and property legal vetting, scaling client returns.",
+      year: content.timeline3_year,
+      title: content.timeline3_title,
+      desc: content.timeline3_desc,
     },
     {
-      year: "2024",
-      title: "Rebranding to PSR ONE",
-      desc: "Consolidated all 5 business verticals under a unified multi-service digital platform.",
+      year: content.timeline4_year,
+      title: content.timeline4_title,
+      desc: content.timeline4_desc,
     },
   ];
 
   const team = [
     {
-      name: "Siddharth Reddy",
-      role: "Founder & Managing Director",
-      bio: "Siddharth has over 20 years of experience in corporate debt syndication and startup capital modeling.",
+      name: content.team1_name,
+      role: content.team1_role,
+      bio: content.team1_bio,
     },
     {
-      name: "Anjali Mehta",
-      role: "Head of Risk & Insurance",
-      bio: "Anjali oversees corporate health portfolios and liability underwriting audits for medium businesses.",
+      name: content.team2_name,
+      role: content.team2_role,
+      bio: content.team2_bio,
     },
     {
-      name: "Ramesh Sharma",
-      role: "Lead Real Estate Counsel",
-      bio: "Ramesh directs commercial land vetting and property layout RERA compliance validations.",
+      name: content.team3_name,
+      role: content.team3_role,
+      bio: content.team3_bio,
     },
   ];
 
@@ -138,10 +169,10 @@ export default function AboutUs() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl font-display font-extrabold text-slate-900 mb-4">
-              Our Core Values
+              {content.values_title}
             </h2>
             <p className="text-slate-500 font-body text-base">
-              The operational rules that guide every audit we conduct and term sheet we structure.
+              {content.values_subtitle}
             </p>
           </div>
 
