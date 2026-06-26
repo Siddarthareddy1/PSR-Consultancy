@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
 import Accordion from "@/components/Common/Accordion";
+import { useContent } from "@/lib/useContent";
 import {
   TrendingUp,
   Award,
@@ -13,6 +14,11 @@ import {
 } from "lucide-react";
 
 export default function BusinessAdvisory() {
+  const { content } = useContent("business_advisory", {
+    hero_title: "Scale Operations, Optimize Capital & Maximize Equity",
+    hero_subtitle: "Accelerate your business scale with expert guidance. Access seasoned corporate advisors, fractional executives, and legal specialists to structure high-growth enterprise models.",
+  });
+
   const faqItems = [
     {
       question: "What types of companies do you advise?",
@@ -136,10 +142,10 @@ export default function BusinessAdvisory() {
               Business Advisory
             </span>
             <h1 className="text-4xl sm:text-5xl font-display font-extrabold mb-6 leading-tight">
-              Scale Operations, Optimize Capital & Maximize Equity
+              {content.hero_title}
             </h1>
             <p className="text-slate-300 text-base sm:text-lg mb-8 max-w-xl font-body font-light">
-              Accelerate your business scale with expert guidance. Access seasoned corporate advisors, fractional executives, and legal specialists to structure high-growth enterprise models.
+              {content.hero_subtitle}
             </p>
             <div className="flex flex-col sm:flex-row items-center gap-4">
               <Link

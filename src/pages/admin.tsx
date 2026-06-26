@@ -8,6 +8,7 @@ import {
   Download,
   Save,
   CheckCircle,
+  FileText,
 } from "lucide-react";
 
 interface Lead {
@@ -31,7 +32,13 @@ export default function AdminDashboard() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [passcode, setPasscode] = useState("");
   const [loginError, setLoginError] = useState("");
-  const [activeTab, setActiveTab] = useState<"leads" | "subscribers" | "settings">("leads");
+  const [activeTab, setActiveTab] = useState<"leads" | "subscribers" | "settings" | "content">("leads");
+
+  // Content Editor States
+  const [selectedPage, setSelectedPage] = useState("home");
+  const [pageContent, setPageContent] = useState<Record<string, string>>({});
+  const [contentLoading, setContentLoading] = useState(false);
+  const [contentSuccess, setContentSuccess] = useState(false);
 
   // Admin Data states
   const [leads, setLeads] = useState<Lead[]>([]);
@@ -159,6 +166,58 @@ export default function AdminDashboard() {
       setLoading(false);
     }
   };
+
+  const loadPageContent = async (pageName: string) => {
+    setContentLoading(true);
+    try {
+      const res = await fetch(`/api/content?page=${pageName}`);
+      if (res.ok) {
+        const data = await res.json();
+        setPageContent(data);
+      }
+    } catch (err) {
+      console.error("Failed to load page content:", err);
+    } finally {
+      setContentLoading(false);
+    }
+  };
+
+  const handleSaveContent = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const res = await fetch("/api/content", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-admin-passcode": passcode,
+        },
+        body: JSON.stringify({
+          page: selectedPage,
+          content: pageContent,
+        }),
+      });
+
+      if (res.ok) {
+        setContentSuccess(true);
+        setTimeout(() => setContentSuccess(false), 3000);
+      } else {
+        const errData = await res.json();
+        alert(errData.message || "Failed to save page content.");
+      }
+    } catch (err) {
+      console.error("Save content error:", err);
+      alert("An error occurred while saving content.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (activeTab === "content" && isAuthenticated) {
+      loadPageContent(selectedPage);
+    }
+  }, [activeTab, selectedPage, isAuthenticated]);
 
   // CSV Export utility
   const exportToCSV = (data: Record<string, unknown>[], fileName: string) => {
@@ -298,6 +357,18 @@ export default function AdminDashboard() {
             >
               <Settings className="h-5 w-5" />
               <span>Live Site Settings</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab("content")}
+              className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-bold transition-all ${
+                activeTab === "content"
+                  ? "bg-primary text-white"
+                  : "text-slate-600 hover:bg-slate-50"
+              }`}
+            >
+              <FileText className="h-5 w-5" />
+              <span>Page Content Editor</span>
             </button>
           </aside>
 
@@ -506,9 +577,114 @@ export default function AdminDashboard() {
                 </form>
               </div>
             )}
+
+            {activeTab === "content" && (
+              <div>
+                <div className="border-b pb-4 mb-6">
+                  <h2 className="text-xl font-bold text-slate-900 font-heading">
+                    Page Content Editor
+                  </h2>
+                  <p className="text-slate-500 text-xs mt-1">
+                    Select a page and customize headings, paragraphs, and labels. Changes save to the database immediately.
+                  </p>
+                </div>
+
+                <div className="mb-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                  <label className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                    Select Page:
+                  </label>
+                  <select
+                    value={selectedPage}
+                    onChange={(e) => setSelectedPage(e.target.value)}
+                    className="px-4 py-2 rounded-lg border border-slate-200 text-sm focus:outline-none focus:border-primary text-slate-800 bg-slate-50 font-semibold"
+                  >
+                    <option value="home">Home Page</option>
+                    <option value="about">About Us Page</option>
+                    <option value="franchise">Franchise Page</option>
+                    <option value="loans">Loans Page</option>
+                    <option value="insurance">Insurance Page</option>
+                    <option value="real_estate">Real Estate Page</option>
+                    <option value="business_advisory">Business Advisory Page</option>
+                  </select>
+                </div>
+
+                {contentSuccess && (
+                  <div className="mb-6 p-3.5 rounded-lg bg-emerald-50 border border-emerald-100 text-emerald-600 text-xs font-semibold flex items-center gap-1.5">
+                    <CheckCircle className="h-4.5 w-4.5" />
+                    <span>Page content updated successfully. Live site changes are saved!</span>
+                  </div>
+                )}
+
+                {contentLoading ? (
+                  <p className="text-slate-500 text-sm">Loading page content...</p>
+                ) : (
+                  <form onSubmit={handleSaveContent} className="space-y-6">
+                    <div className="space-y-6 border border-slate-100 rounded-2xl p-6 bg-slate-50/50">
+                      {Object.keys(pageContent).length === 0 ? (
+                        <p className="text-slate-400 text-xs italic">No content blocks found for this page.</p>
+                      ) : (
+                        Object.entries(pageContent).map(([key, val]) => {
+                          const label = keyLabels[key] || key.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+                          const isTextarea = val.length > 60 || key.includes("desc") || key.includes("subtitle");
+                          
+                          return (
+                            <div key={key}>
+                              <label className="block text-xs font-bold text-slate-700 mb-1.5 capitalize font-heading">
+                                {label}
+                              </label>
+                              {isTextarea ? (
+                                <textarea
+                                  required
+                                  rows={3}
+                                  value={val}
+                                  onChange={(e) => setPageContent({ ...pageContent, [key]: e.target.value })}
+                                  className="w-full px-4 py-2.5 rounded-lg border border-slate-200 text-sm focus:outline-none focus:border-primary text-slate-800 bg-white"
+                                />
+                              ) : (
+                                <input
+                                  type="text"
+                                  required
+                                  value={val}
+                                  onChange={(e) => setPageContent({ ...pageContent, [key]: e.target.value })}
+                                  className="w-full px-4 py-2.5 rounded-lg border border-slate-200 text-sm focus:outline-none focus:border-primary text-slate-800 bg-white"
+                                />
+                              )}
+                              <span className="text-[10px] text-slate-400 mt-1 block">Key identifier: <code className="bg-slate-100 px-1 py-0.5 rounded">{key}</code></span>
+                            </div>
+                          );
+                        })
+                      )}
+                    </div>
+
+                    <button
+                      type="submit"
+                      disabled={loading}
+                      className="inline-flex items-center gap-1.5 px-6 py-3 rounded-lg text-sm font-bold text-white gradient-primary hover:opacity-90 transition-opacity disabled:opacity-50"
+                    >
+                      <Save className="h-4.5 w-4.5" /> Save Page Content
+                    </button>
+                  </form>
+                )}
+              </div>
+            )}
           </main>
         </div>
       </div>
     </>
   );
 }
+
+const keyLabels: Record<string, string> = {
+  hero_title_prefix: "Hero Title Prefix",
+  hero_title_accent: "Hero Title Highlight (Accent Text)",
+  hero_title: "Hero Main Title",
+  hero_subtitle: "Hero Subtitle Paragraph",
+  cta_explore: "CTA Explore Button Text",
+  cta_schedule: "CTA Schedule Button Text",
+  mission_title: "Mission Header Title",
+  mission_desc: "Mission Description Text",
+  vision_title: "Vision Header Title",
+  vision_desc: "Vision Description Text",
+  values_title: "Core Values Section Title",
+  values_subtitle: "Core Values Section Subtitle",
+};

@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
 import Accordion from "@/components/Common/Accordion";
+import { useContent } from "@/lib/useContent";
 import {
   Award,
   Users,
@@ -13,6 +14,11 @@ import {
 } from "lucide-react";
 
 export default function FranchiseInvestment() {
+  const { content } = useContent("franchise", {
+    hero_title: "Invest in Vetted Brands with Confirmed ROI",
+    hero_subtitle: "Skip the startup trial-and-error. Invest in verified businesses with standardized operating procedures, established customer loyalty, and consistent cash flows.",
+  });
+
   const faqItems = [
     {
       question: "What is the minimum investment required for a franchise?",
@@ -131,10 +137,10 @@ export default function FranchiseInvestment() {
               Franchise Investment
             </span>
             <h1 className="text-4xl sm:text-5xl font-display font-extrabold mb-6 leading-tight">
-              Invest in Vetted Brands with Confirmed ROI
+              {content.hero_title}
             </h1>
             <p className="text-slate-300 text-base sm:text-lg mb-8 max-w-xl font-body font-light">
-              Skip the startup trial-and-error. Invest in verified businesses with standardized operating procedures, established customer loyalty, and consistent cash flows.
+              {content.hero_subtitle}
             </p>
             <div className="flex flex-col sm:flex-row items-center gap-4">
               <Link

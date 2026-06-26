@@ -2,6 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import Accordion from "@/components/Common/Accordion";
 import InsuranceCalculator from "@/components/Common/InsuranceCalculator";
+import { useContent } from "@/lib/useContent";
 import {
   Shield,
   Heart,
@@ -13,6 +14,11 @@ import {
 } from "lucide-react";
 
 export default function InsuranceSolutions() {
+  const { content } = useContent("insurance", {
+    hero_title: "Safeguard Your Health, Protect Your Enterprise",
+    hero_subtitle: "Mitigate corporate and personal risks with top-tier underwriting. Compare policies across 10+ partner insurers to optimize sum assured coverage and lower premium costs.",
+  });
+
   const faqItems = [
     {
       question: "What is Keyman Insurance, and who needs it?",
@@ -121,10 +127,10 @@ export default function InsuranceSolutions() {
               Insurance Solutions
             </span>
             <h1 className="text-4xl sm:text-5xl font-display font-extrabold mb-6 leading-tight">
-              Safeguard Your Health, Protect Your Enterprise
+              {content.hero_title}
             </h1>
             <p className="text-slate-300 text-base sm:text-lg mb-8 max-w-xl font-body font-light">
-              Mitigate corporate and personal risks with top-tier underwriting. Compare policies across 10+ partner insurers to optimize sum assured coverage and lower premium costs.
+              {content.hero_subtitle}
             </p>
             <div className="flex flex-col sm:flex-row items-center gap-4">
               <Link

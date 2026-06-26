@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
 import Accordion from "@/components/Common/Accordion";
+import { useContent } from "@/lib/useContent";
 import {
   Home,
   Building,
@@ -13,6 +14,11 @@ import {
 } from "lucide-react";
 
 export default function RealEstateConsulting() {
+  const { content } = useContent("real_estate", {
+    hero_title: "Invest in High-Yield Real Estate Safely",
+    hero_subtitle: "Make data-driven real estate decisions. Avoid layout disputes, unapproved projects, and low-yield properties. We offer independent vetting and premium property sourcing.",
+  });
+
   const faqItems = [
     {
       question: "What due diligence do you perform on properties?",
@@ -137,10 +143,10 @@ export default function RealEstateConsulting() {
               Real Estate Consulting
             </span>
             <h1 className="text-4xl sm:text-5xl font-display font-extrabold mb-6 leading-tight">
-              Invest in High-Yield Real Estate Safely
+              {content.hero_title}
             </h1>
             <p className="text-slate-300 text-base sm:text-lg mb-8 max-w-xl font-body font-light">
-              Make data-driven real estate decisions. Avoid layout disputes, unapproved projects, and low-yield properties. We offer independent vetting and premium property sourcing.
+              {content.hero_subtitle}
             </p>
             <div className="flex flex-col sm:flex-row items-center gap-4">
               <Link

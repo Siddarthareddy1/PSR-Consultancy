@@ -1,8 +1,18 @@
 import Head from "next/head";
 import Link from "next/link";
 import { Award, Compass, Heart, Users, Target, Shield } from "lucide-react";
+import { useContent } from "@/lib/useContent";
 
 export default function AboutUs() {
+  const { content } = useContent("about", {
+    hero_title: "Unified Business & Financial Solutions",
+    hero_subtitle: "Supporting entrepreneurs, investors, and families to grow assets and protect capital since 2006.",
+    mission_title: "Our Mission",
+    mission_desc: "To simplify corporate scaling and wealth management by offering pre-vetted investments, competitive financing options, and legal due diligence tools within a single, integrated platform.",
+    vision_title: "Our Vision",
+    vision_desc: "To become India's leading platform for multi-service business growth, trusted by 100,000+ partners to secure their operations and deploy capital efficiently.",
+  });
+
   const values = [
     {
       title: "Client-Centricity",
@@ -85,10 +95,10 @@ export default function AboutUs() {
             About PSR ONE
           </span>
           <h1 className="text-4xl sm:text-5xl font-display font-extrabold mb-4">
-            Unified Business & Financial Solutions
+            {content.hero_title}
           </h1>
           <p className="text-slate-300 text-sm sm:text-base max-w-xl mx-auto">
-            Supporting entrepreneurs, investors, and families to grow assets and protect capital since 2006.
+            {content.hero_subtitle}
           </p>
         </div>
       </section>
@@ -102,10 +112,10 @@ export default function AboutUs() {
                 <Target className="h-6 w-6" />
               </div>
               <h2 className="text-2xl font-bold text-slate-950 mb-4 font-heading">
-                Our Mission
+                {content.mission_title}
               </h2>
               <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-                To simplify corporate scaling and wealth management by offering pre-vetted investments, competitive financing options, and legal due diligence tools within a single, integrated platform.
+                {content.mission_desc}
               </p>
             </div>
             <div className="bg-slate-50 border border-slate-100 rounded-3xl p-8 sm:p-12">
@@ -113,10 +123,10 @@ export default function AboutUs() {
                 <Compass className="h-6 w-6" />
               </div>
               <h2 className="text-2xl font-bold text-slate-950 mb-4 font-heading">
-                Our Vision
+                {content.vision_title}
               </h2>
               <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-                To become India&apos;s leading platform for multi-service business growth, trusted by 100,000+ partners to secure their operations and deploy capital efficiently.
+                {content.vision_desc}
               </p>
             </div>
           </div>

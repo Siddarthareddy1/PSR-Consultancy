@@ -2,6 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import Accordion from "@/components/Common/Accordion";
 import LoanCalculator from "@/components/Common/LoanCalculator";
+import { useContent } from "@/lib/useContent";
 import {
   FileCheck2,
   Percent,
@@ -12,6 +13,11 @@ import {
 } from "lucide-react";
 
 export default function LoansFinancing() {
+  const { content } = useContent("loans", {
+    hero_title: "Flexible Capital Solutions to Power Your Ambition",
+    hero_subtitle: "Get corporate and personal loans at transparent rates. Leverage our partnerships with leading banks and NBFCs to secure fast pre-approvals and maximum funding.",
+  });
+
   const faqItems = [
     {
       question: "What is the processing timeline for a business loan?",
@@ -73,10 +79,10 @@ export default function LoansFinancing() {
               Loans & Financing
             </span>
             <h1 className="text-4xl sm:text-5xl font-display font-extrabold mb-6 leading-tight">
-              Flexible Capital Solutions to Power Your Ambition
+              {content.hero_title}
             </h1>
             <p className="text-slate-300 text-base sm:text-lg mb-8 max-w-xl font-body font-light">
-              Get corporate and personal loans at transparent rates. Leverage our partnerships with leading banks and NBFCs to secure fast pre-approvals and maximum funding.
+              {content.hero_subtitle}
             </p>
             <div className="flex flex-col sm:flex-row items-center gap-4">
               <Link

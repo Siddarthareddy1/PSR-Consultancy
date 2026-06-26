@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Head from "next/head";
+import { useContent } from "@/lib/useContent";
 import {
   Award,
   Users,
@@ -19,6 +20,14 @@ import {
 } from "lucide-react";
 
 export default function Home() {
+  const { content } = useContent("home", {
+    hero_title_prefix: "Secure Your Wealth, Scale Your Business with ",
+    hero_title_accent: "PSR ONE",
+    hero_subtitle: "Your premium partner for Franchise Investing, Loans & Capital, Corporate Insurance, Strategic Real Estate Advisory, and Business Growth Consulting.",
+    cta_explore: "Explore Our Services",
+    cta_schedule: "Schedule Consultation",
+  });
+
   // Testimonial Slider State
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -164,14 +173,14 @@ export default function Home() {
           </div>
 
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-extrabold tracking-tight text-white mb-6 max-w-4xl mx-auto leading-tight">
-            Secure Your Wealth, Scale Your Business with{" "}
+            {content.hero_title_prefix}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-amber-300">
-              PSR ONE
+              {content.hero_title_accent}
             </span>
           </h1>
 
           <p className="text-lg sm:text-xl text-slate-300 mb-10 max-w-2xl mx-auto font-body font-light leading-relaxed">
-            Your premium partner for Franchise Investing, Loans & Capital, Corporate Insurance, Strategic Real Estate Advisory, and Business Growth Consulting.
+            {content.hero_subtitle}
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -179,13 +188,13 @@ export default function Home() {
               href="#services"
               className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 rounded-xl text-base font-bold text-slate-900 bg-secondary hover:bg-secondary-light shadow-lg transition-all duration-300 transform hover:-translate-y-0.5"
             >
-              Explore Our Services <ArrowRight className="ml-2 h-5 w-5" />
+              {content.cta_explore} <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
             <Link
               href="/contact?service=consultation"
               className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 rounded-xl text-base font-bold text-white bg-slate-900 hover:bg-slate-800 border border-slate-800 transition-all duration-300"
             >
-              Schedule Consultation
+              {content.cta_schedule}
             </Link>
           </div>
         </div>
