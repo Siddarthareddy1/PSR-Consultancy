@@ -1,10 +1,29 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function Footer() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
+
+  const [siteSettings, setSiteSettings] = useState({
+    phone: "+91 9110326887",
+    email: "sandeepsunnycool7@gmail.com",
+    address: "3rd Floor, PSR Heights, Near Hitech City Junction, Hitech City Road, Madhapur, Hyderabad, Telangana, 500081 (Opposite Timmidkunta Lake)",
+    hours: "Open 24 Hours",
+    instagram: "https://www.instagram.com/psrconsultancy_hyderabad",
+  });
+
+  useEffect(() => {
+    const saved = localStorage.getItem("psr_site_settings");
+    if (saved) {
+      try {
+        setSiteSettings(JSON.parse(saved));
+      } catch {
+        // ignore
+      }
+    }
+  }, []);
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -61,7 +80,7 @@ export default function Footer() {
             <div className="flex space-x-4">
               {/* Instagram Profile */}
               <a
-                href="https://www.instagram.com/psrconsultancy_hyderabad"
+                href={siteSettings.instagram}
                 target="_blank"
                 rel="noreferrer"
                 className="h-8 w-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:text-secondary hover:bg-slate-700 transition-colors"
@@ -98,22 +117,22 @@ export default function Footer() {
             </h3>
             <ul className="space-y-3 text-slate-400 text-sm">
               <li>
-                <span className="text-white font-medium">Office:</span> 3rd Floor, PSR Heights, Near Hitech City Junction, Hitech City Road, Madhapur, Hyderabad, Telangana, 500081 (Opposite Timmidkunta Lake)
+                <span className="text-white font-medium">Office:</span> {siteSettings.address}
               </li>
               <li>
                 <span className="text-white font-medium">Phone:</span>{" "}
-                <a href="tel:+919110326887" className="hover:text-secondary">
-                  +91 9110326887
+                <a href={`tel:${siteSettings.phone.replace(/\s+/g, "")}`} className="hover:text-secondary">
+                  {siteSettings.phone}
                 </a>
               </li>
               <li>
                 <span className="text-white font-medium">Email:</span>{" "}
-                <a href="mailto:support@psrone.com" className="hover:text-secondary">
-                  support@psrone.com
+                <a href={`mailto:${siteSettings.email}`} className="hover:text-secondary">
+                  {siteSettings.email}
                 </a>
               </li>
               <li>
-                <span className="text-white font-medium">Hours:</span> Open 24 Hours
+                <span className="text-white font-medium">Hours:</span> {siteSettings.hours}
               </li>
             </ul>
           </div>

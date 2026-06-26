@@ -74,7 +74,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       // Send auto-reply to User
       await transporter.sendMail({
-        from: `PSR ONE Team <support@psrone.com>`,
+        from: `PSR ONE Team <sandeepsunnycool7@gmail.com>`,
         to: email,
         subject: emailSubjectUser,
         text: emailBodyUser,

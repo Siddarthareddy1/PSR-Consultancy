@@ -15,6 +15,18 @@
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading font-bold text-neutralDark;
   }
+
+  .text-white h1, .text-white h2, .text-white h3, .text-white h4, .text-white h5, .text-white h6,
+  .text-slate-100 h1, .text-slate-100 h2, .text-slate-100 h3,
+  .text-slate-200 h1, .text-slate-200 h2, .text-slate-200 h3,
+  .text-slate-300 h1, .text-slate-300 h2, .text-slate-300 h3,
+  .bg-slate-900 h1, .bg-slate-900 h2, .bg-slate-900 h3,
+  .bg-slate-950 h1, .bg-slate-950 h2, .bg-slate-950 h3,
+  .gradient-primary h1, .gradient-primary h2, .gradient-primary h3,
+  .gradient-blue-gold h1, .gradient-blue-gold h2, .gradient-blue-gold h3,
+  .gradient-gold h1, .gradient-gold h2, .gradient-gold h3 {
+    color: #ffffff !important;
+  }
 }
 
 .glassmorphism {

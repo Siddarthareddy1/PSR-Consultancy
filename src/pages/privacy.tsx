@@ -34,7 +34,7 @@ export default function PrivacyPolicy() {
 
             <h2 className="text-xl font-bold text-slate-950 font-heading mt-8">3. Data Retention and Sharing</h2>
             <p>
-              We do not sell, rent, or lease your contact information to third-party brokers. Data is held securely on encrypted servers. You can request complete deletion of your records by emailing support@psrone.com.
+              We do not sell, rent, or lease your contact information to third-party brokers. Data is held securely on encrypted servers. You can request complete deletion of your records by emailing sandeepsunnycool7@gmail.com.
             </p>
 
             <h2 className="text-xl font-bold text-slate-950 font-heading mt-8">4. Cookies and Analytics</h2>

@@ -25,10 +25,25 @@ export default function Contact() {
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
 
-  // Sync service selection with query parameters
+  const [siteSettings, setSiteSettings] = useState({
+    phone: "+91 9110326887",
+    email: "sandeepsunnycool7@gmail.com",
+    address: "3rd Floor, PSR Heights, Near Hitech City Junction, Hitech City Road, Madhapur, Hyderabad, Telangana, 500081, India (Opposite Timmidkunta Lake)",
+    instagram: "https://www.instagram.com/psrconsultancy_hyderabad",
+  });
+
+  // Sync service selection and load custom settings
   useEffect(() => {
     if (queryService) {
       setFormData((prev) => ({ ...prev, service: queryService as string }));
+    }
+    const saved = localStorage.getItem("psr_site_settings");
+    if (saved) {
+      try {
+        setSiteSettings(JSON.parse(saved));
+      } catch {
+        // ignore
+      }
     }
   }, [queryService]);
 
@@ -352,10 +367,10 @@ export default function Contact() {
                       Call Us
                     </span>
                     <a
-                      href="tel:+919110326887"
+                      href={`tel:${siteSettings.phone.replace(/\s+/g, "")}`}
                       className="text-base font-bold text-slate-800 hover:text-primary transition-colors block mt-1"
                     >
-                      +91 9110326887
+                      {siteSettings.phone}
                     </a>
                   </div>
                 </div>
@@ -369,10 +384,10 @@ export default function Contact() {
                       Email Address
                     </span>
                     <a
-                      href="mailto:support@psrone.com"
+                      href={`mailto:${siteSettings.email}`}
                       className="text-base font-bold text-slate-800 hover:text-primary transition-colors block mt-1"
                     >
-                      support@psrone.com
+                      {siteSettings.email}
                     </a>
                   </div>
                 </div>
@@ -386,7 +401,7 @@ export default function Contact() {
                       Corporate Office
                     </span>
                     <p className="text-sm font-semibold text-slate-800 mt-1 leading-relaxed">
-                      3rd Floor, PSR Heights, Near Hitech City Junction, Hitech City Road, Madhapur, Hyderabad, Telangana, 500081, India (Opposite Timmidkunta Lake)
+                      {siteSettings.address}
                     </p>
                   </div>
                 </div>
@@ -405,12 +420,12 @@ export default function Contact() {
 
               {/* WhatsApp Quick CTA */}
               <a
-                href="https://wa.me/919110326887"
+                href={`https://wa.me/${siteSettings.phone.replace(/[^0-9]/g, "")}`}
                 target="_blank"
                 rel="noreferrer"
                 className="w-full flex items-center justify-center py-3.5 rounded-lg text-sm font-bold text-white bg-emerald-600 hover:bg-emerald-500 transition-colors shadow-sm gap-2"
               >
-                Chat on WhatsApp (+91 9110326887)
+                Chat on WhatsApp ({siteSettings.phone})
               </a>
             </div>
           </div>
