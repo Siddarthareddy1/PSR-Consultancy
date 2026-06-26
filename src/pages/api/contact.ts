@@ -44,7 +44,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     Best regards,
     The PSR ONE Advisory Team
-    Office: PSR Heights, Madhapur, Hyderabad
+    Office: PSR Heights, Hitech City Road, Madhapur, Hyderabad (Opposite Timmidkunta Lake)
     Website: ${siteUrl}
   `;
 

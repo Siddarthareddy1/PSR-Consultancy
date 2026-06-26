@@ -352,10 +352,10 @@ export default function Contact() {
                       Call Us
                     </span>
                     <a
-                      href="tel:+919121395329"
+                      href="tel:+919110326887"
                       className="text-base font-bold text-slate-800 hover:text-primary transition-colors block mt-1"
                     >
-                      +91 9121395329
+                      +91 9110326887
                     </a>
                   </div>
                 </div>
@@ -386,7 +386,7 @@ export default function Contact() {
                       Corporate Office
                     </span>
                     <p className="text-sm font-semibold text-slate-800 mt-1 leading-relaxed">
-                      3rd Floor, PSR Heights, Madhapur, Hyderabad, Telangana, 500081, India
+                      3rd Floor, PSR Heights, Near Hitech City Junction, Hitech City Road, Madhapur, Hyderabad, Telangana, 500081, India (Opposite Timmidkunta Lake)
                     </p>
                   </div>
                 </div>
@@ -397,7 +397,7 @@ export default function Contact() {
                 <MapPin className="h-10 w-10 text-primary mb-3 animate-bounce" />
                 <h4 className="font-bold text-slate-900 font-heading text-sm mb-1">Embedded Map Location</h4>
                 <p className="text-slate-500 text-xs max-w-xs leading-relaxed">
-                  PSR Heights, Madhapur. Located 200m from the Madhapur Metro Station. Parking available on-site.
+                  PSR Heights, Hitech City Road. Opposite Timmidkunta Lake, near Shilparamam Art Gallery and Hitech City Junction.
                 </p>
                 {/* Visual grid overlay for map feel */}
                 <div className="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#000_1px,transparent_1px),linear-gradient(to_bottom,#000_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none"></div>
@@ -405,12 +405,12 @@ export default function Contact() {
 
               {/* WhatsApp Quick CTA */}
               <a
-                href="https://wa.me/919121395329"
+                href="https://wa.me/919110326887"
                 target="_blank"
                 rel="noreferrer"
                 className="w-full flex items-center justify-center py-3.5 rounded-lg text-sm font-bold text-white bg-emerald-600 hover:bg-emerald-500 transition-colors shadow-sm gap-2"
               >
-                Chat on WhatsApp (+91 9121395329)
+                Chat on WhatsApp (+91 9110326887)
               </a>
             </div>
           </div>

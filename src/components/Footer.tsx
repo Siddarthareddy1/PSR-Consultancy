@@ -59,15 +59,15 @@ export default function Footer() {
               One platform offering multiple enterprise and consumer business solutions: Insurance, Franchising, Real Estate, Loans, and Consulting.
             </p>
             <div className="flex space-x-4">
-              {/* Social Media Link Mockups */}
-              <a href="#" className="h-8 w-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:text-secondary hover:bg-slate-700 transition-colors">
-                <span className="text-xs font-bold">in</span>
-              </a>
-              <a href="#" className="h-8 w-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:text-secondary hover:bg-slate-700 transition-colors">
-                <span className="text-xs font-bold">tw</span>
-              </a>
-              <a href="#" className="h-8 w-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:text-secondary hover:bg-slate-700 transition-colors">
-                <span className="text-xs font-bold">fb</span>
+              {/* Instagram Profile */}
+              <a
+                href="https://www.instagram.com/psrconsultancy_hyderabad"
+                target="_blank"
+                rel="noreferrer"
+                className="h-8 w-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:text-secondary hover:bg-slate-700 transition-colors"
+                title="Follow us on Instagram"
+              >
+                <span className="text-xs font-bold">ig</span>
               </a>
             </div>
           </div>
@@ -98,12 +98,12 @@ export default function Footer() {
             </h3>
             <ul className="space-y-3 text-slate-400 text-sm">
               <li>
-                <span className="text-white font-medium">Office:</span> 3rd Floor, PSR Heights, Madhapur, Hyderabad, Telangana, India
+                <span className="text-white font-medium">Office:</span> 3rd Floor, PSR Heights, Near Hitech City Junction, Hitech City Road, Madhapur, Hyderabad, Telangana, 500081 (Opposite Timmidkunta Lake)
               </li>
               <li>
                 <span className="text-white font-medium">Phone:</span>{" "}
-                <a href="tel:+919121395329" className="hover:text-secondary">
-                  +91 9121395329
+                <a href="tel:+919110326887" className="hover:text-secondary">
+                  +91 9110326887
                 </a>
               </li>
               <li>
@@ -113,7 +113,7 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <span className="text-white font-medium">Hours:</span> Mon - Sat, 9:00 AM - 6:00 PM
+                <span className="text-white font-medium">Hours:</span> Open 24 Hours
               </li>
             </ul>
           </div>

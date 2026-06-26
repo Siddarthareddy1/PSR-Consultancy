@@ -243,7 +243,7 @@ export default function LoansFinancing() {
               Get Sanction Checklist
             </Link>
             <Link
-              href="https://wa.me/919121395329"
+              href="https://wa.me/919110326887"
               target="_blank"
               className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3 rounded-lg text-sm font-bold text-white border border-slate-700 hover:bg-slate-800 transition-colors"
             >
