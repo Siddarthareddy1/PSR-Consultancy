@@ -37,14 +37,31 @@ export default function Contact() {
     if (queryService) {
       setFormData((prev) => ({ ...prev, service: queryService as string }));
     }
-    const saved = localStorage.getItem("psr_site_settings");
-    if (saved) {
+
+    const loadSettings = async () => {
       try {
-        setSiteSettings(JSON.parse(saved));
-      } catch {
-        // ignore
+        const res = await fetch("/api/settings");
+        if (res.ok) {
+          const data = await res.json();
+          setSiteSettings(data);
+          return;
+        }
+      } catch (err) {
+        console.error("Failed to fetch contact page settings:", err);
       }
-    }
+
+      // Fallback
+      const saved = localStorage.getItem("psr_site_settings");
+      if (saved) {
+        try {
+          setSiteSettings(JSON.parse(saved));
+        } catch {
+          // ignore
+        }
+      }
+    };
+
+    loadSettings();
   }, [queryService]);
 
   const validate = () => {

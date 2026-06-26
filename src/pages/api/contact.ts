@@ -14,7 +14,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(400).json({ message: "Required fields are missing" });
   }
 
-  const adminEmail = process.env.ADMIN_EMAIL || "admin@psrone.com";
+  const adminEmail = process.env.ADMIN_EMAIL || "sandeepsunnycool7@gmail.com";
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://psrone.vercel.app";
 
   const emailSubjectAdmin = `[NEW LEAD] PSR ONE - ${name} - ${service}`;

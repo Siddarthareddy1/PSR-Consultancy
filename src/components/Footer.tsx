@@ -15,14 +15,29 @@ export default function Footer() {
   });
 
   useEffect(() => {
-    const saved = localStorage.getItem("psr_site_settings");
-    if (saved) {
+    const loadSettings = async () => {
       try {
-        setSiteSettings(JSON.parse(saved));
-      } catch {
-        // ignore
+        const res = await fetch("/api/settings");
+        if (res.ok) {
+          const data = await res.json();
+          setSiteSettings(data);
+          return;
+        }
+      } catch (err) {
+        console.error("Failed to fetch site settings:", err);
       }
-    }
+
+      // Fallback
+      const saved = localStorage.getItem("psr_site_settings");
+      if (saved) {
+        try {
+          setSiteSettings(JSON.parse(saved));
+        } catch {
+          // ignore
+        }
+      }
+    };
+    loadSettings();
   }, []);
 
   const handleSubscribe = async (e: React.FormEvent) => {

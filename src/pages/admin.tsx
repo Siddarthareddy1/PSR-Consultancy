@@ -56,75 +56,108 @@ export default function AdminDashboard() {
     if (passcode === "PSRadmin2026") {
       setIsAuthenticated(true);
       setLoginError("");
-      loadDashboardData();
+      loadDashboardData(passcode);
     } else {
       setLoginError("Invalid passcode. Please try again.");
     }
   };
 
   // Load leads and subscribers from local JSON fallbacks/APIs
-  const loadDashboardData = async () => {
+  const loadDashboardData = async (currentPasscode = passcode) => {
     setLoading(true);
     try {
-      // Load Leads
-      const leadsRes = await fetch("/leads_captured.json");
-      if (leadsRes.ok) {
-        const leadsData = await leadsRes.json();
-        setLeads(leadsData.reverse()); // Show newest first
+      const res = await fetch("/api/admin/data", {
+        headers: {
+          "x-admin-passcode": currentPasscode,
+        },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setLeads(data.leads || []);
+        setSubscribers(data.subscribers || []);
       } else {
-        // Mock fallback if file doesn't exist yet
-        setLeads([
-          {
-            name: "Rahul Nair",
-            email: "rahul@example.com",
-            phone: "+91 9876543210",
-            service: "loans",
-            company_name: "Nair Logistics",
-            budget_range: "50l-2cr",
-            contact_method: "phone",
-            message: "Need funding for commercial truck expansion.",
-            created_at: new Date().toISOString(),
-          },
-        ]);
-      }
-
-      // Load Subscribers
-      const subRes = await fetch("/subscribers.json");
-      if (subRes.ok) {
-        const subData = await subRes.json();
-        setSubscribers(subData.reverse());
-      } else {
-        setSubscribers([
-          {
-            email: "partner@example.com",
-            created_at: new Date().toISOString(),
-          },
-        ]);
+        throw new Error("Failed to load admin data");
       }
     } catch (err) {
-      console.error("Failed to load admin logs:", err);
+      console.error("Failed to load admin logs, using fallback data:", err);
+      // Fallback
+      setLeads([
+        {
+          name: "Rahul Nair",
+          email: "rahul@example.com",
+          phone: "+91 9876543210",
+          service: "loans",
+          company_name: "Nair Logistics",
+          budget_range: "50l-2cr",
+          contact_method: "phone",
+          message: "Need funding for commercial truck expansion.",
+          created_at: new Date().toISOString(),
+        },
+      ]);
+      setSubscribers([
+        {
+          email: "partner@example.com",
+          created_at: new Date().toISOString(),
+        },
+      ]);
     } finally {
       setLoading(false);
     }
   };
 
-  // Load custom site settings from localStorage if customized
+  // Load custom site settings from dynamic API with local storage fallback
   useEffect(() => {
-    const saved = localStorage.getItem("psr_site_settings");
-    if (saved) {
+    const loadSettings = async () => {
       try {
-        setSiteSettings(JSON.parse(saved));
-      } catch {
-        // ignore
+        const res = await fetch("/api/settings");
+        if (res.ok) {
+          const data = await res.json();
+          setSiteSettings(data);
+          return;
+        }
+      } catch (err) {
+        console.error("Failed to fetch settings in admin:", err);
       }
-    }
+
+      const saved = localStorage.getItem("psr_site_settings");
+      if (saved) {
+        try {
+          setSiteSettings(JSON.parse(saved));
+        } catch {
+          // ignore
+        }
+      }
+    };
+    loadSettings();
   }, []);
 
-  const handleSaveSettings = (e: React.FormEvent) => {
+  const handleSaveSettings = async (e: React.FormEvent) => {
     e.preventDefault();
-    localStorage.setItem("psr_site_settings", JSON.stringify(siteSettings));
-    setSettingsSuccess(true);
-    setTimeout(() => setSettingsSuccess(false), 3000);
+    setLoading(true);
+    try {
+      const res = await fetch("/api/settings", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-admin-passcode": passcode,
+        },
+        body: JSON.stringify(siteSettings),
+      });
+
+      if (res.ok) {
+        localStorage.setItem("psr_site_settings", JSON.stringify(siteSettings));
+        setSettingsSuccess(true);
+        setTimeout(() => setSettingsSuccess(false), 3000);
+      } else {
+        const errData = await res.json();
+        alert(errData.message || "Failed to save settings.");
+      }
+    } catch (err) {
+      console.error("Save settings error:", err);
+      alert("An error occurred while saving settings.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   // CSV Export utility
