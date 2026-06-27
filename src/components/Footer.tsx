@@ -158,11 +158,6 @@ export default function Footer() {
                   Contact Support
                 </Link>
               </li>
-              <li>
-                <Link href="/client/login" className="text-gray-400 hover:text-white text-xs font-medium transition-colors">
-                  Client Portal login
-                </Link>
-              </li>
             </ul>
           </div>
 

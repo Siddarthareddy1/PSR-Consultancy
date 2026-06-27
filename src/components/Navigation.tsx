@@ -126,14 +126,8 @@ export default function Navigation() {
               </Link>
             </div>
 
-            {/* Desktop CTA & Portal */}
+            {/* Desktop CTA */}
             <div className="hidden md:flex items-center space-x-4">
-              <Link
-                href="/client/login"
-                className="text-xs font-bold text-gray-700 hover:text-primary transition-colors px-3 py-2"
-              >
-                Client Portal
-              </Link>
               <Link
                 href="/contact?service=consultation"
                 className="inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-xs font-bold text-white bg-primary hover:bg-primary-dark transition-all duration-200 shadow-sm hover:shadow-md transform hover:-translate-y-0.5"
@@ -244,13 +238,7 @@ export default function Navigation() {
               </div>
 
               {/* Drawer Footer */}
-              <div className="p-5 border-t border-gray-100 bg-gray-50 space-y-3">
-                <Link
-                  href="/client/login"
-                  className="w-full inline-flex items-center justify-center px-4 py-3 rounded-lg text-sm font-bold text-gray-850 bg-white border border-gray-200 hover:bg-gray-50 transition-colors shadow-sm"
-                >
-                  Client Portal login
-                </Link>
+              <div className="p-5 border-t border-gray-100 bg-gray-50">
                 <Link
                   href="/contact?service=consultation"
                   className="w-full inline-flex items-center justify-center px-4 py-3 rounded-lg text-sm font-bold text-white bg-primary hover:bg-primary-dark transition-colors shadow-md"
