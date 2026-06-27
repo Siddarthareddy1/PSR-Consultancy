@@ -24,6 +24,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           .eq("id", 1)
           .maybeSingle();
         
+        const isMailConfigured = !!process.env.SENDGRID_API_KEY;
         if (!error && data) {
           return res.status(200).json({
             phone: data.phone,
@@ -32,11 +33,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             hours: data.hours,
             instagram: data.instagram,
             isDatabaseConnected: true,
+            isMailConfigured,
           });
         }
         // If table doesn't exist or is empty, we fall back
         console.warn("Supabase site_settings fetch error or empty, trying local file fallback:", error);
       }
+
+      const isMailConfigured = !!process.env.SENDGRID_API_KEY;
 
       // Local file fallback
       if (fs.existsSync(filePath)) {
@@ -45,6 +49,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(200).json({
           ...parsed,
           isDatabaseConnected: isSupabaseConfigured,
+          isMailConfigured,
         });
       }
 
@@ -52,6 +57,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(200).json({
         ...DEFAULT_SETTINGS,
         isDatabaseConnected: isSupabaseConfigured,
+        isMailConfigured,
       });
     } catch (err) {
       console.error("Settings GET error:", err);

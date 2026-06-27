@@ -40,6 +40,7 @@ export default function AdminDashboard() {
   const [contentLoading, setContentLoading] = useState(false);
   const [contentSuccess, setContentSuccess] = useState(false);
   const [isDatabaseConnected, setIsDatabaseConnected] = useState<boolean | null>(null);
+  const [isMailConfigured, setIsMailConfigured] = useState<boolean | null>(null);
 
   // Admin Data states
   const [leads, setLeads] = useState<Lead[]>([]);
@@ -128,6 +129,7 @@ export default function AdminDashboard() {
             instagram: data.instagram,
           });
           setIsDatabaseConnected(data.isDatabaseConnected ?? false);
+          setIsMailConfigured(data.isMailConfigured ?? false);
           return;
         }
       } catch (err) {
@@ -143,6 +145,7 @@ export default function AdminDashboard() {
         }
       }
       setIsDatabaseConnected(false);
+      setIsMailConfigured(false);
     };
     loadSettings();
   }, []);
@@ -386,6 +389,17 @@ export default function AdminDashboard() {
                   <p className="font-bold text-amber-950">Database Connection Not Configured</p>
                   <p className="text-amber-700/95 mt-0.5 font-normal leading-relaxed">
                     The application is running in **Local Fallback Mode**. Edits will only persist temporarily on the server instance cache (<code className="bg-amber-100 px-1 py-0.5 rounded font-mono">/tmp</code>). To enable permanent settings storage across all users, configure the <code className="bg-amber-100 px-1 py-0.5 rounded font-mono">SUPABASE_URL</code> and <code className="bg-amber-100 px-1 py-0.5 rounded font-mono">SUPABASE_ANON_KEY</code> environment variables in Vercel.
+                  </p>
+                </div>
+              </div>
+            )}
+            {isMailConfigured === false && (
+              <div className="mb-6 p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs sm:text-sm font-semibold flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                <span className="h-6 w-6 rounded-full bg-rose-200 flex items-center justify-center text-rose-800 font-bold flex-shrink-0 font-display">!</span>
+                <div>
+                  <p className="font-bold text-rose-950">Email Service Not Configured</p>
+                  <p className="text-rose-700/95 mt-0.5 font-normal leading-relaxed">
+                    Lead submissions will NOT be emailed to <code className="bg-rose-100 px-1 py-0.5 rounded font-mono">sandeepsunnycool7@gmail.com</code>. Configure the <code className="bg-rose-100 px-1 py-0.5 rounded font-mono">SENDGRID_API_KEY</code> environment variable in Vercel to enable live email dispatch.
                   </p>
                 </div>
               </div>
