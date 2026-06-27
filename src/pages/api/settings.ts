@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { supabase, isSupabaseConfigured } from "@/lib/supabase";
+import { getWritablePath } from "@/lib/db-fallback";
 import fs from "fs";
-import path from "path";
 
 const DEFAULT_SETTINGS = {
   phone: "+91 9110326887",
@@ -12,7 +12,7 @@ const DEFAULT_SETTINGS = {
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const filePath = path.join(process.cwd(), "site_settings.json");
+  const filePath = getWritablePath("site_settings.json");
 
   if (req.method === "GET") {
     try {
@@ -31,6 +31,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             address: data.address,
             hours: data.hours,
             instagram: data.instagram,
+            isDatabaseConnected: true,
           });
         }
         // If table doesn't exist or is empty, we fall back
@@ -40,11 +41,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       // Local file fallback
       if (fs.existsSync(filePath)) {
         const fileData = fs.readFileSync(filePath, "utf-8");
-        return res.status(200).json(JSON.parse(fileData));
+        const parsed = JSON.parse(fileData);
+        return res.status(200).json({
+          ...parsed,
+          isDatabaseConnected: isSupabaseConfigured,
+        });
       }
 
       // Default fallback
-      return res.status(200).json(DEFAULT_SETTINGS);
+      return res.status(200).json({
+        ...DEFAULT_SETTINGS,
+        isDatabaseConnected: isSupabaseConfigured,
+      });
     } catch (err) {
       console.error("Settings GET error:", err);
       return res.status(200).json(DEFAULT_SETTINGS);

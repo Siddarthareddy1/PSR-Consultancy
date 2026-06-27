@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { supabase, isSupabaseConfigured } from "@/lib/supabase";
+import { getWritablePath } from "@/lib/db-fallback";
 import fs from "fs";
-import path from "path";
 
 export const DEFAULT_PAGE_CONTENT: Record<string, Record<string, string>> = {
   home: {
@@ -73,7 +73,7 @@ export const DEFAULT_PAGE_CONTENT: Record<string, Record<string, string>> = {
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const filePath = path.join(process.cwd(), "site_content.json");
+  const filePath = getWritablePath("site_content.json");
 
   if (req.method === "GET") {
     const { page } = req.query;

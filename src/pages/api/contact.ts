@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import nodemailer from "nodemailer";
+import { getWritablePath } from "@/lib/db-fallback";
 import fs from "fs";
-import path from "path";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") {
@@ -83,7 +83,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(200).json({ success: true, message: "Emails dispatched successfully via SendGrid" });
     } else {
       // Local mock logging fallback
-      const logPath = path.join(process.cwd(), "emails_sent_mock.log");
+      const logPath = getWritablePath("emails_sent_mock.log");
       const logContent = `
 ========================================
 [MOCK EMAIL DISPATCH - ${new Date().toISOString()}]

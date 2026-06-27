@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { supabase, isSupabaseConfigured } from "@/lib/supabase";
+import { getWritablePath } from "@/lib/db-fallback";
 import fs from "fs";
-import path from "path";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") {
@@ -33,7 +33,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(200).json({ success: true, message: "Lead captured to Supabase" });
     } else {
       // Fallback: append to local file
-      const filePath = path.join(process.cwd(), "leads_captured.json");
+      const filePath = getWritablePath("leads_captured.json");
       let leads = [];
       if (fs.existsSync(filePath)) {
         try {

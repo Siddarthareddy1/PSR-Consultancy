@@ -39,6 +39,7 @@ export default function AdminDashboard() {
   const [pageContent, setPageContent] = useState<Record<string, string>>({});
   const [contentLoading, setContentLoading] = useState(false);
   const [contentSuccess, setContentSuccess] = useState(false);
+  const [isDatabaseConnected, setIsDatabaseConnected] = useState<boolean | null>(null);
 
   // Admin Data states
   const [leads, setLeads] = useState<Lead[]>([]);
@@ -119,7 +120,14 @@ export default function AdminDashboard() {
         const res = await fetch("/api/settings");
         if (res.ok) {
           const data = await res.json();
-          setSiteSettings(data);
+          setSiteSettings({
+            phone: data.phone,
+            email: data.email,
+            address: data.address,
+            hours: data.hours,
+            instagram: data.instagram,
+          });
+          setIsDatabaseConnected(data.isDatabaseConnected ?? false);
           return;
         }
       } catch (err) {
@@ -134,6 +142,7 @@ export default function AdminDashboard() {
           // ignore
         }
       }
+      setIsDatabaseConnected(false);
     };
     loadSettings();
   }, []);
@@ -325,11 +334,10 @@ export default function AdminDashboard() {
           <aside className="lg:col-span-3 bg-white rounded-2xl border border-slate-150 p-4 shadow-sm space-y-2">
             <button
               onClick={() => setActiveTab("leads")}
-              className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-bold transition-all ${
-                activeTab === "leads"
+              className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-bold transition-all ${activeTab === "leads"
                   ? "bg-primary text-white"
                   : "text-slate-600 hover:bg-slate-50"
-              }`}
+                }`}
             >
               <Users className="h-5 w-5" />
               <span>Captured Leads ({leads.length})</span>
@@ -337,11 +345,10 @@ export default function AdminDashboard() {
 
             <button
               onClick={() => setActiveTab("subscribers")}
-              className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-bold transition-all ${
-                activeTab === "subscribers"
+              className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-bold transition-all ${activeTab === "subscribers"
                   ? "bg-primary text-white"
                   : "text-slate-600 hover:bg-slate-50"
-              }`}
+                }`}
             >
               <Mail className="h-5 w-5" />
               <span>Newsletter Signups ({subscribers.length})</span>
@@ -349,11 +356,10 @@ export default function AdminDashboard() {
 
             <button
               onClick={() => setActiveTab("settings")}
-              className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-bold transition-all ${
-                activeTab === "settings"
+              className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-bold transition-all ${activeTab === "settings"
                   ? "bg-primary text-white"
                   : "text-slate-600 hover:bg-slate-50"
-              }`}
+                }`}
             >
               <Settings className="h-5 w-5" />
               <span>Live Site Settings</span>
@@ -361,11 +367,10 @@ export default function AdminDashboard() {
 
             <button
               onClick={() => setActiveTab("content")}
-              className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-bold transition-all ${
-                activeTab === "content"
+              className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-bold transition-all ${activeTab === "content"
                   ? "bg-primary text-white"
                   : "text-slate-600 hover:bg-slate-50"
-              }`}
+                }`}
             >
               <FileText className="h-5 w-5" />
               <span>Page Content Editor</span>
@@ -374,6 +379,17 @@ export default function AdminDashboard() {
 
           {/* Main Dashboard Workspace */}
           <main className="lg:col-span-9 bg-white rounded-2xl border border-slate-150 p-6 sm:p-8 shadow-sm min-h-[50vh]">
+            {isDatabaseConnected === false && (
+              <div className="mb-6 p-4 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 text-xs sm:text-sm font-semibold flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                <span className="h-6 w-6 rounded-full bg-amber-200 flex items-center justify-center text-amber-800 font-bold flex-shrink-0 font-display">!</span>
+                <div>
+                  <p className="font-bold text-amber-950">Database Connection Not Configured</p>
+                  <p className="text-amber-700/95 mt-0.5 font-normal leading-relaxed">
+                    The application is running in **Local Fallback Mode**. Edits will only persist temporarily on the server instance cache (<code className="bg-amber-100 px-1 py-0.5 rounded font-mono">/tmp</code>). To enable permanent settings storage across all users, configure the <code className="bg-amber-100 px-1 py-0.5 rounded font-mono">SUPABASE_URL</code> and <code className="bg-amber-100 px-1 py-0.5 rounded font-mono">SUPABASE_ANON_KEY</code> environment variables in Vercel.
+                  </p>
+                </div>
+              </div>
+            )}
             {activeTab === "leads" && (
               <div>
                 <div className="flex items-center justify-between border-b pb-4 mb-6">
@@ -626,7 +642,7 @@ export default function AdminDashboard() {
                         Object.entries(pageContent).map(([key, val]) => {
                           const label = keyLabels[key] || key.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
                           const isTextarea = val.length > 60 || key.includes("desc") || key.includes("subtitle");
-                          
+
                           return (
                             <div key={key}>
                               <label className="block text-xs font-bold text-slate-700 mb-1.5 capitalize font-heading">

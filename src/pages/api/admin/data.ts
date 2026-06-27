@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { supabase, isSupabaseConfigured } from "@/lib/supabase";
+import { getWritablePath } from "@/lib/db-fallback";
 import fs from "fs";
-import path from "path";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "GET") {
@@ -44,7 +44,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
     } else {
       // Fallback: read from local files
-      const leadsFilePath = path.join(process.cwd(), "leads_captured.json");
+      const leadsFilePath = getWritablePath("leads_captured.json");
       if (fs.existsSync(leadsFilePath)) {
         try {
           const fileContent = fs.readFileSync(leadsFilePath, "utf-8");
@@ -54,7 +54,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
       }
 
-      const subsFilePath = path.join(process.cwd(), "subscribers.json");
+      const subsFilePath = getWritablePath("subscribers.json");
       if (fs.existsSync(subsFilePath)) {
         try {
           const fileContent = fs.readFileSync(subsFilePath, "utf-8");
