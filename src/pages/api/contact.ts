@@ -66,7 +66,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       // Send to Admin
       await transporter.sendMail({
-        from: `PSR ONE Notification <no-reply@psrone.com>`,
+        from: `PSR ONE Notification <${adminEmail}>`,
         to: adminEmail,
         subject: emailSubjectAdmin,
         text: emailBodyAdmin,
@@ -74,7 +74,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       // Send auto-reply to User
       await transporter.sendMail({
-        from: `PSR ONE Team <sandeepsunnycool7@gmail.com>`,
+        from: `PSR ONE Team <${adminEmail}>`,
         to: email,
         subject: emailSubjectUser,
         text: emailBodyUser,
