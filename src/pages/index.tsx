@@ -70,28 +70,7 @@ export default function Home() {
     setCurrentSlide((prev) => (prev + 1) % testimonials.length);
   };
 
-  const trustBadges = [
-    {
-      icon: Award,
-      title: "20+ Years Experience",
-      desc: "Delivering business advisory and financial expertise since 2006.",
-    },
-    {
-      icon: Users,
-      title: "10,000+ Happy Clients",
-      desc: "Trusted by entrepreneurs, investors, and families nationwide.",
-    },
-    {
-      icon: Clock,
-      title: "24/7 Service Support",
-      desc: "Always available to assist with your insurance or loan applications.",
-    },
-    {
-      icon: ShieldCheck,
-      title: "Licensed & Certified",
-      desc: "Registered with ISO standards, maintaining 100% regulatory compliance.",
-    },
-  ];
+
 
   const services = [
     {
@@ -159,66 +138,106 @@ export default function Home() {
       </Head>
 
       {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-slate-950 text-white pt-12">
+      <section className="relative min-h-[95vh] flex items-center justify-center overflow-hidden bg-slate-950 text-white pt-24 pb-16">
         {/* Subtle grid background */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#0f172a_1px,transparent_1px),linear-gradient(to_bottom,#0f172a_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
         {/* Colorful glows */}
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-[120px] animate-pulse"></div>
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/15 rounded-full blur-[120px] animation-delay-2000"></div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center z-10">
-          <div className="inline-flex items-center space-x-2 bg-slate-900 border border-slate-800 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider text-secondary mb-8">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10 flex flex-col items-center">
+          <div className="inline-flex items-center space-x-2 bg-slate-900/80 backdrop-blur border border-slate-800 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider text-secondary mb-8">
             <Sparkles className="h-3.5 w-3.5" />
             <span>ONE PLATFORM, MULTIPLE BUSINESS SOLUTIONS</span>
           </div>
 
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-extrabold tracking-tight text-white mb-6 max-w-4xl mx-auto leading-tight">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-extrabold tracking-tight text-white mb-6 max-w-4xl leading-tight">
             {content.hero_title_prefix}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-amber-300">
               {content.hero_title_accent}
             </span>
           </h1>
 
-          <p className="text-lg sm:text-xl text-slate-300 mb-10 max-w-2xl mx-auto font-body font-light leading-relaxed">
+          <p className="text-base sm:text-lg text-slate-300 mb-10 max-w-2xl font-body font-light leading-relaxed">
             {content.hero_subtitle}
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto mb-16">
             <Link
               href="#services"
-              className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 rounded-xl text-base font-bold text-slate-900 bg-secondary hover:bg-secondary-light shadow-lg transition-all duration-300 transform hover:-translate-y-0.5"
+              className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 rounded-xl text-sm font-bold text-slate-900 bg-secondary hover:bg-secondary-light shadow-lg transition-all duration-300 transform hover:-translate-y-0.5"
             >
               {content.cta_explore} <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
             <Link
               href="/contact?service=consultation"
-              className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 rounded-xl text-base font-bold text-white bg-slate-900 hover:bg-slate-800 border border-slate-800 transition-all duration-300"
+              className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 rounded-xl text-sm font-bold text-white bg-slate-900 hover:bg-slate-800 border border-slate-800 transition-all duration-300"
             >
               {content.cta_schedule}
             </Link>
           </div>
+
+          {/* Floating Trust Metrics inside Hero */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 w-full max-w-4xl border border-slate-800/80 bg-slate-900/40 backdrop-blur rounded-2xl p-6 sm:p-8">
+            <div className="text-center">
+              <p className="text-2xl sm:text-3xl font-extrabold text-secondary font-display">20+</p>
+              <p className="text-[10px] sm:text-xs text-slate-400 font-bold uppercase tracking-wider mt-1">Years Experience</p>
+            </div>
+            <div className="text-center border-l border-slate-800/80">
+              <p className="text-2xl sm:text-3xl font-extrabold text-secondary font-display">10,000+</p>
+              <p className="text-[10px] sm:text-xs text-slate-400 font-bold uppercase tracking-wider mt-1">Happy Clients</p>
+            </div>
+            <div className="text-center border-l border-slate-800/80">
+              <p className="text-2xl sm:text-3xl font-extrabold text-secondary font-display">₹50 Cr+</p>
+              <p className="text-[10px] sm:text-xs text-slate-400 font-bold uppercase tracking-wider mt-1">Capital Funded</p>
+            </div>
+            <div className="text-center border-l border-slate-800/80">
+              <p className="text-2xl sm:text-3xl font-extrabold text-secondary font-display">98%</p>
+              <p className="text-[10px] sm:text-xs text-slate-400 font-bold uppercase tracking-wider mt-1">Success Rate</p>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Trust Badges Section */}
-      <section className="relative z-20 -mt-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-8 sm:p-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {trustBadges.map((badge, idx) => {
-            const IconComponent = badge.icon;
-            return (
-              <div key={idx} className="flex flex-col items-center text-center p-2">
-                <div className="h-12 w-12 rounded-xl bg-blue-50 text-primary flex items-center justify-center mb-4 shadow-inner">
-                  <IconComponent className="h-6 w-6" />
-                </div>
-                <h3 className="font-heading font-bold text-slate-900 text-base mb-2">
-                  {badge.title}
-                </h3>
-                <p className="text-slate-500 text-xs sm:text-sm leading-relaxed">
-                  {badge.desc}
-                </p>
-              </div>
-            );
-          })}
+      {/* Certification Badges Section */}
+      <section className="relative z-20 -mt-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-6 sm:p-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="flex items-center gap-3">
+            <div className="h-10 w-10 rounded-lg bg-emerald-50 text-emerald-650 flex items-center justify-center flex-shrink-0">
+              <Award className="h-5 w-5" />
+            </div>
+            <div>
+              <p className="text-xs font-bold text-slate-900 font-heading">ISO Certified</p>
+              <p className="text-[10px] text-slate-500 mt-0.5">Compliant with global standards</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3 lg:border-l lg:border-slate-100 lg:pl-6">
+            <div className="h-10 w-10 rounded-lg bg-blue-50 text-blue-650 flex items-center justify-center flex-shrink-0">
+              <ShieldCheck className="h-5 w-5" />
+            </div>
+            <div>
+              <p className="text-xs font-bold text-slate-900 font-heading">Licensed & Registered</p>
+              <p className="text-[10px] text-slate-500 mt-0.5">Approved corporate syndicates</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3 lg:border-l lg:border-slate-100 lg:pl-6">
+            <div className="h-10 w-10 rounded-lg bg-purple-50 text-purple-650 flex items-center justify-center flex-shrink-0">
+              <Clock className="h-5 w-5" />
+            </div>
+            <div>
+              <p className="text-xs font-bold text-slate-900 font-heading">24/7 Support</p>
+              <p className="text-[10px] text-slate-500 mt-0.5">Always available for urgent queries</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3 lg:border-l lg:border-slate-100 lg:pl-6">
+            <div className="h-10 w-10 rounded-lg bg-amber-50 text-amber-650 flex items-center justify-center flex-shrink-0">
+              <Star className="h-5 w-5" />
+            </div>
+            <div>
+              <p className="text-xs font-bold text-slate-900 font-heading">100% Regulatory Compliant</p>
+              <p className="text-[10px] text-slate-500 mt-0.5">Following strict legal guidelines</p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -237,11 +256,26 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, idx) => {
               const IconComp = service.icon;
+              const accentColor = 
+                idx === 0 ? "#EA580C" : 
+                idx === 1 ? "#16A34A" : 
+                idx === 2 ? "#7C3AED" : 
+                idx === 3 ? "#0891B2" : "#D97706";
+
+              const borderStyles = { borderLeft: `4px solid ${accentColor}` };
+              const badgeNumber = `0${idx + 1}`;
+
               return (
                 <div
                   key={idx}
-                  className={`bg-white rounded-2xl p-8 border card-hover ${service.color} transition-all duration-300 flex flex-col h-full`}
+                  style={borderStyles}
+                  className="bg-white rounded-2xl p-8 border border-slate-150 hover:shadow-xl transition-all duration-300 flex flex-col h-full relative group transform hover:-translate-y-2"
                 >
+                  {/* Top-right number badge */}
+                  <span className="absolute top-6 right-6 text-slate-200 font-extrabold text-2xl font-display group-hover:text-slate-350 transition-colors">
+                    {badgeNumber}
+                  </span>
+
                   <div className={`h-14 w-14 rounded-xl ${service.iconBg} flex items-center justify-center mb-6`}>
                     <IconComp className="h-7 w-7" />
                   </div>
@@ -253,10 +287,10 @@ export default function Home() {
                   </p>
                   <Link
                     href={service.href}
-                    className="inline-flex items-center text-primary font-bold text-sm hover:text-secondary group transition-colors"
+                    className="inline-flex items-center font-bold text-sm text-slate-900 hover:opacity-80 group/link transition-colors"
                   >
                     Learn More{" "}
-                    <ArrowRight className="ml-1 h-4 w-4 transform group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="ml-1 h-4 w-4 transform group-hover/link:translate-x-1 transition-transform" />
                   </Link>
                 </div>
               );
