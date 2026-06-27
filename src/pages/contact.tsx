@@ -24,6 +24,7 @@ export default function Contact() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const [currentStep, setCurrentStep] = useState(1);
 
   const [siteSettings, setSiteSettings] = useState({
     phone: "+91 9110326887",
@@ -64,23 +65,37 @@ export default function Contact() {
     loadSettings();
   }, [queryService]);
 
-  const validate = () => {
+  const validateStep = (step: number) => {
     const newErrors: Record<string, string> = {};
-    if (!formData.name.trim()) newErrors.name = "Name is required";
-    if (!formData.email.trim()) {
-      newErrors.email = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Please enter a valid email address";
+    if (step === 1) {
+      if (!formData.service) newErrors.service = "Please select a service";
     }
-    if (!formData.phone.trim()) {
-      newErrors.phone = "Phone number is required";
-    } else if (!/^[0-9+\s-]{10,15}$/.test(formData.phone.trim())) {
-      newErrors.phone = "Please enter a valid phone number";
+    if (step === 2) {
+      if (!formData.name.trim()) newErrors.name = "Name is required";
+      if (!formData.email.trim()) {
+        newErrors.email = "Email is required";
+      } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+        newErrors.email = "Please enter a valid email address";
+      }
+      if (!formData.phone.trim()) {
+        newErrors.phone = "Phone number is required";
+      } else if (!/^[0-9+\s-]{10,15}$/.test(formData.phone.trim())) {
+        newErrors.phone = "Please enter a valid phone number";
+      }
     }
-    if (!formData.service) newErrors.service = "Please select a service";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
+  };
+
+  const handleNextStep = () => {
+    if (validateStep(currentStep)) {
+      setCurrentStep((prev) => prev + 1);
+    }
+  };
+
+  const handlePrevStep = () => {
+    setCurrentStep((prev) => prev - 1);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -95,7 +110,7 @@ export default function Contact() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!validate()) return;
+    if (!validateStep(1) || !validateStep(2)) return;
 
     setStatus("submitting");
     setErrorMessage("");
@@ -182,187 +197,269 @@ export default function Contact() {
                     </div>
                   )}
 
-                  {/* Row 1: Name & Email */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
-                        Your Name <span className="text-rose-500">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        className={`w-full px-4 py-2.5 rounded-lg border text-sm focus:outline-none transition-colors text-slate-800 bg-slate-50 ${
-                          errors.name ? "border-rose-400 focus:border-rose-400" : "border-slate-200 focus:border-primary"
-                        }`}
-                        placeholder="John Doe"
-                      />
-                      {errors.name && <span className="text-xs text-rose-500 mt-1 block">{errors.name}</span>}
+                  {/* Step Indicators */}
+                  <div className="flex items-center justify-between mb-8 pb-6 border-b border-slate-150">
+                    <div className="flex items-center gap-2">
+                      <span className={`h-7 w-7 rounded-full flex items-center justify-center text-xs font-bold transition-all ${
+                        currentStep === 1
+                          ? "bg-primary text-white scale-110 shadow"
+                          : currentStep > 1
+                          ? "bg-emerald-500 text-white"
+                          : "bg-slate-100 text-slate-400"
+                      }`}>
+                        {currentStep > 1 ? "✓" : "1"}
+                      </span>
+                      <span className="text-[10px] sm:text-xs font-bold text-slate-700">Category</span>
                     </div>
-
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
-                        Email Address <span className="text-rose-500">*</span>
-                      </label>
-                      <input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        className={`w-full px-4 py-2.5 rounded-lg border text-sm focus:outline-none transition-colors text-slate-800 bg-slate-50 ${
-                          errors.email ? "border-rose-400 focus:border-rose-400" : "border-slate-200 focus:border-primary"
-                        }`}
-                        placeholder="john@example.com"
-                      />
-                      {errors.email && <span className="text-xs text-rose-500 mt-1 block">{errors.email}</span>}
+                    <div className="h-0.5 bg-slate-200 flex-1 mx-2 sm:mx-4"></div>
+                    <div className="flex items-center gap-2">
+                      <span className={`h-7 w-7 rounded-full flex items-center justify-center text-xs font-bold transition-all ${
+                        currentStep === 2
+                          ? "bg-primary text-white scale-110 shadow"
+                          : currentStep > 2
+                          ? "bg-emerald-500 text-white"
+                          : "bg-slate-100 text-slate-400"
+                      }`}>
+                        {currentStep > 2 ? "✓" : "2"}
+                      </span>
+                      <span className="text-[10px] sm:text-xs font-bold text-slate-700">Profile</span>
                     </div>
-                  </div>
-
-                  {/* Row 2: Phone & Service Dropdown */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
-                        Phone Number <span className="text-rose-500">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        className={`w-full px-4 py-2.5 rounded-lg border text-sm focus:outline-none transition-colors text-slate-800 bg-slate-50 ${
-                          errors.phone ? "border-rose-400 focus:border-rose-400" : "border-slate-200 focus:border-primary"
-                        }`}
-                        placeholder="+91 98765 43210"
-                      />
-                      {errors.phone && <span className="text-xs text-rose-500 mt-1 block">{errors.phone}</span>}
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
-                        Service Interested <span className="text-rose-500">*</span>
-                      </label>
-                      <select
-                        name="service"
-                        value={formData.service}
-                        onChange={handleChange}
-                        className={`w-full px-4 py-2.5 rounded-lg border text-sm focus:outline-none transition-colors text-slate-800 bg-slate-50 ${
-                          errors.service ? "border-rose-400 focus:border-rose-400" : "border-slate-200 focus:border-primary"
-                        }`}
-                      >
-                        <option value="">Select a service</option>
-                        <option value="franchise">Franchise Investment</option>
-                        <option value="loans">Loans & Financing</option>
-                        <option value="insurance">Insurance Solutions</option>
-                        <option value="realestate">Real Estate Consulting</option>
-                        <option value="consulting">Business Advisory</option>
-                        <option value="consultation">General Consultation</option>
-                      </select>
-                      {errors.service && <span className="text-xs text-rose-500 mt-1 block">{errors.service}</span>}
+                    <div className="h-0.5 bg-slate-200 flex-1 mx-2 sm:mx-4"></div>
+                    <div className="flex items-center gap-2">
+                      <span className={`h-7 w-7 rounded-full flex items-center justify-center text-xs font-bold transition-all ${
+                        currentStep === 3
+                          ? "bg-primary text-white scale-110 shadow"
+                          : "bg-slate-100 text-slate-400"
+                      }`}>
+                        3
+                      </span>
+                      <span className="text-[10px] sm:text-xs font-bold text-slate-700">Message</span>
                     </div>
                   </div>
 
-                  {/* Row 3: Company Name (optional) & Budget Range (optional) */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
-                        Company Name <span className="text-slate-400 font-normal">(Optional)</span>
-                      </label>
-                      <input
-                        type="text"
-                        name="companyName"
-                        value={formData.companyName}
-                        onChange={handleChange}
-                        className="w-full px-4 py-2.5 rounded-lg border border-slate-200 text-sm focus:outline-none focus:border-primary text-slate-800 bg-slate-50"
-                        placeholder="Acme Corp"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
-                        Budget Range <span className="text-slate-400 font-normal">(Optional)</span>
-                      </label>
-                      <select
-                        name="budgetRange"
-                        value={formData.budgetRange}
-                        onChange={handleChange}
-                        className="w-full px-4 py-2.5 rounded-lg border border-slate-200 text-sm focus:outline-none focus:border-primary text-slate-800 bg-slate-50"
-                      >
-                        <option value="">Select range</option>
-                        <option value="under-10l">Under ₹10 Lakhs</option>
-                        <option value="10l-50l">₹10 Lakhs - ₹50 Lakhs</option>
-                        <option value="50l-2cr">₹50 Lakhs - ₹2 Crores</option>
-                        <option value="above-2cr">Above ₹2 Crores</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  {/* Preferred Contact Method (Radios) */}
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">
-                      Preferred Contact Method
-                    </label>
-                    <div className="flex flex-wrap gap-4">
-                      {["phone", "email", "whatsapp"].map((method) => (
-                        <label
-                          key={method}
-                          onClick={() => handleRadioChange(method)}
-                          className="flex items-center space-x-2 text-xs sm:text-sm text-slate-700 cursor-pointer"
-                        >
-                          <input
-                            type="radio"
-                            name="contactMethod"
-                            checked={formData.contactMethod === method}
-                            readOnly
-                            className="h-4 w-4 border-slate-300 text-primary focus:ring-primary"
-                          />
-                          <span className="capitalize">{method}</span>
+                  {/* Step 1 Content: Service & Budget */}
+                  {currentStep === 1 && (
+                    <div className="space-y-6">
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+                          Service Interested <span className="text-rose-500">*</span>
                         </label>
-                      ))}
+                        <select
+                          name="service"
+                          value={formData.service}
+                          onChange={handleChange}
+                          className={`w-full px-4 py-2.5 rounded-lg border text-sm focus:outline-none transition-colors text-slate-800 bg-slate-50 ${
+                            errors.service ? "border-rose-400 focus:border-rose-400" : "border-slate-200 focus:border-primary"
+                          }`}
+                        >
+                          <option value="">Select a service</option>
+                          <option value="franchise">Franchise Investment</option>
+                          <option value="loans">Loans & Financing</option>
+                          <option value="insurance">Insurance Solutions</option>
+                          <option value="realestate">Real Estate Consulting</option>
+                          <option value="consulting">Business Advisory</option>
+                          <option value="consultation">General Consultation</option>
+                        </select>
+                        {errors.service && <span className="text-xs text-rose-500 mt-1 block">{errors.service}</span>}
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+                          Budget Range <span className="text-slate-400 font-normal">(Optional)</span>
+                        </label>
+                        <select
+                          name="budgetRange"
+                          value={formData.budgetRange}
+                          onChange={handleChange}
+                          className="w-full px-4 py-2.5 rounded-lg border border-slate-200 text-sm focus:outline-none focus:border-primary text-slate-800 bg-slate-50"
+                        >
+                          <option value="">Select range</option>
+                          <option value="under-10l">Under ₹10 Lakhs</option>
+                          <option value="10l-50l">₹10 Lakhs - ₹50 Lakhs</option>
+                          <option value="50l-2cr">₹50 Lakhs - ₹2 Crores</option>
+                          <option value="above-2cr">Above ₹2 Crores</option>
+                        </select>
+                      </div>
+
+                      <div className="pt-4">
+                        <button
+                          type="button"
+                          onClick={handleNextStep}
+                          className="w-full py-3.5 rounded-lg text-sm font-bold text-slate-900 bg-secondary hover:bg-secondary-light transition-all flex items-center justify-center gap-1.5 shadow"
+                        >
+                          Next: Profile Details →
+                        </button>
+                      </div>
                     </div>
-                  </div>
+                  )}
 
-                  {/* Message (Textarea) */}
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
-                      Write Your Requirements
-                    </label>
-                    <textarea
-                      name="message"
-                      rows={4}
-                      value={formData.message}
-                      onChange={handleChange}
-                      className="w-full px-4 py-2.5 rounded-lg border border-slate-200 text-sm focus:outline-none focus:border-primary text-slate-800 bg-slate-50"
-                      placeholder="Details about your loan size, franchise brand preference, or property registry due diligence..."
-                    />
-                  </div>
+                  {/* Step 2 Content: Personal/Company Profile */}
+                  {currentStep === 2 && (
+                    <div className="space-y-6">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                          <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+                            Your Name <span className="text-rose-500">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            className={`w-full px-4 py-2.5 rounded-lg border text-sm focus:outline-none transition-colors text-slate-800 bg-slate-50 ${
+                              errors.name ? "border-rose-400 focus:border-rose-400" : "border-slate-200 focus:border-primary"
+                            }`}
+                            placeholder="John Doe"
+                          />
+                          {errors.name && <span className="text-xs text-rose-500 mt-1 block">{errors.name}</span>}
+                        </div>
 
-                  {/* Newsletter Opt-in (Checkbox) */}
-                  <label className="flex items-start space-x-3 text-xs sm:text-sm text-slate-600 cursor-pointer select-none">
-                    <input
-                      type="checkbox"
-                      name="newsletter"
-                      checked={formData.newsletter}
-                      onChange={handleChange}
-                      className="h-4.5 w-4.5 rounded border-slate-350 text-primary focus:ring-primary mt-0.5"
-                    />
-                    <span>Opt-in to our weekly Insights Newsletter. We only send vetted tax changes, property yield alerts, and new open franchise lists.</span>
-                  </label>
+                        <div>
+                          <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+                            Email Address <span className="text-rose-500">*</span>
+                          </label>
+                          <input
+                            type="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            className={`w-full px-4 py-2.5 rounded-lg border text-sm focus:outline-none transition-colors text-slate-800 bg-slate-50 ${
+                              errors.email ? "border-rose-400 focus:border-rose-400" : "border-slate-200 focus:border-primary"
+                            }`}
+                            placeholder="john@example.com"
+                          />
+                          {errors.email && <span className="text-xs text-rose-500 mt-1 block">{errors.email}</span>}
+                        </div>
+                      </div>
 
-                  {/* Submit Button */}
-                  <button
-                    type="submit"
-                    disabled={status === "submitting"}
-                    className="w-full flex items-center justify-center py-3.5 rounded-lg text-sm font-bold text-white gradient-primary hover:opacity-90 shadow-md transition-opacity disabled:opacity-65 gap-2"
-                  >
-                    {status === "submitting" ? (
-                      <>
-                        <Loader2 className="h-4.5 w-4.5 animate-spin" /> Submitting Request...
-                      </>
-                    ) : (
-                      "Submit Lead Information"
-                    )}
-                  </button>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                          <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+                            Phone Number <span className="text-rose-500">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            name="phone"
+                            value={formData.phone}
+                            onChange={handleChange}
+                            className={`w-full px-4 py-2.5 rounded-lg border text-sm focus:outline-none transition-colors text-slate-800 bg-slate-50 ${
+                              errors.phone ? "border-rose-400 focus:border-rose-400" : "border-slate-200 focus:border-primary"
+                            }`}
+                            placeholder="+91 98765 43210"
+                          />
+                          {errors.phone && <span className="text-xs text-rose-500 mt-1 block">{errors.phone}</span>}
+                        </div>
+
+                        <div>
+                          <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+                            Company Name <span className="text-slate-400 font-normal">(Optional)</span>
+                          </label>
+                          <input
+                            type="text"
+                            name="companyName"
+                            value={formData.companyName}
+                            onChange={handleChange}
+                            className="w-full px-4 py-2.5 rounded-lg border border-slate-200 text-sm focus:outline-none focus:border-primary text-slate-800 bg-slate-50"
+                            placeholder="Acme Corp"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="flex gap-4 pt-4">
+                        <button
+                          type="button"
+                          onClick={handlePrevStep}
+                          className="w-1/3 py-3.5 rounded-lg text-sm font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 transition-all text-center"
+                        >
+                          ← Back
+                        </button>
+                        <button
+                          type="button"
+                          onClick={handleNextStep}
+                          className="w-2/3 py-3.5 rounded-lg text-sm font-bold text-slate-900 bg-secondary hover:bg-secondary-light transition-all flex items-center justify-center gap-1.5 shadow"
+                        >
+                          Next: Requirements →
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Step 3 Content: Requirements & Contact Preference */}
+                  {currentStep === 3 && (
+                    <div className="space-y-6">
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">
+                          Preferred Contact Method
+                        </label>
+                        <div className="flex flex-wrap gap-4">
+                          {["phone", "email", "whatsapp"].map((method) => (
+                            <label
+                              key={method}
+                              onClick={() => handleRadioChange(method)}
+                              className="flex items-center space-x-2 text-xs sm:text-sm text-slate-700 cursor-pointer"
+                            >
+                              <input
+                                type="radio"
+                                name="contactMethod"
+                                checked={formData.contactMethod === method}
+                                readOnly
+                                className="h-4 w-4 border-slate-300 text-primary focus:ring-primary"
+                              />
+                              <span className="capitalize">{method}</span>
+                            </label>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+                          Write Your Requirements
+                        </label>
+                        <textarea
+                          name="message"
+                          rows={4}
+                          value={formData.message}
+                          onChange={handleChange}
+                          className="w-full px-4 py-2.5 rounded-lg border border-slate-200 text-sm focus:outline-none focus:border-primary text-slate-800 bg-slate-50"
+                          placeholder="Details about your loan size, franchise brand preference, or property registry due diligence..."
+                        />
+                      </div>
+
+                      <label className="flex items-start space-x-3 text-xs sm:text-sm text-slate-600 cursor-pointer select-none">
+                        <input
+                          type="checkbox"
+                          name="newsletter"
+                          checked={formData.newsletter}
+                          onChange={handleChange}
+                          className="h-4.5 w-4.5 rounded border-slate-350 text-primary focus:ring-primary mt-0.5"
+                        />
+                        <span>Opt-in to our weekly Insights Newsletter. We only send vetted tax changes, property yield alerts, and new open franchise lists.</span>
+                      </label>
+
+                      <div className="flex gap-4 pt-4">
+                        <button
+                          type="button"
+                          onClick={handlePrevStep}
+                          className="w-1/3 py-3.5 rounded-lg text-sm font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 transition-all text-center"
+                        >
+                          ← Back
+                        </button>
+                        <button
+                          type="submit"
+                          disabled={status === "submitting"}
+                          className="w-2/3 flex items-center justify-center py-3.5 rounded-lg text-sm font-bold text-white gradient-primary hover:opacity-90 shadow-md transition-opacity disabled:opacity-65 gap-2"
+                        >
+                          {status === "submitting" ? (
+                            <>
+                              <Loader2 className="h-4.5 w-4.5 animate-spin" /> Submitting Request...
+                            </>
+                          ) : (
+                            "Submit Lead Information"
+                          )}
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </form>
               )}
             </div>
