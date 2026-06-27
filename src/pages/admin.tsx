@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 
 interface Lead {
+  id?: string;
   name: string;
   email: string;
   phone: string;
@@ -20,6 +21,7 @@ interface Lead {
   budget_range?: string;
   contact_method: string;
   message?: string;
+  status?: string;
   created_at: string;
 }
 
@@ -181,11 +183,21 @@ export default function AdminDashboard() {
 
   const loadPageContent = async (pageName: string) => {
     setContentLoading(true);
+    // Load local storage preview if present
+    const cached = localStorage.getItem(`psr_content_${pageName}`);
+    if (cached) {
+      try {
+        setPageContent(JSON.parse(cached));
+      } catch {
+        // ignore
+      }
+    }
     try {
       const res = await fetch(`/api/content?page=${pageName}`);
       if (res.ok) {
         const data = await res.json();
         setPageContent(data);
+        localStorage.setItem(`psr_content_${pageName}`, JSON.stringify(data));
       }
     } catch (err) {
       console.error("Failed to load page content:", err);
@@ -211,6 +223,7 @@ export default function AdminDashboard() {
       });
 
       if (res.ok) {
+        localStorage.setItem(`psr_content_${selectedPage}`, JSON.stringify(pageContent));
         setContentSuccess(true);
         setTimeout(() => setContentSuccess(false), 3000);
       } else {
@@ -222,6 +235,54 @@ export default function AdminDashboard() {
       alert("An error occurred while saving content.");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleUpdateLeadStatus = async (id: string, status: string) => {
+    try {
+      const res = await fetch("/api/leads", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "x-admin-passcode": passcode,
+        },
+        body: JSON.stringify({ id, status }),
+      });
+
+      if (res.ok) {
+        setLeads((prev) =>
+          prev.map((l) => (String(l.id) === String(id) ? { ...l, status } : l))
+        );
+      } else {
+        const err = await res.json();
+        alert(err.message || "Failed to update status");
+      }
+    } catch (error) {
+      console.error("Failed to update status:", error);
+      alert("An error occurred while updating status");
+    }
+  };
+
+  const handleDeleteLead = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this lead?")) return;
+
+    try {
+      const res = await fetch(`/api/leads?id=${id}`, {
+        method: "DELETE",
+        headers: {
+          "x-admin-passcode": passcode,
+        },
+      });
+
+      if (res.ok) {
+        setLeads((prev) => prev.filter((l) => String(l.id) !== String(id)));
+      } else {
+        const err = await res.json();
+        alert(err.message || "Failed to delete lead");
+      }
+    } catch (error) {
+      console.error("Failed to delete lead:", error);
+      alert("An error occurred while deleting lead");
     }
   };
 
@@ -433,6 +494,8 @@ export default function AdminDashboard() {
                           <th className="p-3">Inquiry</th>
                           <th className="p-3">Message</th>
                           <th className="p-3">Date</th>
+                          <th className="p-3">Status</th>
+                          <th className="p-3 text-center">Actions</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-slate-100">
@@ -456,6 +519,34 @@ export default function AdminDashboard() {
                             </td>
                             <td className="p-3 text-slate-400 text-[10px]">
                               {new Date(lead.created_at).toLocaleDateString()}
+                            </td>
+                            <td className="p-3">
+                              <select
+                                value={lead.status || "New"}
+                                onChange={(e) => handleUpdateLeadStatus(lead.id || "", e.target.value)}
+                                className={`px-2 py-1 rounded text-[10px] font-bold border cursor-pointer outline-none transition-colors ${
+                                  (lead.status || "New") === "New"
+                                    ? "bg-blue-50 text-blue-700 border-blue-200"
+                                    : (lead.status || "New") === "In Progress"
+                                    ? "bg-amber-50 text-amber-700 border-amber-200"
+                                    : (lead.status || "New") === "Contacted"
+                                    ? "bg-purple-50 text-purple-700 border-purple-200"
+                                    : "bg-emerald-50 text-emerald-700 border-emerald-200"
+                                }`}
+                              >
+                                <option value="New">New</option>
+                                <option value="In Progress">In Progress</option>
+                                <option value="Contacted">Contacted</option>
+                                <option value="Resolved">Resolved</option>
+                              </select>
+                            </td>
+                            <td className="p-3 text-center">
+                              <button
+                                onClick={() => handleDeleteLead(lead.id || "")}
+                                className="px-2 py-1 text-[10px] font-bold bg-rose-50 text-rose-600 hover:bg-rose-100 border border-rose-200 rounded transition-colors"
+                              >
+                                Delete
+                              </button>
                             </td>
                           </tr>
                         ))}
