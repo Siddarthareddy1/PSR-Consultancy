@@ -9,6 +9,9 @@ import {
   Save,
   CheckCircle,
   FileText,
+  BarChart2,
+  Search,
+  X,
 } from "lucide-react";
 
 interface Lead {
@@ -22,6 +25,7 @@ interface Lead {
   contact_method: string;
   message?: string;
   status?: string;
+  admin_notes?: string;
   created_at: string;
 }
 
@@ -34,7 +38,7 @@ export default function AdminDashboard() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [passcode, setPasscode] = useState("");
   const [loginError, setLoginError] = useState("");
-  const [activeTab, setActiveTab] = useState<"leads" | "subscribers" | "settings" | "content">("leads");
+  const [activeTab, setActiveTab] = useState<"dashboard" | "leads" | "subscribers" | "settings" | "content">("dashboard");
 
   // Content Editor States
   const [selectedPage, setSelectedPage] = useState("home");
@@ -44,10 +48,32 @@ export default function AdminDashboard() {
   const [isDatabaseConnected, setIsDatabaseConnected] = useState<boolean | null>(null);
   const [isMailConfigured, setIsMailConfigured] = useState<boolean | null>(null);
 
+  // Search & Detail Modal States
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
+  const [adminNotes, setAdminNotes] = useState("");
+  const [stats, setStats] = useState<{
+    totalLeads: number;
+    leadsThisMonth: number;
+    conversionRate: number;
+    byService: Record<string, number>;
+    byStatus: Record<string, number>;
+  } | null>(null);
+
   // Admin Data states
   const [leads, setLeads] = useState<Lead[]>([]);
   const [subscribers, setSubscribers] = useState<Subscriber[]>([]);
   const [loading, setLoading] = useState(false);
+
+  const filteredLeads = leads.filter((lead) => {
+    const query = searchQuery.toLowerCase();
+    return (
+      lead.name.toLowerCase().includes(query) ||
+      lead.email.toLowerCase().includes(query) ||
+      (lead.phone || "").toLowerCase().includes(query) ||
+      lead.service.toLowerCase().includes(query)
+    );
+  });
 
   // Site Settings state (dynamically linked to localStorage)
   const [siteSettings, setSiteSettings] = useState({
@@ -86,8 +112,16 @@ export default function AdminDashboard() {
         const data = await res.json();
         setLeads(data.leads || []);
         setSubscribers(data.subscribers || []);
-      } else {
-        throw new Error("Failed to load admin data");
+      }
+
+      const statsRes = await fetch("/api/admin/stats", {
+        headers: {
+          "x-admin-passcode": currentPasscode,
+        },
+      });
+      if (statsRes.ok) {
+        const statsData = await statsRes.json();
+        setStats(statsData);
       }
     } catch (err) {
       console.error("Failed to load admin logs, using fallback data:", err);
@@ -286,6 +320,42 @@ export default function AdminDashboard() {
     }
   };
 
+  const handleSaveNotes = async () => {
+    if (!selectedLead) return;
+    setLoading(true);
+    try {
+      const res = await fetch("/api/leads", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "x-admin-passcode": passcode,
+        },
+        body: JSON.stringify({
+          id: selectedLead.id,
+          admin_notes: adminNotes,
+        }),
+      });
+
+      if (res.ok) {
+        setLeads((prev) =>
+          prev.map((l) =>
+            String(l.id) === String(selectedLead.id) ? { ...l, admin_notes: adminNotes } : l
+          )
+        );
+        setSelectedLead((prev) => (prev ? { ...prev, admin_notes: adminNotes } : null));
+        alert("Notes saved successfully!");
+      } else {
+        const err = await res.json();
+        alert(err.message || "Failed to save notes");
+      }
+    } catch (error) {
+      console.error("Save notes error:", error);
+      alert("Failed to save notes");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (activeTab === "content" && isAuthenticated) {
       loadPageContent(selectedPage);
@@ -397,6 +467,17 @@ export default function AdminDashboard() {
           {/* Navigation Sidebar */}
           <aside className="lg:col-span-3 bg-white rounded-2xl border border-slate-150 p-4 shadow-sm space-y-2">
             <button
+              onClick={() => setActiveTab("dashboard")}
+              className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-bold transition-all ${activeTab === "dashboard"
+                  ? "bg-primary text-white"
+                  : "text-slate-600 hover:bg-slate-50"
+                }`}
+            >
+              <BarChart2 className="h-5 w-5" />
+              <span>CRM Dashboard</span>
+            </button>
+
+            <button
               onClick={() => setActiveTab("leads")}
               className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-bold transition-all ${activeTab === "leads"
                   ? "bg-primary text-white"
@@ -465,25 +546,120 @@ export default function AdminDashboard() {
                 </div>
               </div>
             )}
+            {activeTab === "dashboard" && (
+              <div>
+                <h2 className="text-xl font-bold text-slate-900 font-heading border-b pb-4 mb-6">
+                  CRM Analytics Overview
+                </h2>
+
+                {/* Stats Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+                  <div className="bg-slate-50 border border-slate-150 p-5 rounded-xl">
+                    <p className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Total Leads</p>
+                    <p className="text-3xl font-extrabold text-slate-900 mt-2 font-display">
+                      {stats?.totalLeads || 0}
+                    </p>
+                  </div>
+
+                  <div className="bg-slate-50 border border-slate-150 p-5 rounded-xl">
+                    <p className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Leads This Month</p>
+                    <p className="text-3xl font-extrabold text-slate-900 mt-2 font-display">
+                      {stats?.leadsThisMonth || 0}
+                    </p>
+                  </div>
+
+                  <div className="bg-slate-50 border border-slate-150 p-5 rounded-xl">
+                    <p className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Advisory Conversion</p>
+                    <p className="text-3xl font-extrabold text-slate-900 mt-2 font-display">
+                      {stats?.conversionRate || 0}%
+                    </p>
+                  </div>
+                </div>
+
+                {/* Chart Breakdowns */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="border border-slate-150 p-5 rounded-xl">
+                    <h3 className="text-xs uppercase font-bold text-slate-500 tracking-wider mb-4">Leads by Service</h3>
+                    <div className="space-y-3">
+                      {stats && Object.entries(stats.byService).length > 0 ? (
+                        Object.entries(stats.byService).map(([srv, count]) => (
+                          <div key={srv} className="flex items-center justify-between text-xs">
+                            <span className="capitalize text-slate-600 font-medium">{srv}</span>
+                            <div className="flex items-center gap-2 flex-1 mx-4">
+                              <div className="h-2 bg-slate-100 rounded-full flex-1 overflow-hidden">
+                                <div
+                                  className="h-full bg-primary"
+                                  style={{ width: `${(count / (stats.totalLeads || 1)) * 100}%` }}
+                                ></div>
+                              </div>
+                            </div>
+                            <span className="font-bold text-slate-800">{count}</span>
+                          </div>
+                        ))
+                      ) : (
+                        <p className="text-xs text-slate-400">No leads to display</p>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="border border-slate-150 p-5 rounded-xl">
+                    <h3 className="text-xs uppercase font-bold text-slate-500 tracking-wider mb-4">Leads by Status</h3>
+                    <div className="space-y-3">
+                      {stats && Object.entries(stats.byStatus).length > 0 ? (
+                        Object.entries(stats.byStatus).map(([st, count]) => (
+                          <div key={st} className="flex items-center justify-between text-xs">
+                            <span className="capitalize text-slate-600 font-medium">{st}</span>
+                            <div className="flex items-center gap-2 flex-1 mx-4">
+                              <div className="h-2 bg-slate-100 rounded-full flex-1 overflow-hidden">
+                                <div
+                                  className="h-full bg-secondary"
+                                  style={{ width: `${(count / (stats.totalLeads || 1)) * 100}%` }}
+                                ></div>
+                              </div>
+                            </div>
+                            <span className="font-bold text-slate-800">{count}</span>
+                          </div>
+                        ))
+                      ) : (
+                        <p className="text-xs text-slate-400">No leads to display</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {activeTab === "leads" && (
               <div>
-                <div className="flex items-center justify-between border-b pb-4 mb-6">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b pb-4 mb-6 gap-4 border-slate-150">
                   <h2 className="text-xl font-bold text-slate-900 font-heading">
-                    Form Leads Captured
+                    Form Leads Captured ({filteredLeads.length})
                   </h2>
-                  <button
-                    onClick={() => exportToCSV(leads as unknown as Record<string, unknown>[], "psr_one_leads")}
-                    disabled={leads.length === 0}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-50 hover:bg-slate-100 border text-slate-700 disabled:opacity-50"
-                  >
-                    <Download className="h-4 w-4" /> Export CSV
-                  </button>
+                  <div className="flex items-center gap-3">
+                    <div className="relative">
+                      <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-slate-400" />
+                      <input
+                        type="text"
+                        placeholder="Search name, email..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-primary transition-all w-48"
+                      />
+                    </div>
+                    <button
+                      onClick={() => exportToCSV(leads as unknown as Record<string, unknown>[], "psr_one_leads")}
+                      disabled={leads.length === 0}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-50 hover:bg-slate-100 border text-slate-700 disabled:opacity-50"
+                    >
+                      <Download className="h-4 w-4" /> Export CSV
+                    </button>
+                  </div>
                 </div>
 
                 {loading ? (
                   <p className="text-slate-500 text-sm">Loading records...</p>
-                ) : leads.length === 0 ? (
-                  <p className="text-slate-500 text-sm">No leads captured yet.</p>
+                ) : filteredLeads.length === 0 ? (
+                  <p className="text-slate-500 text-sm">No leads match your search query.</p>
                 ) : (
                   <div className="overflow-x-auto">
                     <table className="w-full text-left text-xs border-collapse">
@@ -499,8 +675,15 @@ export default function AdminDashboard() {
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-slate-100">
-                        {leads.map((lead, idx) => (
-                          <tr key={idx} className="hover:bg-slate-50/50">
+                        {filteredLeads.map((lead, idx) => (
+                          <tr
+                            key={idx}
+                            className="hover:bg-slate-50/70 transition-colors cursor-pointer"
+                            onClick={() => {
+                              setSelectedLead(lead);
+                              setAdminNotes(lead.admin_notes || "");
+                            }}
+                          >
                             <td className="p-3 font-bold text-slate-800">{lead.name}</td>
                             <td className="p-3 text-slate-600">
                               <span className="block">{lead.email}</span>
@@ -520,27 +703,27 @@ export default function AdminDashboard() {
                             <td className="p-3 text-slate-400 text-[10px]">
                               {new Date(lead.created_at).toLocaleDateString()}
                             </td>
-                            <td className="p-3">
+                            <td className="p-3" onClick={(e) => e.stopPropagation()}>
                               <select
-                                value={lead.status || "New"}
+                                value={lead.status || "new"}
                                 onChange={(e) => handleUpdateLeadStatus(lead.id || "", e.target.value)}
                                 className={`px-2 py-1 rounded text-[10px] font-bold border cursor-pointer outline-none transition-colors ${
-                                  (lead.status || "New") === "New"
+                                  (lead.status || "new").toLowerCase() === "new"
                                     ? "bg-blue-50 text-blue-700 border-blue-200"
-                                    : (lead.status || "New") === "In Progress"
-                                    ? "bg-amber-50 text-amber-700 border-amber-200"
-                                    : (lead.status || "New") === "Contacted"
-                                    ? "bg-purple-50 text-purple-700 border-purple-200"
-                                    : "bg-emerald-50 text-emerald-700 border-emerald-200"
+                                    : ["closed", "resolved"].includes((lead.status || "new").toLowerCase())
+                                    ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                                    : "bg-amber-50 text-amber-700 border-amber-200"
                                 }`}
                               >
-                                <option value="New">New</option>
-                                <option value="In Progress">In Progress</option>
-                                <option value="Contacted">Contacted</option>
-                                <option value="Resolved">Resolved</option>
+                                <option value="new">New</option>
+                                <option value="contacted">Contacted</option>
+                                <option value="qualified">Qualified</option>
+                                <option value="proposal_sent">Proposal Sent</option>
+                                <option value="closed">Closed</option>
+                                <option value="rejected">Rejected</option>
                               </select>
                             </td>
-                            <td className="p-3 text-center">
+                            <td className="p-3 text-center" onClick={(e) => e.stopPropagation()}>
                               <button
                                 onClick={() => handleDeleteLead(lead.id || "")}
                                 className="px-2 py-1 text-[10px] font-bold bg-rose-50 text-rose-600 hover:bg-rose-100 border border-rose-200 rounded transition-colors"
@@ -791,6 +974,101 @@ export default function AdminDashboard() {
           </main>
         </div>
       </div>
+
+      {/* Lead Detail Modal */}
+      {selectedLead && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-sm">
+          <div className="bg-white rounded-2xl border border-slate-150 shadow-2xl w-full max-w-lg overflow-hidden flex flex-col max-h-[85vh]">
+            {/* Modal Header */}
+            <div className="px-6 py-4 bg-slate-50 border-b border-slate-150 flex items-center justify-between">
+              <h3 className="font-heading font-bold text-slate-900 text-sm sm:text-base">
+                Lead Detail: {selectedLead.name}
+              </h3>
+              <button
+                onClick={() => setSelectedLead(null)}
+                className="p-1 rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition-colors"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <div className="p-6 overflow-y-auto space-y-4 text-xs sm:text-sm leading-relaxed">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <p className="text-[10px] uppercase font-bold text-slate-400">Email</p>
+                  <p className="text-slate-800 font-medium break-all">{selectedLead.email}</p>
+                </div>
+                <div>
+                  <p className="text-[10px] uppercase font-bold text-slate-400">Phone</p>
+                  <p className="text-slate-800 font-medium">{selectedLead.phone || "N/A"}</p>
+                </div>
+                <div>
+                  <p className="text-[10px] uppercase font-bold text-slate-400">Service Category</p>
+                  <span className="inline-block mt-1 px-2.5 py-0.5 rounded bg-blue-50 text-primary text-[10px] font-bold uppercase">
+                    {selectedLead.service}
+                  </span>
+                </div>
+                <div>
+                  <p className="text-[10px] uppercase font-bold text-slate-400">Submission Date</p>
+                  <p className="text-slate-800 mt-1">{new Date(selectedLead.created_at).toLocaleString()}</p>
+                </div>
+              </div>
+
+              {selectedLead.company_name && (
+                <div>
+                  <p className="text-[10px] uppercase font-bold text-slate-400">Company Name</p>
+                  <p className="text-slate-800 font-medium">{selectedLead.company_name}</p>
+                </div>
+              )}
+
+              {selectedLead.budget_range && (
+                <div>
+                  <p className="text-[10px] uppercase font-bold text-slate-400">Budget Range</p>
+                  <p className="text-slate-800 font-medium">{selectedLead.budget_range}</p>
+                </div>
+              )}
+
+              <div>
+                <p className="text-[10px] uppercase font-bold text-slate-400 mb-1">Requirements message</p>
+                <p className="bg-slate-50 border border-slate-100 p-3 rounded-lg text-slate-600 text-xs whitespace-pre-wrap leading-relaxed">
+                  {selectedLead.message || "No message provided."}
+                </p>
+              </div>
+
+              {/* Notes Textarea */}
+              <div className="border-t border-slate-100 pt-4">
+                <label className="text-[10px] uppercase font-bold text-slate-400 block mb-1">
+                  Internal Admin Notes
+                </label>
+                <textarea
+                  rows={4}
+                  value={adminNotes}
+                  onChange={(e) => setAdminNotes(e.target.value)}
+                  placeholder="Add status details, call logs, or syndicate remarks here..."
+                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-primary focus:bg-white transition-all resize-none"
+                />
+              </div>
+            </div>
+
+            {/* Modal Footer */}
+            <div className="px-6 py-4 bg-slate-50 border-t border-slate-150 flex items-center justify-end gap-3">
+              <button
+                onClick={() => setSelectedLead(null)}
+                className="px-4 py-2 rounded-lg text-xs font-bold bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 transition-colors"
+              >
+                Close
+              </button>
+              <button
+                onClick={handleSaveNotes}
+                className="px-4 py-2 rounded-lg text-xs font-bold bg-primary hover:bg-primary-dark text-white shadow transition-colors flex items-center gap-1"
+              >
+                <Save className="h-4 w-4" /> Save Notes
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

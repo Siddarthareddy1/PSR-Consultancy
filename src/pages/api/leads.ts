@@ -66,19 +66,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   if (req.method === "PUT") {
-    const { id, status } = req.body;
-    if (!id || !status) {
-      return res.status(400).json({ message: "ID and status are required" });
+    const { id, status, admin_notes } = req.body;
+    if (!id) {
+      return res.status(400).json({ message: "ID is required" });
     }
 
     try {
+      const updateData: Record<string, unknown> = {};
+      if (status) updateData.status = status;
+      if (admin_notes !== undefined) updateData.admin_notes = admin_notes;
+      updateData.updated_at = new Date().toISOString();
+
       if (isSupabaseConfigured && supabase) {
         const { error } = await supabase
           .from("leads")
-          .update({ status })
+          .update(updateData)
           .eq("id", id);
         if (error) throw error;
-        return res.status(200).json({ success: true, message: "Lead status updated in Supabase" });
+        return res.status(200).json({ success: true, message: "Lead updated in Supabase" });
       } else {
         const filePath = getWritablePath("leads_captured.json");
         if (fs.existsSync(filePath)) {
@@ -86,16 +91,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           const leads = JSON.parse(fileData);
           const index = leads.findIndex((l: { id: string }) => String(l.id) === String(id));
           if (index !== -1) {
-            leads[index].status = status;
+            if (status) leads[index].status = status;
+            if (admin_notes !== undefined) leads[index].admin_notes = admin_notes;
+            leads[index].updated_at = new Date().toISOString();
             fs.writeFileSync(filePath, JSON.stringify(leads, null, 2));
-            return res.status(200).json({ success: true, message: "Lead status updated locally" });
+            return res.status(200).json({ success: true, message: "Lead updated locally" });
           }
         }
         return res.status(404).json({ message: "Lead not found" });
       }
     } catch (error) {
       console.error("Leads API PUT Error:", error);
-      return res.status(500).json({ message: "Failed to update lead status" });
+      return res.status(500).json({ message: "Failed to update lead" });
     }
   }
 
