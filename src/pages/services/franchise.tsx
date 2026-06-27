@@ -127,7 +127,7 @@ export default function FranchiseInvestment() {
       </Head>
 
       {/* Hero Section */}
-      <section className="relative py-20 bg-slate-900 text-white overflow-hidden">
+      <section className="relative py-20 bg-gray-950 text-white overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-primary-dark to-slate-900 opacity-95"></div>
         <div className="absolute top-0 right-0 w-96 h-96 bg-secondary/15 rounded-full blur-[100px]"></div>
 
@@ -139,27 +139,27 @@ export default function FranchiseInvestment() {
             <h1 className="text-4xl sm:text-5xl font-display font-extrabold mb-6 leading-tight">
               {content.hero_title}
             </h1>
-            <p className="text-slate-300 text-base sm:text-lg mb-8 max-w-xl font-body font-light">
+            <p className="text-gray-300 text-base sm:text-lg mb-8 max-w-xl font-body font-light">
               {content.hero_subtitle}
             </p>
             <div className="flex flex-col sm:flex-row items-center gap-4">
               <Link
                 href="/contact?service=franchise"
-                className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 rounded-lg text-sm font-bold text-slate-900 bg-secondary hover:bg-secondary-light transition-colors"
+                className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 rounded-lg text-sm font-bold text-gray-900 bg-secondary hover:bg-secondary-light transition-colors"
               >
                 Find a Brand
               </Link>
               <a
                 href="#how-it-works"
-                className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 rounded-lg text-sm font-bold text-white border border-slate-700 hover:bg-slate-800 transition-colors"
+                className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 rounded-lg text-sm font-bold text-white border border-gray-800 hover:bg-slate-800 transition-colors"
               >
                 Methodology
               </a>
             </div>
           </div>
           {/* Visual Showcase Graphic */}
-          <div className="hidden lg:block bg-slate-800/40 rounded-2xl border border-slate-700 p-8 shadow-2xl relative">
-            <div className="flex items-center justify-between border-b border-slate-700 pb-4 mb-6">
+          <div className="hidden lg:block bg-slate-800/40 rounded-2xl border border-gray-800 p-8 shadow-2xl relative">
+            <div className="flex items-center justify-between border-b border-gray-800 pb-4 mb-6">
               <h3 className="font-bold text-white font-heading text-sm uppercase tracking-wider">
                 Market Performance Vetting
               </h3>
@@ -168,16 +168,16 @@ export default function FranchiseInvestment() {
               </span>
             </div>
             <div className="space-y-4">
-              <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800 flex items-center justify-between">
+              <div className="p-4 rounded-xl bg-gray-950/60 border border-gray-800 flex items-center justify-between">
                 <div>
-                  <span className="block text-slate-400 text-xs font-semibold">Average ROI Timeline</span>
+                  <span className="block text-gray-450 text-xs font-semibold">Average ROI Timeline</span>
                   <span className="text-lg font-bold text-white font-display">18 - 24 Months</span>
                 </div>
                 <TrendingUp className="h-6 w-6 text-emerald-400" />
               </div>
-              <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800 flex items-center justify-between">
+              <div className="p-4 rounded-xl bg-gray-950/60 border border-gray-800 flex items-center justify-between">
                 <div>
-                  <span className="block text-slate-400 text-xs font-semibold">Partner Franchise Success Rate</span>
+                  <span className="block text-gray-450 text-xs font-semibold">Partner Franchise Success Rate</span>
                   <span className="text-lg font-bold text-white font-display">94.2% (Industry Avg: 65%)</span>
                 </div>
                 <CheckCircle2 className="h-6 w-6 text-secondary" />
@@ -192,29 +192,29 @@ export default function FranchiseInvestment() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl font-display font-extrabold text-slate-900 mb-6">
+              <h2 className="text-3xl font-display font-extrabold text-gray-900 mb-6">
                 Why Franchise Investing Works
               </h2>
-              <p className="text-slate-600 font-body text-base leading-relaxed mb-6">
+              <p className="text-gray-650 font-body text-base leading-relaxed mb-6">
                 Starting a business from scratch has an 80% failure rate within the first five years. Franchising reverses those odds by providing you with an operating blueprint, national brand awareness, and bulk-buying power.
               </p>
-              <p className="text-slate-600 font-body text-base leading-relaxed mb-6">
+              <p className="text-gray-650 font-body text-base leading-relaxed mb-6">
                 At PSR ONE, we consult with you to map your budget, experience, and regional preferences to the highest-performing franchise formats available. We guide you through signing territorial licenses and store fit-outs.
               </p>
-              <div className="border-l-4 border-secondary pl-4 py-2 italic text-slate-700 text-sm sm:text-base font-body bg-slate-50">
+              <div className="border-l-4 border-secondary pl-4 py-2 italic text-gray-700 text-sm sm:text-base font-body bg-gray-50">
                 &ldquo;We help you buy a job that builds long-term passive equity.&rdquo;
               </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div className="p-6 rounded-2xl bg-slate-50 border border-slate-100">
+              <div className="p-6 rounded-2xl bg-gray-50 border border-gray-100">
                 <span className="text-2xl font-extrabold text-primary font-display block mb-1">₹15 Lakhs</span>
-                <span className="text-xs font-bold text-slate-400 uppercase tracking-widest block mb-2">Average Entry Ticket</span>
-                <p className="text-slate-500 text-xs sm:text-sm leading-relaxed">Highly accessible investment thresholds with banks willing to fund up to 60% of setup.</p>
+                <span className="text-xs font-bold text-gray-450 uppercase tracking-widest block mb-2">Average Entry Ticket</span>
+                <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">Highly accessible investment thresholds with banks willing to fund up to 60% of setup.</p>
               </div>
-              <div className="p-6 rounded-2xl bg-slate-50 border border-slate-100">
+              <div className="p-6 rounded-2xl bg-gray-50 border border-gray-100">
                 <span className="text-2xl font-extrabold text-primary font-display block mb-1">45 - 60 Days</span>
-                <span className="text-xs font-bold text-slate-400 uppercase tracking-widest block mb-2">Deployment Speed</span>
-                <p className="text-slate-500 text-xs sm:text-sm leading-relaxed">From signing agreements to the grand opening ribbon-cutting ceremony.</p>
+                <span className="text-xs font-bold text-gray-450 uppercase tracking-widest block mb-2">Deployment Speed</span>
+                <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">From signing agreements to the grand opening ribbon-cutting ceremony.</p>
               </div>
             </div>
           </div>
@@ -222,13 +222,13 @@ export default function FranchiseInvestment() {
       </section>
 
       {/* How it Works */}
-      <section id="how-it-works" className="py-24 bg-slate-50 border-y border-slate-100">
+      <section id="how-it-works" className="py-24 bg-gray-50 border-y border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl font-display font-extrabold text-slate-900 mb-4">
+            <h2 className="text-3xl font-display font-extrabold text-gray-900 mb-4">
               Our Franchise Setup Methodology
             </h2>
-            <p className="text-slate-500 text-sm sm:text-base font-body">
+            <p className="text-gray-500 text-sm sm:text-base font-body">
               How we take you from investor to operational business owner in 4 structured steps.
             </p>
           </div>
@@ -240,10 +240,10 @@ export default function FranchiseInvestment() {
               { step: "03", title: "Site Selection & Legal", desc: "Perform footfall analysis on target locations and execute regulatory franchising agreements." },
               { step: "04", title: "Store Fit-out & Launch", desc: "Coordinate interior setup, vendor supply chains, local marketing blitz, and launch audits." },
             ].map((step, idx) => (
-              <div key={idx} className="bg-white p-6 rounded-2xl border border-slate-100 relative shadow-sm hover:shadow-md transition-shadow">
+              <div key={idx} className="bg-white p-6 rounded-2xl border border-gray-100 relative shadow-sm hover:shadow-md transition-shadow">
                 <span className="text-3xl font-black text-slate-200 block mb-2 font-display">{step.step}</span>
-                <h3 className="font-heading font-bold text-slate-900 text-base mb-2">{step.title}</h3>
-                <p className="text-slate-500 text-xs sm:text-sm leading-relaxed">{step.desc}</p>
+                <h3 className="font-heading font-bold text-gray-900 text-base mb-2">{step.title}</h3>
+                <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">{step.desc}</p>
               </div>
             ))}
           </div>
@@ -254,10 +254,10 @@ export default function FranchiseInvestment() {
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl font-display font-extrabold text-slate-900 mb-4">
+            <h2 className="text-3xl font-display font-extrabold text-gray-900 mb-4">
               Franchise Advisory Features
             </h2>
-            <p className="text-slate-500 text-sm sm:text-base font-body">
+            <p className="text-gray-500 text-sm sm:text-base font-body">
               Complete investor support package designed to protect your investment and scale multi-unit holdings.
             </p>
           </div>
@@ -271,8 +271,8 @@ export default function FranchiseInvestment() {
                     <IconComp className="h-5 w-5" />
                   </div>
                   <div>
-                    <h3 className="font-heading font-bold text-slate-900 text-base mb-1">{feat.title}</h3>
-                    <p className="text-slate-500 text-xs sm:text-sm leading-relaxed">{feat.desc}</p>
+                    <h3 className="font-heading font-bold text-gray-900 text-base mb-1">{feat.title}</h3>
+                    <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">{feat.desc}</p>
                   </div>
                 </div>
               );
@@ -282,13 +282,13 @@ export default function FranchiseInvestment() {
       </section>
 
       {/* Pricing Section */}
-      <section className="py-24 bg-slate-50 border-t border-slate-100">
+      <section className="py-24 bg-gray-50 border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl font-display font-extrabold text-slate-900 mb-4">
+            <h2 className="text-3xl font-display font-extrabold text-gray-900 mb-4">
               Investment Scale Options
             </h2>
-            <p className="text-slate-500 text-sm sm:text-base font-body">
+            <p className="text-gray-500 text-sm sm:text-base font-body">
               Transparent investment thresholds depending on business scale and territorial rights.
             </p>
           </div>
@@ -298,7 +298,7 @@ export default function FranchiseInvestment() {
               <div
                 key={idx}
                 className={`bg-white rounded-2xl p-8 border flex flex-col justify-between ${
-                  tier.popular ? "border-primary ring-2 ring-primary/10 shadow-lg relative" : "border-slate-200"
+                  tier.popular ? "border-primary ring-2 ring-primary/10 shadow-lg relative" : "border-gray-200"
                 }`}
               >
                 {tier.popular && (
@@ -307,14 +307,14 @@ export default function FranchiseInvestment() {
                   </span>
                 )}
                 <div>
-                  <h3 className="text-lg font-bold text-slate-900 mb-2 font-heading">{tier.name}</h3>
-                  <p className="text-slate-400 text-xs leading-relaxed mb-6">{tier.desc}</p>
-                  <span className="text-3xl font-extrabold text-slate-950 font-display block mb-6">
+                  <h3 className="text-lg font-bold text-gray-900 mb-2 font-heading">{tier.name}</h3>
+                  <p className="text-gray-450 text-xs leading-relaxed mb-6">{tier.desc}</p>
+                  <span className="text-3xl font-extrabold text-gray-900 font-display block mb-6">
                     {tier.price}
                   </span>
-                  <ul className="space-y-3 mb-8 border-t border-slate-100 pt-6">
+                  <ul className="space-y-3 mb-8 border-t border-gray-100 pt-6">
                     {tier.features.map((feat, fIdx) => (
-                      <li key={fIdx} className="flex items-center text-xs sm:text-sm text-slate-600">
+                      <li key={fIdx} className="flex items-center text-xs sm:text-sm text-gray-650">
                         <CheckCircle2 className="h-4 w-4 text-emerald-500 mr-2 flex-shrink-0" />
                         <span>{feat}</span>
                       </li>
@@ -326,7 +326,7 @@ export default function FranchiseInvestment() {
                   className={`w-full inline-flex items-center justify-center py-2.5 rounded-lg text-sm font-bold shadow-sm transition-all ${
                     tier.popular
                       ? "gradient-primary text-white hover:opacity-90"
-                      : "bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200"
+                      : "bg-gray-50 hover:bg-slate-100 text-gray-700 border border-gray-200"
                   }`}
                 >
                   {tier.cta}
@@ -338,14 +338,14 @@ export default function FranchiseInvestment() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-24 bg-white border-t border-slate-100">
+      <section className="py-24 bg-white border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <div className="inline-flex items-center space-x-1 bg-slate-50 border border-slate-100 px-3 py-1 rounded-full text-xs font-bold text-primary mb-3">
+            <div className="inline-flex items-center space-x-1 bg-gray-50 border border-gray-100 px-3 py-1 rounded-full text-xs font-bold text-primary mb-3">
               <HelpCircle className="h-3.5 w-3.5 text-secondary" />
               <span>FREQUENTLY ASKED QUESTIONS</span>
             </div>
-            <h2 className="text-3xl font-display font-extrabold text-slate-900 mb-4">
+            <h2 className="text-3xl font-display font-extrabold text-gray-900 mb-4">
               Franchise Advisory FAQs
             </h2>
           </div>
@@ -361,19 +361,19 @@ export default function FranchiseInvestment() {
           <h2 className="text-3xl font-display font-extrabold text-white mb-4">
             Find the Perfect Brand and Territorial Rights
           </h2>
-          <p className="text-slate-300 font-body text-sm sm:text-base mb-8 max-w-xl mx-auto">
+          <p className="text-gray-300 font-body text-sm sm:text-base mb-8 max-w-xl mx-auto">
             Book a one-on-one strategy session with our lead franchise coordinator to analyze open territories.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/contact?service=franchise"
-              className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3 rounded-lg text-sm font-bold text-slate-900 bg-secondary hover:bg-secondary-light transition-colors"
+              className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3 rounded-lg text-sm font-bold text-gray-900 bg-secondary hover:bg-secondary-light transition-colors"
             >
               Schedule Consultation
             </Link>
             <Link
               href="/contact"
-              className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3 rounded-lg text-sm font-bold text-white border border-slate-700 hover:bg-slate-800 transition-colors"
+              className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3 rounded-lg text-sm font-bold text-white border border-gray-800 hover:bg-slate-800 transition-colors"
             >
               Contact Support
             </Link>

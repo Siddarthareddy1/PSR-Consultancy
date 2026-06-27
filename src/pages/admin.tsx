@@ -388,16 +388,16 @@ export default function AdminDashboard() {
           <title>Admin Login | PSR ONE Portal</title>
           <meta name="robots" content="noindex, nofollow" />
         </Head>
-        <div className="min-h-[80vh] flex items-center justify-center bg-slate-50 px-4">
-          <div className="max-w-md w-full bg-white rounded-3xl border border-slate-150 p-8 shadow-sm">
+        <div className="min-h-[80vh] flex items-center justify-center bg-gray-50 px-4">
+          <div className="max-w-md w-full bg-white rounded-3xl border border-gray-150 p-8 shadow-sm">
             <div className="text-center mb-8">
               <div className="h-12 w-12 rounded-xl bg-blue-50 text-primary flex items-center justify-center mx-auto mb-4">
                 <Lock className="h-6 w-6" />
               </div>
-              <h1 className="text-2xl font-bold text-slate-900 font-heading">
+              <h1 className="text-2xl font-bold text-gray-900 font-heading">
                 PSR ONE Admin Portal
               </h1>
-              <p className="text-slate-500 text-xs sm:text-sm mt-1">
+              <p className="text-gray-500 text-xs sm:text-sm mt-1">
                 Enter your administrative passcode to configure site parameters.
               </p>
             </div>
@@ -409,7 +409,7 @@ export default function AdminDashboard() {
                 </div>
               )}
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+                <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">
                   Security Passcode
                 </label>
                 <input
@@ -418,9 +418,9 @@ export default function AdminDashboard() {
                   placeholder="••••••••••••"
                   value={passcode}
                   onChange={(e) => setPasscode(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-lg border border-slate-200 text-sm focus:outline-none focus:border-primary text-slate-800 bg-slate-50"
+                  className="w-full px-4 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:border-primary text-slate-800 bg-gray-50"
                 />
-                <span className="text-[10px] text-slate-400 block mt-2">
+                <span className="text-[10px] text-gray-450 block mt-2">
                   *Default passcode is: <code className="bg-slate-100 px-1 py-0.5 rounded">PSRadmin2026</code>
                 </span>
               </div>
@@ -445,17 +445,17 @@ export default function AdminDashboard() {
         <meta name="robots" content="noindex, nofollow" />
       </Head>
 
-      <section className="py-12 bg-slate-900 text-white">
+      <section className="py-12 bg-gray-950 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
             <h1 className="text-3xl font-display font-extrabold">Admin Control Panel</h1>
-            <p className="text-slate-400 text-xs sm:text-sm mt-1">
+            <p className="text-gray-450 text-xs sm:text-sm mt-1">
               View leads, download subscriber metrics, or adjust live phone and address configurations.
             </p>
           </div>
           <button
             onClick={() => setIsAuthenticated(false)}
-            className="px-4 py-2 rounded-lg text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition-colors"
+            className="px-4 py-2 rounded-lg text-xs font-bold bg-slate-800 hover:bg-slate-700 text-gray-300 border border-gray-800 transition-colors"
           >
             Lock Dashboard
           </button>
@@ -465,12 +465,12 @@ export default function AdminDashboard() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Navigation Sidebar */}
-          <aside className="lg:col-span-3 bg-white rounded-2xl border border-slate-150 p-4 shadow-sm space-y-2">
+          <aside className="lg:col-span-3 bg-white rounded-2xl border border-gray-150 p-4 shadow-sm space-y-2">
             <button
               onClick={() => setActiveTab("dashboard")}
               className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-bold transition-all ${activeTab === "dashboard"
                   ? "bg-primary text-white"
-                  : "text-slate-600 hover:bg-slate-50"
+                  : "text-gray-650 hover:bg-gray-50"
                 }`}
             >
               <BarChart2 className="h-5 w-5" />
@@ -481,7 +481,7 @@ export default function AdminDashboard() {
               onClick={() => setActiveTab("leads")}
               className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-bold transition-all ${activeTab === "leads"
                   ? "bg-primary text-white"
-                  : "text-slate-600 hover:bg-slate-50"
+                  : "text-gray-650 hover:bg-gray-50"
                 }`}
             >
               <Users className="h-5 w-5" />
@@ -492,7 +492,7 @@ export default function AdminDashboard() {
               onClick={() => setActiveTab("subscribers")}
               className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-bold transition-all ${activeTab === "subscribers"
                   ? "bg-primary text-white"
-                  : "text-slate-600 hover:bg-slate-50"
+                  : "text-gray-650 hover:bg-gray-50"
                 }`}
             >
               <Mail className="h-5 w-5" />
@@ -503,7 +503,7 @@ export default function AdminDashboard() {
               onClick={() => setActiveTab("settings")}
               className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-bold transition-all ${activeTab === "settings"
                   ? "bg-primary text-white"
-                  : "text-slate-600 hover:bg-slate-50"
+                  : "text-gray-650 hover:bg-gray-50"
                 }`}
             >
               <Settings className="h-5 w-5" />
@@ -514,7 +514,7 @@ export default function AdminDashboard() {
               onClick={() => setActiveTab("content")}
               className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-bold transition-all ${activeTab === "content"
                   ? "bg-primary text-white"
-                  : "text-slate-600 hover:bg-slate-50"
+                  : "text-gray-650 hover:bg-gray-50"
                 }`}
             >
               <FileText className="h-5 w-5" />
@@ -523,7 +523,7 @@ export default function AdminDashboard() {
           </aside>
 
           {/* Main Dashboard Workspace */}
-          <main className="lg:col-span-9 bg-white rounded-2xl border border-slate-150 p-6 sm:p-8 shadow-sm min-h-[50vh]">
+          <main className="lg:col-span-9 bg-white rounded-2xl border border-gray-150 p-6 sm:p-8 shadow-sm min-h-[50vh]">
             {isDatabaseConnected === false && (
               <div className="mb-6 p-4 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 text-xs sm:text-sm font-semibold flex flex-col sm:flex-row items-start sm:items-center gap-3">
                 <span className="h-6 w-6 rounded-full bg-amber-200 flex items-center justify-center text-amber-800 font-bold flex-shrink-0 font-display">!</span>
@@ -548,29 +548,29 @@ export default function AdminDashboard() {
             )}
             {activeTab === "dashboard" && (
               <div>
-                <h2 className="text-xl font-bold text-slate-900 font-heading border-b pb-4 mb-6">
+                <h2 className="text-xl font-bold text-gray-900 font-heading border-b pb-4 mb-6">
                   CRM Analytics Overview
                 </h2>
 
                 {/* Stats Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
-                  <div className="bg-slate-50 border border-slate-150 p-5 rounded-xl">
-                    <p className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Total Leads</p>
-                    <p className="text-3xl font-extrabold text-slate-900 mt-2 font-display">
+                  <div className="bg-gray-50 border border-gray-150 p-5 rounded-xl">
+                    <p className="text-[10px] uppercase font-bold text-gray-450 tracking-wider">Total Leads</p>
+                    <p className="text-3xl font-extrabold text-gray-900 mt-2 font-display">
                       {stats?.totalLeads || 0}
                     </p>
                   </div>
 
-                  <div className="bg-slate-50 border border-slate-150 p-5 rounded-xl">
-                    <p className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Leads This Month</p>
-                    <p className="text-3xl font-extrabold text-slate-900 mt-2 font-display">
+                  <div className="bg-gray-50 border border-gray-150 p-5 rounded-xl">
+                    <p className="text-[10px] uppercase font-bold text-gray-450 tracking-wider">Leads This Month</p>
+                    <p className="text-3xl font-extrabold text-gray-900 mt-2 font-display">
                       {stats?.leadsThisMonth || 0}
                     </p>
                   </div>
 
-                  <div className="bg-slate-50 border border-slate-150 p-5 rounded-xl">
-                    <p className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Advisory Conversion</p>
-                    <p className="text-3xl font-extrabold text-slate-900 mt-2 font-display">
+                  <div className="bg-gray-50 border border-gray-150 p-5 rounded-xl">
+                    <p className="text-[10px] uppercase font-bold text-gray-450 tracking-wider">Advisory Conversion</p>
+                    <p className="text-3xl font-extrabold text-gray-900 mt-2 font-display">
                       {stats?.conversionRate || 0}%
                     </p>
                   </div>
@@ -578,13 +578,13 @@ export default function AdminDashboard() {
 
                 {/* Chart Breakdowns */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="border border-slate-150 p-5 rounded-xl">
-                    <h3 className="text-xs uppercase font-bold text-slate-500 tracking-wider mb-4">Leads by Service</h3>
+                  <div className="border border-gray-150 p-5 rounded-xl">
+                    <h3 className="text-xs uppercase font-bold text-gray-500 tracking-wider mb-4">Leads by Service</h3>
                     <div className="space-y-3">
                       {stats && Object.entries(stats.byService).length > 0 ? (
                         Object.entries(stats.byService).map(([srv, count]) => (
                           <div key={srv} className="flex items-center justify-between text-xs">
-                            <span className="capitalize text-slate-600 font-medium">{srv}</span>
+                            <span className="capitalize text-gray-650 font-medium">{srv}</span>
                             <div className="flex items-center gap-2 flex-1 mx-4">
                               <div className="h-2 bg-slate-100 rounded-full flex-1 overflow-hidden">
                                 <div
@@ -597,18 +597,18 @@ export default function AdminDashboard() {
                           </div>
                         ))
                       ) : (
-                        <p className="text-xs text-slate-400">No leads to display</p>
+                        <p className="text-xs text-gray-450">No leads to display</p>
                       )}
                     </div>
                   </div>
 
-                  <div className="border border-slate-150 p-5 rounded-xl">
-                    <h3 className="text-xs uppercase font-bold text-slate-500 tracking-wider mb-4">Leads by Status</h3>
+                  <div className="border border-gray-150 p-5 rounded-xl">
+                    <h3 className="text-xs uppercase font-bold text-gray-500 tracking-wider mb-4">Leads by Status</h3>
                     <div className="space-y-3">
                       {stats && Object.entries(stats.byStatus).length > 0 ? (
                         Object.entries(stats.byStatus).map(([st, count]) => (
                           <div key={st} className="flex items-center justify-between text-xs">
-                            <span className="capitalize text-slate-600 font-medium">{st}</span>
+                            <span className="capitalize text-gray-650 font-medium">{st}</span>
                             <div className="flex items-center gap-2 flex-1 mx-4">
                               <div className="h-2 bg-slate-100 rounded-full flex-1 overflow-hidden">
                                 <div
@@ -621,7 +621,7 @@ export default function AdminDashboard() {
                           </div>
                         ))
                       ) : (
-                        <p className="text-xs text-slate-400">No leads to display</p>
+                        <p className="text-xs text-gray-450">No leads to display</p>
                       )}
                     </div>
                   </div>
@@ -631,25 +631,25 @@ export default function AdminDashboard() {
 
             {activeTab === "leads" && (
               <div>
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b pb-4 mb-6 gap-4 border-slate-150">
-                  <h2 className="text-xl font-bold text-slate-900 font-heading">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b pb-4 mb-6 gap-4 border-gray-150">
+                  <h2 className="text-xl font-bold text-gray-900 font-heading">
                     Form Leads Captured ({filteredLeads.length})
                   </h2>
                   <div className="flex items-center gap-3">
                     <div className="relative">
-                      <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-slate-400" />
+                      <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-gray-450" />
                       <input
                         type="text"
                         placeholder="Search name, email..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-primary transition-all w-48"
+                        className="pl-8 pr-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-primary transition-all w-48"
                       />
                     </div>
                     <button
                       onClick={() => exportToCSV(leads as unknown as Record<string, unknown>[], "psr_one_leads")}
                       disabled={leads.length === 0}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-50 hover:bg-slate-100 border text-slate-700 disabled:opacity-50"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-gray-50 hover:bg-slate-100 border text-gray-700 disabled:opacity-50"
                     >
                       <Download className="h-4 w-4" /> Export CSV
                     </button>
@@ -657,14 +657,14 @@ export default function AdminDashboard() {
                 </div>
 
                 {loading ? (
-                  <p className="text-slate-500 text-sm">Loading records...</p>
+                  <p className="text-gray-500 text-sm">Loading records...</p>
                 ) : filteredLeads.length === 0 ? (
-                  <p className="text-slate-500 text-sm">No leads match your search query.</p>
+                  <p className="text-gray-500 text-sm">No leads match your search query.</p>
                 ) : (
                   <div className="overflow-x-auto">
                     <table className="w-full text-left text-xs border-collapse">
                       <thead>
-                        <tr className="bg-slate-50 border-b border-slate-150 text-slate-500 font-bold uppercase tracking-wider">
+                        <tr className="bg-gray-50 border-b border-gray-150 text-gray-500 font-bold uppercase tracking-wider">
                           <th className="p-3">Name</th>
                           <th className="p-3">Contact</th>
                           <th className="p-3">Inquiry</th>
@@ -678,29 +678,29 @@ export default function AdminDashboard() {
                         {filteredLeads.map((lead, idx) => (
                           <tr
                             key={idx}
-                            className="hover:bg-slate-50/70 transition-colors cursor-pointer"
+                            className="hover:bg-gray-50/70 transition-colors cursor-pointer"
                             onClick={() => {
                               setSelectedLead(lead);
                               setAdminNotes(lead.admin_notes || "");
                             }}
                           >
                             <td className="p-3 font-bold text-slate-800">{lead.name}</td>
-                            <td className="p-3 text-slate-600">
+                            <td className="p-3 text-gray-650">
                               <span className="block">{lead.email}</span>
-                              <span className="block mt-0.5 text-[10px] text-slate-400">{lead.phone}</span>
+                              <span className="block mt-0.5 text-[10px] text-gray-450">{lead.phone}</span>
                             </td>
                             <td className="p-3">
                               <span className="inline-block px-2 py-0.5 rounded bg-blue-50 text-primary text-[10px] font-semibold uppercase">
                                 {lead.service}
                               </span>
                               {lead.company_name && (
-                                <span className="block mt-1 text-[10px] text-slate-400">{lead.company_name}</span>
+                                <span className="block mt-1 text-[10px] text-gray-450">{lead.company_name}</span>
                               )}
                             </td>
-                            <td className="p-3 text-slate-500 max-w-xs truncate" title={lead.message}>
+                            <td className="p-3 text-gray-500 max-w-xs truncate" title={lead.message}>
                               {lead.message || "N/A"}
                             </td>
-                            <td className="p-3 text-slate-400 text-[10px]">
+                            <td className="p-3 text-gray-450 text-[10px]">
                               {new Date(lead.created_at).toLocaleDateString()}
                             </td>
                             <td className="p-3" onClick={(e) => e.stopPropagation()}>
@@ -743,36 +743,36 @@ export default function AdminDashboard() {
             {activeTab === "subscribers" && (
               <div>
                 <div className="flex items-center justify-between border-b pb-4 mb-6">
-                  <h2 className="text-xl font-bold text-slate-900 font-heading">
+                  <h2 className="text-xl font-bold text-gray-900 font-heading">
                     Newsletter Subscribers
                   </h2>
                   <button
                     onClick={() => exportToCSV(subscribers as unknown as Record<string, unknown>[], "psr_one_subscribers")}
                     disabled={subscribers.length === 0}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-50 hover:bg-slate-100 border text-slate-700 disabled:opacity-50"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-gray-50 hover:bg-slate-100 border text-gray-700 disabled:opacity-50"
                   >
                     <Download className="h-4 w-4" /> Export CSV
                   </button>
                 </div>
 
                 {loading ? (
-                  <p className="text-slate-500 text-sm">Loading records...</p>
+                  <p className="text-gray-500 text-sm">Loading records...</p>
                 ) : subscribers.length === 0 ? (
-                  <p className="text-slate-500 text-sm">No subscribers registered yet.</p>
+                  <p className="text-gray-500 text-sm">No subscribers registered yet.</p>
                 ) : (
                   <div className="overflow-x-auto">
                     <table className="w-full text-left text-xs border-collapse">
                       <thead>
-                        <tr className="bg-slate-50 border-b border-slate-150 text-slate-500 font-bold uppercase tracking-wider">
+                        <tr className="bg-gray-50 border-b border-gray-150 text-gray-500 font-bold uppercase tracking-wider">
                           <th className="p-3">Subscriber Email</th>
                           <th className="p-3">Signup Date</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-slate-100">
                         {subscribers.map((sub, idx) => (
-                          <tr key={idx} className="hover:bg-slate-50/50">
+                          <tr key={idx} className="hover:bg-gray-50/50">
                             <td className="p-3 font-semibold text-slate-800">{sub.email}</td>
-                            <td className="p-3 text-slate-400">
+                            <td className="p-3 text-gray-450">
                               {new Date(sub.created_at).toLocaleString()}
                             </td>
                           </tr>
@@ -787,10 +787,10 @@ export default function AdminDashboard() {
             {activeTab === "settings" && (
               <div>
                 <div className="border-b pb-4 mb-6">
-                  <h2 className="text-xl font-bold text-slate-900 font-heading">
+                  <h2 className="text-xl font-bold text-gray-900 font-heading">
                     Adjust Live Site Configurations
                   </h2>
-                  <p className="text-slate-500 text-xs mt-1">
+                  <p className="text-gray-500 text-xs mt-1">
                     Update core contact credentials. Live changes will save to local store settings immediately.
                   </p>
                 </div>
@@ -805,7 +805,7 @@ export default function AdminDashboard() {
                 <form onSubmit={handleSaveSettings} className="space-y-6">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+                      <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">
                         Contact Phone / WhatsApp
                       </label>
                       <input
@@ -813,12 +813,12 @@ export default function AdminDashboard() {
                         required
                         value={siteSettings.phone}
                         onChange={(e) => setSiteSettings({ ...siteSettings, phone: e.target.value })}
-                        className="w-full px-4 py-2.5 rounded-lg border border-slate-200 text-sm focus:outline-none focus:border-primary text-slate-800 bg-slate-50"
+                        className="w-full px-4 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:border-primary text-slate-800 bg-gray-50"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+                      <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">
                         Contact Email
                       </label>
                       <input
@@ -826,13 +826,13 @@ export default function AdminDashboard() {
                         required
                         value={siteSettings.email}
                         onChange={(e) => setSiteSettings({ ...siteSettings, email: e.target.value })}
-                        className="w-full px-4 py-2.5 rounded-lg border border-slate-200 text-sm focus:outline-none focus:border-primary text-slate-800 bg-slate-50"
+                        className="w-full px-4 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:border-primary text-slate-800 bg-gray-50"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">
                       Office Address & Landmarks
                     </label>
                     <textarea
@@ -840,13 +840,13 @@ export default function AdminDashboard() {
                       rows={3}
                       value={siteSettings.address}
                       onChange={(e) => setSiteSettings({ ...siteSettings, address: e.target.value })}
-                      className="w-full px-4 py-2.5 rounded-lg border border-slate-200 text-sm focus:outline-none focus:border-primary text-slate-800 bg-slate-50"
+                      className="w-full px-4 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:border-primary text-slate-800 bg-gray-50"
                     />
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+                      <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">
                         Operating Timings
                       </label>
                       <input
@@ -854,12 +854,12 @@ export default function AdminDashboard() {
                         required
                         value={siteSettings.hours}
                         onChange={(e) => setSiteSettings({ ...siteSettings, hours: e.target.value })}
-                        className="w-full px-4 py-2.5 rounded-lg border border-slate-200 text-sm focus:outline-none focus:border-primary text-slate-800 bg-slate-50"
+                        className="w-full px-4 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:border-primary text-slate-800 bg-gray-50"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+                      <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">
                         Instagram Profile Link
                       </label>
                       <input
@@ -867,7 +867,7 @@ export default function AdminDashboard() {
                         required
                         value={siteSettings.instagram}
                         onChange={(e) => setSiteSettings({ ...siteSettings, instagram: e.target.value })}
-                        className="w-full px-4 py-2.5 rounded-lg border border-slate-200 text-sm focus:outline-none focus:border-primary text-slate-800 bg-slate-50"
+                        className="w-full px-4 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:border-primary text-slate-800 bg-gray-50"
                       />
                     </div>
                   </div>
@@ -885,22 +885,22 @@ export default function AdminDashboard() {
             {activeTab === "content" && (
               <div>
                 <div className="border-b pb-4 mb-6">
-                  <h2 className="text-xl font-bold text-slate-900 font-heading">
+                  <h2 className="text-xl font-bold text-gray-900 font-heading">
                     Page Content Editor
                   </h2>
-                  <p className="text-slate-500 text-xs mt-1">
+                  <p className="text-gray-500 text-xs mt-1">
                     Select a page and customize headings, paragraphs, and labels. Changes save to the database immediately.
                   </p>
                 </div>
 
                 <div className="mb-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                  <label className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                  <label className="text-xs font-bold uppercase tracking-wider text-gray-500">
                     Select Page:
                   </label>
                   <select
                     value={selectedPage}
                     onChange={(e) => setSelectedPage(e.target.value)}
-                    className="px-4 py-2 rounded-lg border border-slate-200 text-sm focus:outline-none focus:border-primary text-slate-800 bg-slate-50 font-semibold"
+                    className="px-4 py-2 rounded-lg border border-gray-200 text-sm focus:outline-none focus:border-primary text-slate-800 bg-gray-50 font-semibold"
                   >
                     <option value="home">Home Page</option>
                     <option value="about">About Us Page</option>
@@ -920,12 +920,12 @@ export default function AdminDashboard() {
                 )}
 
                 {contentLoading ? (
-                  <p className="text-slate-500 text-sm">Loading page content...</p>
+                  <p className="text-gray-500 text-sm">Loading page content...</p>
                 ) : (
                   <form onSubmit={handleSaveContent} className="space-y-6">
-                    <div className="space-y-6 border border-slate-100 rounded-2xl p-6 bg-slate-50/50">
+                    <div className="space-y-6 border border-gray-100 rounded-2xl p-6 bg-gray-50/50">
                       {Object.keys(pageContent).length === 0 ? (
-                        <p className="text-slate-400 text-xs italic">No content blocks found for this page.</p>
+                        <p className="text-gray-450 text-xs italic">No content blocks found for this page.</p>
                       ) : (
                         Object.entries(pageContent).map(([key, val]) => {
                           const label = keyLabels[key] || key.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
@@ -933,7 +933,7 @@ export default function AdminDashboard() {
 
                           return (
                             <div key={key}>
-                              <label className="block text-xs font-bold text-slate-700 mb-1.5 capitalize font-heading">
+                              <label className="block text-xs font-bold text-gray-700 mb-1.5 capitalize font-heading">
                                 {label}
                               </label>
                               {isTextarea ? (
@@ -942,7 +942,7 @@ export default function AdminDashboard() {
                                   rows={3}
                                   value={val}
                                   onChange={(e) => setPageContent({ ...pageContent, [key]: e.target.value })}
-                                  className="w-full px-4 py-2.5 rounded-lg border border-slate-200 text-sm focus:outline-none focus:border-primary text-slate-800 bg-white"
+                                  className="w-full px-4 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:border-primary text-slate-800 bg-white"
                                 />
                               ) : (
                                 <input
@@ -950,10 +950,10 @@ export default function AdminDashboard() {
                                   required
                                   value={val}
                                   onChange={(e) => setPageContent({ ...pageContent, [key]: e.target.value })}
-                                  className="w-full px-4 py-2.5 rounded-lg border border-slate-200 text-sm focus:outline-none focus:border-primary text-slate-800 bg-white"
+                                  className="w-full px-4 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:border-primary text-slate-800 bg-white"
                                 />
                               )}
-                              <span className="text-[10px] text-slate-400 mt-1 block">Key identifier: <code className="bg-slate-100 px-1 py-0.5 rounded">{key}</code></span>
+                              <span className="text-[10px] text-gray-450 mt-1 block">Key identifier: <code className="bg-slate-100 px-1 py-0.5 rounded">{key}</code></span>
                             </div>
                           );
                         })
@@ -978,15 +978,15 @@ export default function AdminDashboard() {
       {/* Lead Detail Modal */}
       {selectedLead && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-sm">
-          <div className="bg-white rounded-2xl border border-slate-150 shadow-2xl w-full max-w-lg overflow-hidden flex flex-col max-h-[85vh]">
+          <div className="bg-white rounded-2xl border border-gray-150 shadow-2xl w-full max-w-lg overflow-hidden flex flex-col max-h-[85vh]">
             {/* Modal Header */}
-            <div className="px-6 py-4 bg-slate-50 border-b border-slate-150 flex items-center justify-between">
-              <h3 className="font-heading font-bold text-slate-900 text-sm sm:text-base">
+            <div className="px-6 py-4 bg-gray-50 border-b border-gray-150 flex items-center justify-between">
+              <h3 className="font-heading font-bold text-gray-900 text-sm sm:text-base">
                 Lead Detail: {selectedLead.name}
               </h3>
               <button
                 onClick={() => setSelectedLead(null)}
-                className="p-1 rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition-colors"
+                className="p-1 rounded-lg text-gray-450 hover:bg-slate-100 hover:text-gray-700 transition-colors"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -996,49 +996,49 @@ export default function AdminDashboard() {
             <div className="p-6 overflow-y-auto space-y-4 text-xs sm:text-sm leading-relaxed">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <p className="text-[10px] uppercase font-bold text-slate-400">Email</p>
+                  <p className="text-[10px] uppercase font-bold text-gray-450">Email</p>
                   <p className="text-slate-800 font-medium break-all">{selectedLead.email}</p>
                 </div>
                 <div>
-                  <p className="text-[10px] uppercase font-bold text-slate-400">Phone</p>
+                  <p className="text-[10px] uppercase font-bold text-gray-450">Phone</p>
                   <p className="text-slate-800 font-medium">{selectedLead.phone || "N/A"}</p>
                 </div>
                 <div>
-                  <p className="text-[10px] uppercase font-bold text-slate-400">Service Category</p>
+                  <p className="text-[10px] uppercase font-bold text-gray-450">Service Category</p>
                   <span className="inline-block mt-1 px-2.5 py-0.5 rounded bg-blue-50 text-primary text-[10px] font-bold uppercase">
                     {selectedLead.service}
                   </span>
                 </div>
                 <div>
-                  <p className="text-[10px] uppercase font-bold text-slate-400">Submission Date</p>
+                  <p className="text-[10px] uppercase font-bold text-gray-450">Submission Date</p>
                   <p className="text-slate-800 mt-1">{new Date(selectedLead.created_at).toLocaleString()}</p>
                 </div>
               </div>
 
               {selectedLead.company_name && (
                 <div>
-                  <p className="text-[10px] uppercase font-bold text-slate-400">Company Name</p>
+                  <p className="text-[10px] uppercase font-bold text-gray-450">Company Name</p>
                   <p className="text-slate-800 font-medium">{selectedLead.company_name}</p>
                 </div>
               )}
 
               {selectedLead.budget_range && (
                 <div>
-                  <p className="text-[10px] uppercase font-bold text-slate-400">Budget Range</p>
+                  <p className="text-[10px] uppercase font-bold text-gray-450">Budget Range</p>
                   <p className="text-slate-800 font-medium">{selectedLead.budget_range}</p>
                 </div>
               )}
 
               <div>
-                <p className="text-[10px] uppercase font-bold text-slate-400 mb-1">Requirements message</p>
-                <p className="bg-slate-50 border border-slate-100 p-3 rounded-lg text-slate-600 text-xs whitespace-pre-wrap leading-relaxed">
+                <p className="text-[10px] uppercase font-bold text-gray-450 mb-1">Requirements message</p>
+                <p className="bg-gray-50 border border-gray-100 p-3 rounded-lg text-gray-650 text-xs whitespace-pre-wrap leading-relaxed">
                   {selectedLead.message || "No message provided."}
                 </p>
               </div>
 
               {/* Notes Textarea */}
-              <div className="border-t border-slate-100 pt-4">
-                <label className="text-[10px] uppercase font-bold text-slate-400 block mb-1">
+              <div className="border-t border-gray-100 pt-4">
+                <label className="text-[10px] uppercase font-bold text-gray-450 block mb-1">
                   Internal Admin Notes
                 </label>
                 <textarea
@@ -1046,16 +1046,16 @@ export default function AdminDashboard() {
                   value={adminNotes}
                   onChange={(e) => setAdminNotes(e.target.value)}
                   placeholder="Add status details, call logs, or syndicate remarks here..."
-                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-primary focus:bg-white transition-all resize-none"
+                  className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-primary focus:bg-white transition-all resize-none"
                 />
               </div>
             </div>
 
             {/* Modal Footer */}
-            <div className="px-6 py-4 bg-slate-50 border-t border-slate-150 flex items-center justify-end gap-3">
+            <div className="px-6 py-4 bg-gray-50 border-t border-gray-150 flex items-center justify-end gap-3">
               <button
                 onClick={() => setSelectedLead(null)}
-                className="px-4 py-2 rounded-lg text-xs font-bold bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 transition-colors"
+                className="px-4 py-2 rounded-lg text-xs font-bold bg-white hover:bg-gray-50 border border-gray-200 text-gray-700 transition-colors"
               >
                 Close
               </button>

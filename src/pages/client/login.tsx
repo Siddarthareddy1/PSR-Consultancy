@@ -75,7 +75,7 @@ export default function ClientLogin() {
           <h2 className="mt-6 text-center text-3xl font-extrabold text-white font-heading">
             {isRegistering ? "Create Client Account" : "Sign In to Client Portal"}
           </h2>
-          <p className="mt-2 text-center text-sm text-slate-400">
+          <p className="mt-2 text-center text-sm text-gray-450">
             {isRegistering ? (
               <span>
                 Already have an account?{" "}
@@ -95,24 +95,24 @@ export default function ClientLogin() {
         </div>
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md relative z-10">
-          <div className="bg-slate-900/80 backdrop-blur-xl py-8 px-4 border border-slate-800 shadow-2xl sm:rounded-2xl sm:px-10">
+          <div className="bg-gray-950/80 backdrop-blur-xl py-8 px-4 border border-gray-800 shadow-2xl sm:rounded-2xl sm:px-10">
             {success ? (
               <div className="text-center py-6">
                 <CheckCircle className="h-12 w-12 text-emerald-400 mx-auto mb-4 animate-bounce" />
                 <h3 className="text-lg font-bold text-white mb-2">Check Your Email</h3>
-                <p className="text-sm text-slate-300 leading-relaxed">
+                <p className="text-sm text-gray-300 leading-relaxed">
                   {message || "We have dispatched a secure sign-in magic link. Please check your inbox and click the link to log in."}
                 </p>
 
                 {mockLink && (
-                  <div className="mt-6 p-4 bg-slate-950 rounded-xl border border-slate-800 text-left">
+                  <div className="mt-6 p-4 bg-slate-950 rounded-xl border border-gray-800 text-left">
                     <p className="text-xs text-amber-400 font-bold mb-2">⚠️ Local Test Mode Login Link:</p>
-                    <p className="text-[10px] text-slate-400 break-all bg-slate-900 p-2 rounded border border-slate-800 font-mono">
+                    <p className="text-[10px] text-gray-450 break-all bg-gray-950 p-2 rounded border border-gray-800 font-mono">
                       {mockLink}
                     </p>
                     <a
                       href={mockLink}
-                      className="mt-3 block text-center px-4 py-2 text-xs font-bold bg-secondary hover:bg-secondary-dark text-slate-900 rounded-lg transition-all"
+                      className="mt-3 block text-center px-4 py-2 text-xs font-bold bg-secondary hover:bg-secondary-dark text-gray-900 rounded-lg transition-all"
                     >
                       Instant Test Login
                     </a>
@@ -121,7 +121,7 @@ export default function ClientLogin() {
 
                 <button
                   onClick={() => setSuccess(false)}
-                  className="mt-6 text-xs text-slate-400 hover:text-white flex items-center gap-1 mx-auto"
+                  className="mt-6 text-xs text-gray-450 hover:text-white flex items-center gap-1 mx-auto"
                 >
                   <ArrowLeft className="h-3 w-3" /> Go back
                 </button>
@@ -131,7 +131,7 @@ export default function ClientLogin() {
                 {isRegistering && (
                   <>
                     <div>
-                      <label htmlFor="name" className="block text-xs font-semibold text-slate-300 uppercase tracking-wider">
+                      <label htmlFor="name" className="block text-xs font-semibold text-gray-300 uppercase tracking-wider">
                         Full Name *
                       </label>
                       <input
@@ -141,12 +141,12 @@ export default function ClientLogin() {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         placeholder="John Doe"
-                        className="mt-1 block w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-white placeholder-slate-600 text-sm focus:outline-none focus:border-secondary transition-colors"
+                        className="mt-1 block w-full px-3 py-2 bg-slate-950 border border-gray-800 rounded-lg text-white placeholder-slate-600 text-sm focus:outline-none focus:border-secondary transition-colors"
                       />
                     </div>
 
                     <div>
-                      <label htmlFor="company" className="block text-xs font-semibold text-slate-300 uppercase tracking-wider">
+                      <label htmlFor="company" className="block text-xs font-semibold text-gray-300 uppercase tracking-wider">
                         Company Name (Optional)
                       </label>
                       <input
@@ -155,12 +155,12 @@ export default function ClientLogin() {
                         value={company}
                         onChange={(e) => setCompany(e.target.value)}
                         placeholder="Acme Corp"
-                        className="mt-1 block w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-white placeholder-slate-600 text-sm focus:outline-none focus:border-secondary transition-colors"
+                        className="mt-1 block w-full px-3 py-2 bg-slate-950 border border-gray-800 rounded-lg text-white placeholder-slate-600 text-sm focus:outline-none focus:border-secondary transition-colors"
                       />
                     </div>
 
                     <div>
-                      <label htmlFor="phone" className="block text-xs font-semibold text-slate-300 uppercase tracking-wider">
+                      <label htmlFor="phone" className="block text-xs font-semibold text-gray-300 uppercase tracking-wider">
                         Phone Number
                       </label>
                       <input
@@ -169,19 +169,19 @@ export default function ClientLogin() {
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
                         placeholder="+91 98765 43210"
-                        className="mt-1 block w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-white placeholder-slate-600 text-sm focus:outline-none focus:border-secondary transition-colors"
+                        className="mt-1 block w-full px-3 py-2 bg-slate-950 border border-gray-800 rounded-lg text-white placeholder-slate-600 text-sm focus:outline-none focus:border-secondary transition-colors"
                       />
                     </div>
 
                     <div>
-                      <label htmlFor="service" className="block text-xs font-semibold text-slate-300 uppercase tracking-wider">
+                      <label htmlFor="service" className="block text-xs font-semibold text-gray-300 uppercase tracking-wider">
                         Primary Service Needed
                       </label>
                       <select
                         id="service"
                         value={service}
                         onChange={(e) => setService(e.target.value)}
-                        className="mt-1 block w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-white text-sm focus:outline-none focus:border-secondary transition-colors"
+                        className="mt-1 block w-full px-3 py-2 bg-slate-950 border border-gray-800 rounded-lg text-white text-sm focus:outline-none focus:border-secondary transition-colors"
                       >
                         <option value="Franchise">Franchise Investment</option>
                         <option value="Loan">Loans & Capital</option>
@@ -194,12 +194,12 @@ export default function ClientLogin() {
                 )}
 
                 <div>
-                  <label htmlFor="email" className="block text-xs font-semibold text-slate-300 uppercase tracking-wider">
+                  <label htmlFor="email" className="block text-xs font-semibold text-gray-300 uppercase tracking-wider">
                     Email Address *
                   </label>
                   <div className="mt-1 relative rounded-md shadow-sm">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <Mail className="h-4 w-4 text-slate-500" />
+                      <Mail className="h-4 w-4 text-gray-500" />
                     </div>
                     <input
                       id="email"
@@ -208,7 +208,7 @@ export default function ClientLogin() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="client@example.com"
-                      className="block w-full pl-10 pr-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-white placeholder-slate-600 text-sm focus:outline-none focus:border-secondary transition-colors"
+                      className="block w-full pl-10 pr-3 py-2 bg-slate-950 border border-gray-800 rounded-lg text-white placeholder-slate-600 text-sm focus:outline-none focus:border-secondary transition-colors"
                     />
                   </div>
                 </div>
@@ -219,7 +219,7 @@ export default function ClientLogin() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full flex justify-center items-center gap-1.5 py-2.5 px-4 border border-transparent rounded-lg text-sm font-bold text-slate-900 bg-secondary hover:bg-secondary-dark focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                    className="w-full flex justify-center items-center gap-1.5 py-2.5 px-4 border border-transparent rounded-lg text-sm font-bold text-gray-900 bg-secondary hover:bg-secondary-dark focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed transition-all"
                   >
                     {loading ? (
                       <>
@@ -235,8 +235,8 @@ export default function ClientLogin() {
               </form>
             )}
 
-            <div className="mt-6 border-t border-slate-800 pt-6">
-              <Link href="/" className="text-xs text-slate-400 hover:text-white flex items-center gap-1 justify-center transition-colors">
+            <div className="mt-6 border-t border-gray-800 pt-6">
+              <Link href="/" className="text-xs text-gray-450 hover:text-white flex items-center gap-1 justify-center transition-colors">
                 <ArrowLeft className="h-3 w-3" /> Back to homepage
               </Link>
             </div>

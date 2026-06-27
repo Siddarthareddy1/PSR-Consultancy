@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Head from "next/head";
 import { useContent } from "@/lib/useContent";
@@ -9,15 +9,66 @@ import {
   ShieldCheck,
   ArrowRight,
   TrendingUp,
-  Landmark,
   Shield,
-  Home as HomeIcon,
-  Briefcase,
+  Building,
+  Target,
+  Wallet,
   Star,
   ChevronLeft,
   ChevronRight,
   Sparkles,
+  ChevronDown,
 } from "lucide-react";
+
+// Animated Counter Component on scroll-into-view
+function Counter({ to, duration = 2000, suffix = "" }: { to: number; duration?: number; suffix?: string }) {
+  const [count, setCount] = useState(0);
+  const [started, setStarted] = useState(false);
+  const elementRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setStarted(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (elementRef.current) {
+      observer.observe(elementRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!started) return;
+    let start = 0;
+    const end = to;
+    const totalMs = duration;
+    const incrementTime = Math.max(Math.floor(totalMs / end), 25);
+
+    const timer = setInterval(() => {
+      start += Math.ceil(end / (totalMs / incrementTime));
+      if (start >= end) {
+        clearInterval(timer);
+        setCount(end);
+      } else {
+        setCount(start);
+      }
+    }, incrementTime);
+
+    return () => clearInterval(timer);
+  }, [started, to, duration]);
+
+  return (
+    <span ref={elementRef} className="tabular-nums">
+      {count.toLocaleString()}{suffix}
+    </span>
+  );
+}
 
 export default function Home() {
   const { content } = useContent("home", {
@@ -28,8 +79,8 @@ export default function Home() {
     cta_schedule: "Schedule Consultation",
   });
 
-  // Testimonial Slider State
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [faqOpen, setFaqOpen] = useState<Record<number, boolean>>({});
 
   const testimonials = [
     {
@@ -70,56 +121,90 @@ export default function Home() {
     setCurrentSlide((prev) => (prev + 1) % testimonials.length);
   };
 
-
+  const toggleFaq = (index: number) => {
+    setFaqOpen((prev) => ({ ...prev, [index]: !prev[index] }));
+  };
 
   const services = [
     {
-      icon: Briefcase,
+      icon: Target,
       name: "Franchise Investment",
       desc: "Unlock lucrative franchise opportunities with vetted brands, secure territorial rights, and end-to-end launch assistance.",
       href: "/services/franchise",
-      color: "border-blue-500/20 hover:border-blue-500",
-      iconBg: "bg-blue-50 text-blue-600",
+      color: "border-l-4 border-l-[#EA580C] hover:border-l-[#EA580C]",
+      iconBg: "bg-orange-50 text-[#EA580C]",
+      badge: "01",
     },
     {
-      icon: Landmark,
+      icon: Wallet,
       name: "Loans & Financing",
       desc: "Access customized business loans, mortgage financing, and working capital solutions at competitive, transparent interest rates.",
       href: "/services/loans",
-      color: "border-amber-500/20 hover:border-amber-500",
-      iconBg: "bg-amber-50 text-amber-600",
+      color: "border-l-4 border-l-[#16A34A] hover:border-l-[#16A34A]",
+      iconBg: "bg-emerald-50 text-[#16A34A]",
+      badge: "02",
     },
     {
       icon: Shield,
       name: "Insurance Solutions",
       desc: "Protect your health, wealth, and enterprise. Custom policies spanning corporate liability, life, health, and keyman insurance.",
       href: "/services/insurance",
-      color: "border-emerald-500/20 hover:border-emerald-500",
-      iconBg: "bg-emerald-50 text-emerald-600",
+      color: "border-l-4 border-l-[#7C3AED] hover:border-l-[#7C3AED]",
+      iconBg: "bg-purple-50 text-[#7C3AED]",
+      badge: "03",
     },
     {
-      icon: HomeIcon,
+      icon: Building,
       name: "Real Estate Consulting",
       desc: "Navigate commercial and premium residential investments with expert legal vetting, yield calculations, and location audits.",
       href: "/services/real-estate",
-      color: "border-indigo-500/20 hover:border-indigo-500",
-      iconBg: "bg-indigo-50 text-indigo-600",
+      color: "border-l-4 border-l-[#0891B2] hover:border-l-[#0891B2]",
+      iconBg: "bg-cyan-50 text-[#0891B2]",
+      badge: "04",
     },
     {
       icon: TrendingUp,
       name: "Business Advisory",
       desc: "Accelerate growth, optimize corporate structures, manage risk, and formulate scale-ready exit and fundraising strategies.",
       href: "/services/business-advisory",
-      color: "border-purple-500/20 hover:border-purple-500",
-      iconBg: "bg-purple-50 text-purple-600",
+      color: "border-l-4 border-l-[#D97706] hover:border-l-[#D97706]",
+      iconBg: "bg-amber-50 text-[#D97706]",
+      badge: "05",
     },
   ];
 
-  const stats = [
-    { label: "Active Corporate Clients", value: "150+" },
-    { label: "Total Capital Funded", value: "₹50 Cr+" },
-    { label: "Successful Case Rate", value: "98%" },
-    { label: "Completed Projects", value: "100+" },
+  const certifications = [
+    { icon: Award, title: "ISO Certified", desc: "Global standards compliance" },
+    { icon: ShieldCheck, title: "Licensed & Registered", desc: "Approved corporate channels" },
+    { icon: Clock, title: "24/7 Support", desc: "Always here for client actions" },
+    { icon: Star, title: "100% Compliant", desc: "Regulated advisory standards" },
+  ];
+
+  const faqs = [
+    {
+      q: "How long does the consultation process take?",
+      a: "Our initial strategic assessment takes 30-45 minutes. During this session, we outline parameters, document criteria, and deliver custom pipeline proposals.",
+    },
+    {
+      q: "What is your success rate?",
+      a: "We maintain a 98% successful case rate across business loan syndications, territorial franchise acquisitions, and corporate risk underwriting.",
+    },
+    {
+      q: "Do you offer flexible payment plans?",
+      a: "Yes, we structure advisory arrangements, commission syndicates, and milestone payments based on the total capital scale of the project.",
+    },
+    {
+      q: "Are you certified and regulated?",
+      a: "Yes. PSR ONE is registered, ISO certified, and compliant with standard corporate guidelines, RBI lender circles, and IRDAI risk frameworks.",
+    },
+    {
+      q: "What documents do I need to provide?",
+      a: "Required documentation varies by service. Typically, we require basic KYC identification, company registration certificates, tax statements, or estate documents.",
+    },
+    {
+      q: "How do I get started?",
+      a: "Simply click the 'Schedule Consultation' button, fill out our 3-step wizard intake, and an advisory partner will contact you within 2 business hours.",
+    },
   ];
 
   return (
@@ -128,169 +213,214 @@ export default function Home() {
         <title>PSR ONE | Premium Business & Financial Solutions Platform</title>
         <meta
           name="description"
-          content="PSR ONE (formerly PSR Consultancy) offers trusted multi-service solutions including Franchise Investments, Business Loans, Insurance Policies, Real Estate Consulting, and Corporate Business Advisory."
+          content="PSR ONE offers trusted multi-service solutions including Franchise Investments, Business Loans, Insurance Policies, Real Estate Consulting, and Corporate Business Advisory."
         />
         <meta name="keywords" content="PSR ONE, Business Advisory, Business Loans, Insurance, Franchise Investment, Real Estate Consultancy, Hyderabad" />
-        <meta property="og:title" content="PSR ONE | Premium Business & Financial Solutions Platform" />
-        <meta property="og:description" content="One platform offering multiple corporate and consumer solutions. Invest, secure, scale, and purchase property under expert advisory." />
-        <meta property="og:type" content="website" />
-        <meta name="twitter:card" content="summary_large_image" />
       </Head>
 
       {/* Hero Section */}
-      <section className="relative min-h-[95vh] flex items-center justify-center overflow-hidden bg-slate-950 text-white pt-24 pb-16">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gray-950 text-white pt-28 pb-16">
         {/* Subtle grid background */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#0f172a_1px,transparent_1px),linear-gradient(to_bottom,#0f172a_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
-        {/* Colorful glows */}
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-[120px] animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/15 rounded-full blur-[120px] animation-delay-2000"></div>
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:4.5rem_4.5rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-40"></div>
+        
+        {/* Animated colorful glows */}
+        <div className="absolute top-1/4 left-1/4 w-[35rem] h-[35rem] bg-primary/20 rounded-full blur-[140px] animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-[35rem] h-[35rem] bg-purple-900/15 rounded-full blur-[140px] animation-delay-2000"></div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10 flex flex-col items-center">
-          <div className="inline-flex items-center space-x-2 bg-slate-900/80 backdrop-blur border border-slate-800 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider text-secondary mb-8">
-            <Sparkles className="h-3.5 w-3.5" />
-            <span>ONE PLATFORM, MULTIPLE BUSINESS SOLUTIONS</span>
-          </div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            {/* Left Column: Text & CTAs */}
+            <div className="lg:col-span-7 text-left space-y-6 slide-in-left">
+              <div className="inline-flex items-center space-x-2 bg-gray-900/90 backdrop-blur border border-gray-800 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider text-secondary">
+                <Sparkles className="h-3.5 w-3.5" />
+                <span>ONE PLATFORM, MULTIPLE BUSINESS SOLUTIONS</span>
+              </div>
 
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-extrabold tracking-tight text-white mb-6 max-w-4xl leading-tight">
-            {content.hero_title_prefix}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-amber-300">
-              {content.hero_title_accent}
-            </span>
-          </h1>
+              <h1 className="text-4xl sm:text-5xl md:text-[2.75rem] font-display font-extrabold tracking-tight text-white leading-tight">
+                {content.hero_title_prefix}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-amber-300">
+                  {content.hero_title_accent}
+                </span>
+              </h1>
 
-          <p className="text-base sm:text-lg text-slate-300 mb-10 max-w-2xl font-body font-light leading-relaxed">
-            {content.hero_subtitle}
-          </p>
+              <p className="text-sm sm:text-base text-gray-300 leading-relaxed max-w-2xl">
+                {content.hero_subtitle}
+              </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto mb-16">
-            <Link
-              href="#services"
-              className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 rounded-xl text-sm font-bold text-slate-900 bg-secondary hover:bg-secondary-light shadow-lg transition-all duration-300 transform hover:-translate-y-0.5"
-            >
-              {content.cta_explore} <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-            <Link
-              href="/contact?service=consultation"
-              className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 rounded-xl text-sm font-bold text-white bg-slate-900 hover:bg-slate-800 border border-slate-800 transition-all duration-300"
-            >
-              {content.cta_schedule}
-            </Link>
-          </div>
+              <div className="flex flex-col sm:flex-row items-center gap-4 pt-2">
+                <Link
+                  href="#services"
+                  className="w-full sm:w-auto inline-flex items-center justify-center px-7 py-3.5 rounded-lg text-xs font-bold text-gray-900 bg-secondary hover:bg-secondary-light transition-all duration-200 shadow-md transform hover:-translate-y-0.5"
+                >
+                  {content.cta_explore} <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+                <Link
+                  href="/contact?service=consultation"
+                  className="w-full sm:w-auto inline-flex items-center justify-center px-7 py-3.5 rounded-lg text-xs font-bold text-white bg-gray-900 hover:bg-gray-850 border border-gray-850 transition-all duration-205"
+                >
+                  {content.cta_schedule}
+                </Link>
+              </div>
 
-          {/* Floating Trust Metrics inside Hero */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 w-full max-w-4xl border border-slate-800/80 bg-slate-900/40 backdrop-blur rounded-2xl p-6 sm:p-8">
-            <div className="text-center">
-              <p className="text-2xl sm:text-3xl font-extrabold text-secondary font-display">20+</p>
-              <p className="text-[10px] sm:text-xs text-slate-400 font-bold uppercase tracking-wider mt-1">Years Experience</p>
+              {/* Stats Counters inside Hero */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8 border-t border-gray-800/80">
+                <div>
+                  <p className="text-2xl sm:text-3xl font-extrabold text-secondary font-display">
+                    <Counter to={20} suffix="+" />
+                  </p>
+                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider mt-1">Years Experience</p>
+                </div>
+                <div className="border-l border-gray-800/80 pl-4">
+                  <p className="text-2xl sm:text-3xl font-extrabold text-secondary font-display">
+                    <Counter to={10000} suffix="+" />
+                  </p>
+                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider mt-1">Clients Served</p>
+                </div>
+                <div className="border-l border-gray-800/80 pl-4">
+                  <p className="text-2xl sm:text-3xl font-extrabold text-secondary font-display">
+                    ₹<Counter to={50} suffix=" Cr+" />
+                  </p>
+                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider mt-1">Capital Funded</p>
+                </div>
+                <div className="border-l border-gray-800/80 pl-4">
+                  <p className="text-2xl sm:text-3xl font-extrabold text-secondary font-display">
+                    <Counter to={98} suffix="%" />
+                  </p>
+                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider mt-1">Success Rate</p>
+                </div>
+              </div>
             </div>
-            <div className="text-center border-l border-slate-800/80">
-              <p className="text-2xl sm:text-3xl font-extrabold text-secondary font-display">10,000+</p>
-              <p className="text-[10px] sm:text-xs text-slate-400 font-bold uppercase tracking-wider mt-1">Happy Clients</p>
-            </div>
-            <div className="text-center border-l border-slate-800/80">
-              <p className="text-2xl sm:text-3xl font-extrabold text-secondary font-display">₹50 Cr+</p>
-              <p className="text-[10px] sm:text-xs text-slate-400 font-bold uppercase tracking-wider mt-1">Capital Funded</p>
-            </div>
-            <div className="text-center border-l border-slate-800/80">
-              <p className="text-2xl sm:text-3xl font-extrabold text-secondary font-display">98%</p>
-              <p className="text-[10px] sm:text-xs text-slate-400 font-bold uppercase tracking-wider mt-1">Success Rate</p>
+
+            {/* Right Column: Abstract Glassmorphic Illustration */}
+            <div className="lg:col-span-5 hidden lg:flex justify-center items-center slide-in-right">
+              <div className="relative w-80 h-96 bg-gray-900/30 rounded-3xl border border-gray-800 p-6 flex flex-col justify-between shadow-2xl glassmorphic overflow-hidden">
+                {/* Decorative floating grids */}
+                <div className="absolute -top-10 -right-10 w-32 h-32 bg-primary/20 rounded-full blur-2xl"></div>
+                <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-secondary/15 rounded-full blur-2xl"></div>
+
+                {/* Dashboard Header UI Mock */}
+                <div className="flex items-center justify-between border-b border-gray-800/80 pb-3">
+                  <div className="flex items-center space-x-2">
+                    <span className="h-3 w-3 rounded-full bg-rose-500"></span>
+                    <span className="h-3 w-3 rounded-full bg-amber-500"></span>
+                    <span className="h-3 w-3 rounded-full bg-emerald-500"></span>
+                  </div>
+                  <span className="text-[9px] uppercase tracking-widest text-gray-500 font-bold">Secure Syndicate Portal</span>
+                </div>
+
+                {/* Visualization elements */}
+                <div className="my-6 space-y-4">
+                  <div className="p-3 bg-gray-950/65 rounded-xl border border-gray-800 flex items-center justify-between">
+                    <div>
+                      <p className="text-[9px] text-gray-500 uppercase font-bold tracking-wider">Advisory Pipeline</p>
+                      <p className="text-xs font-bold text-white mt-0.5">Franchise Territory Acquisition</p>
+                    </div>
+                    <span className="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 text-[8px] font-bold uppercase">Active</span>
+                  </div>
+
+                  <div className="p-3 bg-gray-950/65 rounded-xl border border-gray-800 flex items-center justify-between">
+                    <div>
+                      <p className="text-[9px] text-gray-500 uppercase font-bold tracking-wider">Syndicated Funding</p>
+                      <p className="text-xs font-bold text-white mt-0.5">₹2.4 Cr Term Loan approved</p>
+                    </div>
+                    <span className="px-2 py-0.5 rounded bg-primary/20 text-primary-light text-[8px] font-bold uppercase">Closed</span>
+                  </div>
+
+                  {/* Abstract Graph Simulation */}
+                  <div className="pt-2">
+                    <div className="flex justify-between items-end h-16 gap-2">
+                      <div className="bg-gray-800 w-full h-8 rounded-sm"></div>
+                      <div className="bg-gray-800 w-full h-12 rounded-sm"></div>
+                      <div className="bg-primary w-full h-16 rounded-sm animate-pulse"></div>
+                      <div className="bg-secondary w-full h-14 rounded-sm"></div>
+                      <div className="bg-gray-800 w-full h-10 rounded-sm"></div>
+                    </div>
+                    <div className="flex justify-between text-[8px] text-gray-500 mt-1 font-mono">
+                      <span>MON</span>
+                      <span>WED</span>
+                      <span>FRI</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Footer status bar */}
+                <div className="border-t border-gray-800/80 pt-3 flex items-center justify-between text-[9px] text-gray-400 font-bold">
+                  <span>Connection: SSL Secure</span>
+                  <span className="text-emerald-400">● Live</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Certification Badges Section */}
-      <section className="relative z-20 -mt-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-6 sm:p-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-lg bg-emerald-50 text-emerald-650 flex items-center justify-center flex-shrink-0">
-              <Award className="h-5 w-5" />
-            </div>
-            <div>
-              <p className="text-xs font-bold text-slate-900 font-heading">ISO Certified</p>
-              <p className="text-[10px] text-slate-500 mt-0.5">Compliant with global standards</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-3 lg:border-l lg:border-slate-100 lg:pl-6">
-            <div className="h-10 w-10 rounded-lg bg-blue-50 text-blue-650 flex items-center justify-center flex-shrink-0">
-              <ShieldCheck className="h-5 w-5" />
-            </div>
-            <div>
-              <p className="text-xs font-bold text-slate-900 font-heading">Licensed & Registered</p>
-              <p className="text-[10px] text-slate-500 mt-0.5">Approved corporate syndicates</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-3 lg:border-l lg:border-slate-100 lg:pl-6">
-            <div className="h-10 w-10 rounded-lg bg-purple-50 text-purple-650 flex items-center justify-center flex-shrink-0">
-              <Clock className="h-5 w-5" />
-            </div>
-            <div>
-              <p className="text-xs font-bold text-slate-900 font-heading">24/7 Support</p>
-              <p className="text-[10px] text-slate-500 mt-0.5">Always available for urgent queries</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-3 lg:border-l lg:border-slate-100 lg:pl-6">
-            <div className="h-10 w-10 rounded-lg bg-amber-50 text-amber-650 flex items-center justify-center flex-shrink-0">
-              <Star className="h-5 w-5" />
-            </div>
-            <div>
-              <p className="text-xs font-bold text-slate-900 font-heading">100% Regulatory Compliant</p>
-              <p className="text-[10px] text-slate-500 mt-0.5">Following strict legal guidelines</p>
-            </div>
-          </div>
+      <section className="relative z-20 -mt-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-white rounded-2xl shadow-lg border border-gray-150 p-6 sm:p-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {certifications.map((item, idx) => {
+            const Icon = item.icon;
+            return (
+              <div
+                key={idx}
+                className="flex items-center gap-4 p-2 transition-all hover:bg-gray-50 rounded-xl"
+              >
+                <div className="h-10 w-10 rounded-lg bg-gray-50 text-primary flex items-center justify-center flex-shrink-0 shadow-inner">
+                  <Icon className="h-5 w-5" />
+                </div>
+                <div>
+                  <h4 className="text-xs font-bold text-gray-900 font-heading">{item.title}</h4>
+                  <p className="text-[10px] text-gray-500 mt-0.5 leading-tight">{item.desc}</p>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </section>
 
-      {/* Services Overview Section */}
-      <section id="services" className="py-24 bg-slate-50">
+      {/* Services Section */}
+      <section id="services" className="py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-slate-900 mb-4">
-              Comprehensive Core Solutions
+          <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
+            <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-gray-900">
+              Comprehensive Corporate Solutions
             </h2>
-            <p className="text-slate-500 font-body text-base sm:text-lg">
-              Explore our core pillars of enterprise growth and financial protection. We deliver tailored strategies that fuel growth and secure prosperity.
+            <p className="text-gray-550 text-sm leading-relaxed">
+              Explore our core pillars of enterprise growth and financial security. We deliver custom parameters, legal vetting, and syndication resources.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service, idx) => {
-              const IconComp = service.icon;
-              const accentColor = 
-                idx === 0 ? "#EA580C" : 
-                idx === 1 ? "#16A34A" : 
-                idx === 2 ? "#7C3AED" : 
-                idx === 3 ? "#0891B2" : "#D97706";
-
-              const borderStyles = { borderLeft: `4px solid ${accentColor}` };
-              const badgeNumber = `0${idx + 1}`;
-
+            {services.map((item, idx) => {
+              const Icon = item.icon;
               return (
                 <div
                   key={idx}
-                  style={borderStyles}
-                  className="bg-white rounded-2xl p-8 border border-slate-150 hover:shadow-xl transition-all duration-300 flex flex-col h-full relative group transform hover:-translate-y-2"
+                  style={{ borderLeftWidth: "4px" }}
+                  className={`bg-white rounded-2xl p-8 border border-gray-150 hover:shadow-xl transition-all duration-300 flex flex-col h-full relative group transform hover:-translate-y-2 ${item.color}`}
                 >
-                  {/* Top-right number badge */}
-                  <span className="absolute top-6 right-6 text-slate-200 font-extrabold text-2xl font-display group-hover:text-slate-350 transition-colors">
-                    {badgeNumber}
+                  {/* Top-Right Number Badge */}
+                  <span className="absolute top-6 right-6 text-gray-200 font-extrabold text-2xl font-display group-hover:text-gray-300 transition-colors">
+                    {item.badge}
                   </span>
 
-                  <div className={`h-14 w-14 rounded-xl ${service.iconBg} flex items-center justify-center mb-6`}>
-                    <IconComp className="h-7 w-7" />
+                  <div className={`h-12 w-12 rounded-xl ${item.iconBg} flex items-center justify-center mb-6 flex-shrink-0 shadow-sm`}>
+                    <Icon className="h-6 w-6" />
                   </div>
-                  <h3 className="text-xl font-bold text-slate-900 mb-3 font-heading">
-                    {service.name}
+
+                  <h3 className="text-lg font-bold text-gray-900 mb-3 font-heading">
+                    {item.name}
                   </h3>
-                  <p className="text-slate-500 text-sm leading-relaxed mb-6 flex-grow">
-                    {service.desc}
+                  
+                  <p className="text-gray-500 text-xs leading-relaxed mb-6 flex-grow">
+                    {item.desc}
                   </p>
+
                   <Link
-                    href={service.href}
-                    className="inline-flex items-center font-bold text-sm text-slate-900 hover:opacity-80 group/link transition-colors"
+                    href={item.href}
+                    className="inline-flex items-center font-bold text-xs text-gray-900 hover:opacity-85 group/link transition-colors"
                   >
                     Learn More{" "}
-                    <ArrowRight className="ml-1 h-4 w-4 transform group-hover/link:translate-x-1 transition-transform" />
+                    <ArrowRight className="ml-1 h-3.5 w-3.5 transform group-hover/link:translate-x-1.5 transition-transform duration-200" />
                   </Link>
                 </div>
               );
@@ -299,89 +429,70 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-20 gradient-primary text-white relative overflow-hidden">
-        {/* Glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-secondary/10 rounded-full blur-[120px]"></div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 text-center">
-            {stats.map((stat, idx) => (
-              <div key={idx} className="flex flex-col items-center">
-                <span className="text-4xl sm:text-5xl font-extrabold text-secondary font-display mb-2">
-                  {stat.value}
-                </span>
-                <span className="text-slate-300 text-xs sm:text-sm tracking-wide uppercase font-semibold font-heading">
-                  {stat.label}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Testimonials Slider */}
-      <section className="py-24 bg-white">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center space-x-1 bg-slate-50 border border-slate-100 px-3 py-1 rounded-full text-xs font-bold text-primary mb-6">
+      <section className="py-24 bg-white border-t border-b border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="inline-flex items-center space-x-1.5 bg-gray-50 border border-gray-150 px-3.5 py-1 rounded-full text-[10px] font-bold text-primary mb-6">
             <Users className="h-3.5 w-3.5 text-secondary" />
             <span>CLIENT SUCCESS STORIES</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-slate-900 mb-12">
+          <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-gray-900 mb-12">
             What Our Partners Say
           </h2>
 
-          <div className="relative bg-slate-50 rounded-3xl border border-slate-100 p-8 sm:p-16 shadow-sm overflow-hidden">
-            {/* Slide */}
-            <div className="min-h-[220px] flex flex-col justify-center transition-all duration-500">
-              <div className="flex justify-center space-x-1 mb-6">
+          <div className="relative bg-gray-50 rounded-2xl border border-gray-150 p-8 sm:p-14 shadow-sm overflow-hidden">
+            {/* Slide content */}
+            <div className="min-h-[14rem] flex flex-col justify-center transition-all duration-300">
+              <div className="flex justify-center space-x-1 mb-5">
                 {[...Array(testimonials[currentSlide].rating)].map((_, i) => (
-                  <Star key={i} className="h-5 w-5 fill-secondary text-secondary" />
+                  <Star key={i} className="h-4.5 w-4.5 fill-secondary text-secondary" />
                 ))}
               </div>
-              <p className="text-slate-700 text-lg sm:text-xl md:text-2xl font-body italic leading-relaxed max-w-3xl mx-auto mb-8">
+              <p className="text-gray-800 text-base sm:text-lg italic leading-relaxed max-w-2xl mx-auto mb-6">
                 &ldquo;{testimonials[currentSlide].quote}&rdquo;
               </p>
               <div>
-                <h4 className="text-slate-950 font-bold text-base sm:text-lg font-heading">
+                <h4 className="text-gray-900 font-extrabold text-sm font-heading">
                   {testimonials[currentSlide].name}
                 </h4>
-                <p className="text-slate-500 text-sm mb-3">
+                <p className="text-gray-500 text-xs mt-0.5">
                   {testimonials[currentSlide].role}
                 </p>
-                <span className="inline-flex px-3 py-1 rounded-full bg-emerald-50 border border-emerald-100 text-xs font-bold text-emerald-600">
-                  {testimonials[currentSlide].result}
-                </span>
+                <div className="mt-3">
+                  <span className="inline-flex px-3 py-1 rounded-full bg-emerald-50 border border-emerald-100 text-[10px] font-bold text-emerald-600">
+                    {testimonials[currentSlide].result}
+                  </span>
+                </div>
               </div>
             </div>
 
             {/* Slider Controls */}
-            <div className="absolute top-1/2 -translate-y-1/2 left-4 md:left-8">
+            <div className="absolute top-1/2 -translate-y-1/2 left-3 sm:left-6">
               <button
                 onClick={handlePrevSlide}
-                className="p-2 rounded-full bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 shadow-sm transition-colors hover:text-primary focus:outline-none"
+                className="p-2 rounded-lg bg-white hover:bg-gray-50 border border-gray-200 text-gray-700 shadow-sm transition-colors"
               >
-                <ChevronLeft className="h-5 w-5" />
+                <ChevronLeft className="h-4 w-4" />
               </button>
             </div>
-            <div className="absolute top-1/2 -translate-y-1/2 right-4 md:right-8">
+            <div className="absolute top-1/2 -translate-y-1/2 right-3 sm:right-6">
               <button
                 onClick={handleNextSlide}
-                className="p-2 rounded-full bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 shadow-sm transition-colors hover:text-primary focus:outline-none"
+                className="p-2 rounded-lg bg-white hover:bg-gray-50 border border-gray-200 text-gray-700 shadow-sm transition-colors"
               >
-                <ChevronRight className="h-5 w-5" />
+                <ChevronRight className="h-4 w-4" />
               </button>
             </div>
 
-            {/* Dots */}
+            {/* Indicator Dots */}
             <div className="flex justify-center space-x-2 mt-8">
               {testimonials.map((_, idx) => (
                 <button
                   key={idx}
                   onClick={() => setCurrentSlide(idx)}
                   className={`h-2 rounded-full transition-all duration-300 ${
-                    currentSlide === idx ? "w-6 bg-primary" : "w-2 bg-slate-300"
+                    currentSlide === idx ? "w-6 bg-primary" : "w-2 bg-gray-300"
                   }`}
                 />
               ))}
@@ -390,30 +501,78 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Accordion FAQ Section */}
+      <section className="py-24 bg-gray-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
+            <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-gray-900">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-gray-500 text-sm">
+              Find answers to commonly asked questions about our process, compliance guidelines, and advisory terms.
+            </p>
+          </div>
+
+          <div className="space-y-4">
+            {faqs.map((faq, idx) => {
+              const isOpen = faqOpen[idx] || false;
+              return (
+                <div
+                  key={idx}
+                  className="bg-white rounded-xl border border-gray-205 overflow-hidden transition-all shadow-sm"
+                >
+                  <button
+                    onClick={() => toggleFaq(idx)}
+                    className="w-full px-6 py-5 flex items-center justify-between text-left focus:outline-none hover:bg-gray-50/50 transition-colors"
+                  >
+                    <span className="text-sm font-bold text-gray-900 font-heading">
+                      {faq.q}
+                    </span>
+                    <ChevronDown
+                      className={`h-4.5 w-4.5 text-gray-500 transition-transform duration-250 ${
+                        isOpen ? "transform rotate-180" : ""
+                      }`}
+                    />
+                  </button>
+
+                  <div
+                    className={`transition-all duration-300 ease-in-out overflow-hidden ${
+                      isOpen ? "max-h-40 border-t border-gray-100" : "max-h-0"
+                    }`}
+                  >
+                    <div className="p-6 text-xs sm:text-sm text-gray-550 leading-relaxed bg-gray-50/30">
+                      {faq.a}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
       {/* CTA Banner Section */}
       <section className="py-20 relative overflow-hidden">
-        {/* Background gradient from deep blue to gold */}
         <div className="absolute inset-0 bg-gradient-to-r from-primary-dark via-primary to-secondary/80"></div>
-        {/* Decorative pattern overlay */}
         <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_1px_1px,#fff_1px,transparent_1px)] bg-[size:24px_24px]"></div>
 
-        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
-          <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-white mb-4">
+        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10 space-y-6">
+          <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-white">
             Ready to Transform & Secure Your Business?
           </h2>
-          <p className="text-slate-100 font-body text-base sm:text-lg mb-8 max-w-xl mx-auto">
+          <p className="text-slate-100 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
             Schedule an online or offline consultation with our senior advisory team. Let&apos;s evaluate your project capital or portfolio coverage.
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
             <Link
               href="/contact?service=consultation"
-              className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3.5 rounded-lg text-base font-bold text-slate-900 bg-white hover:bg-slate-50 transition-colors shadow-md card-hover"
+              className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3.5 rounded-lg text-xs font-bold text-gray-900 bg-white hover:bg-gray-50 transition-colors shadow-md transform hover:-translate-y-0.5"
             >
               Start Consultation
             </Link>
             <Link
               href="#services"
-              className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3.5 rounded-lg text-base font-bold text-white border border-white hover:bg-white/10 transition-colors"
+              className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3.5 rounded-lg text-xs font-bold text-white border border-white hover:bg-white/10 transition-colors"
             >
               Learn More
             </Link>

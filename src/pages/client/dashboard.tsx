@@ -228,7 +228,7 @@ export default function ClientDashboard() {
       case "Advisory":
         return <Briefcase className="h-5 w-5 text-amber-500" />;
       default:
-        return <HelpCircle className="h-5 w-5 text-slate-500" />;
+        return <HelpCircle className="h-5 w-5 text-gray-500" />;
     }
   };
 
@@ -241,7 +241,7 @@ export default function ClientDashboard() {
     return (
       <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center text-white">
         <Loader2 className="h-10 w-10 text-secondary animate-spin mb-4" />
-        <p className="text-slate-400 text-sm">Loading portal dashboard...</p>
+        <p className="text-gray-450 text-sm">Loading portal dashboard...</p>
       </div>
     );
   }
@@ -254,12 +254,12 @@ export default function ClientDashboard() {
 
       <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-body">
         {/* Navigation bar */}
-        <header className="bg-slate-900 border-b border-slate-800 px-6 py-4 flex items-center justify-between">
+        <header className="bg-gray-950 border-b border-gray-800 px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="text-white font-bold text-xl tracking-wider font-heading">
               <span className="text-secondary">PSR</span> ONE
             </span>
-            <span className="text-xs px-2 py-0.5 rounded bg-slate-800 text-slate-400 font-semibold uppercase">
+            <span className="text-xs px-2 py-0.5 rounded bg-slate-800 text-gray-450 font-semibold uppercase">
               Client Portal
             </span>
           </div>
@@ -269,13 +269,13 @@ export default function ClientDashboard() {
               <div className="h-8 w-8 rounded-full bg-secondary/15 border border-secondary/20 flex items-center justify-center text-secondary text-xs font-bold uppercase">
                 <User className="h-4 w-4" />
               </div>
-              <span className="text-xs font-bold hidden sm:inline-block text-slate-300">
+              <span className="text-xs font-bold hidden sm:inline-block text-gray-300">
                 {profile?.name || "Client"}
               </span>
             </div>
             <button
               onClick={handleLogout}
-              className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition-colors"
+              className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-gray-450 hover:text-white transition-colors"
               title="Logout"
             >
               <LogOut className="h-4 w-4" />
@@ -286,13 +286,13 @@ export default function ClientDashboard() {
         {/* Dashboard Workspace */}
         <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6 p-6">
           {/* Applications list sidebar */}
-          <aside className="lg:col-span-3 bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col gap-4">
-            <h2 className="text-sm font-bold text-slate-400 uppercase tracking-wider">
+          <aside className="lg:col-span-3 bg-gray-950 border border-gray-800 rounded-xl p-4 flex flex-col gap-4">
+            <h2 className="text-sm font-bold text-gray-450 uppercase tracking-wider">
               Your Applications
             </h2>
 
             {applications.length === 0 ? (
-              <div className="text-center py-8 text-slate-500 text-xs">
+              <div className="text-center py-8 text-gray-500 text-xs">
                 No active consulting profiles found.
               </div>
             ) : (
@@ -307,7 +307,7 @@ export default function ClientDashboard() {
                     className={`flex items-center gap-3 p-3 rounded-lg text-left border transition-all ${
                       selectedApp?.id === app.id
                         ? "bg-secondary/10 border-secondary text-white"
-                        : "bg-slate-950 border-slate-850 hover:bg-slate-900 text-slate-400"
+                        : "bg-slate-950 border-slate-850 hover:bg-gray-950 text-gray-450"
                     }`}
                   >
                     {getServiceIcon(app.service)}
@@ -315,7 +315,7 @@ export default function ClientDashboard() {
                       <p className="text-xs font-bold truncate">
                         {app.service} Consulting
                       </p>
-                      <p className="text-[10px] text-slate-500 mt-0.5 capitalize">
+                      <p className="text-[10px] text-gray-500 mt-0.5 capitalize">
                         Status: {app.status.replace("_", " ")}
                       </p>
                     </div>
@@ -329,13 +329,13 @@ export default function ClientDashboard() {
           {selectedApp ? (
             <main className="lg:col-span-9 flex flex-col gap-6">
               {/* Application Header & Timeline progress */}
-              <section className="bg-slate-900 border border-slate-800 rounded-xl p-6">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-800 pb-4 mb-6 gap-2">
+              <section className="bg-gray-950 border border-gray-800 rounded-xl p-6">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-gray-800 pb-4 mb-6 gap-2">
                   <div>
                     <h1 className="text-xl font-bold text-white font-heading">
                       {selectedApp.service} Advisory Pipeline
                     </h1>
-                    <p className="text-[10px] text-slate-500 mt-0.5">
+                    <p className="text-[10px] text-gray-500 mt-0.5">
                       Submitted on: {new Date(selectedApp.submitted_date).toLocaleDateString()}
                     </p>
                   </div>
@@ -365,13 +365,13 @@ export default function ClientDashboard() {
                         <div
                           className={`h-6 w-6 rounded-full flex items-center justify-center text-[10px] font-bold transition-colors ${
                             isCompleted
-                              ? "bg-secondary text-slate-900"
-                              : "bg-slate-950 border border-slate-800 text-slate-500"
+                              ? "bg-secondary text-gray-900"
+                              : "bg-slate-950 border border-gray-800 text-gray-500"
                           }`}
                         >
                           {idx + 1}
                         </div>
-                        <span className="text-[10px] text-slate-400 mt-2 font-bold whitespace-nowrap">
+                        <span className="text-[10px] text-gray-450 mt-2 font-bold whitespace-nowrap">
                           {label}
                         </span>
                       </div>
@@ -383,8 +383,8 @@ export default function ClientDashboard() {
               {/* Chat & Resources Row */}
               <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
                 {/* Chatbox messages thread */}
-                <section className="md:col-span-7 bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col h-[50vh]">
-                  <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-1.5 border-b border-slate-800 pb-2">
+                <section className="md:col-span-7 bg-gray-950 border border-gray-800 rounded-xl p-4 flex flex-col h-[50vh]">
+                  <h3 className="text-xs font-bold text-gray-450 uppercase tracking-wider mb-3 flex items-center gap-1.5 border-b border-gray-800 pb-2">
                     <MessageSquare className="h-4 w-4 text-secondary" />
                     Discussion Thread
                   </h3>
@@ -392,7 +392,7 @@ export default function ClientDashboard() {
                   {/* Messages Feed */}
                   <div className="flex-1 overflow-y-auto space-y-4 pr-2 mb-4 scrollbar-thin">
                     {selectedApp.messages.length === 0 ? (
-                      <div className="text-center text-xs text-slate-600 mt-12">
+                      <div className="text-center text-xs text-gray-650 mt-12">
                         No messages in this pipeline yet. Introduce yourself to your advisory team!
                       </div>
                     ) : (
@@ -405,13 +405,13 @@ export default function ClientDashboard() {
                               isSelf ? "self-end ml-auto items-end" : "self-start items-start"
                             }`}
                           >
-                            <span className="text-[9px] text-slate-500 font-bold mb-1">
+                            <span className="text-[9px] text-gray-500 font-bold mb-1">
                               {msg.from_name} • {new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                             </span>
                             <div
                               className={`p-3 rounded-xl text-xs leading-relaxed ${
                                 isSelf
-                                  ? "bg-secondary text-slate-900 rounded-tr-none font-medium"
+                                  ? "bg-secondary text-gray-900 rounded-tr-none font-medium"
                                   : "bg-slate-950 border border-slate-850 text-slate-200 rounded-tl-none"
                               }`}
                             >
@@ -431,11 +431,11 @@ export default function ClientDashboard() {
                       value={newMessage}
                       onChange={(e) => setNewMessage(e.target.value)}
                       placeholder="Type a message to the advisor..."
-                      className="flex-1 px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white placeholder-slate-600 focus:outline-none focus:border-secondary transition-colors"
+                      className="flex-1 px-3 py-2 bg-slate-950 border border-gray-800 rounded-lg text-xs text-white placeholder-slate-600 focus:outline-none focus:border-secondary transition-colors"
                     />
                     <button
                       type="submit"
-                      className="p-2 bg-secondary hover:bg-secondary-dark text-slate-900 rounded-lg transition-colors"
+                      className="p-2 bg-secondary hover:bg-secondary-dark text-gray-900 rounded-lg transition-colors"
                     >
                       <Send className="h-4 w-4" />
                     </button>
@@ -445,8 +445,8 @@ export default function ClientDashboard() {
                 {/* Documents & Schedule sidebar */}
                 <div className="md:col-span-5 flex flex-col gap-6">
                   {/* Documents Manager */}
-                  <section className="bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col gap-3">
-                    <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5 border-b border-slate-800 pb-2">
+                  <section className="bg-gray-950 border border-gray-800 rounded-xl p-4 flex flex-col gap-3">
+                    <h3 className="text-xs font-bold text-gray-450 uppercase tracking-wider flex items-center gap-1.5 border-b border-gray-800 pb-2">
                       <FileText className="h-4 w-4 text-secondary" />
                       Documents Archive
                     </h3>
@@ -454,7 +454,7 @@ export default function ClientDashboard() {
                     {/* Docs List */}
                     <div className="flex flex-col gap-2 max-h-[15vh] overflow-y-auto pr-1">
                       {selectedApp.documents.length === 0 ? (
-                        <p className="text-[10px] text-slate-500 py-2">No documents shared yet.</p>
+                        <p className="text-[10px] text-gray-500 py-2">No documents shared yet.</p>
                       ) : (
                         selectedApp.documents.map((doc, idx) => (
                           <a
@@ -462,17 +462,17 @@ export default function ClientDashboard() {
                             href={doc.file_url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center justify-between p-2 rounded bg-slate-950 border border-slate-850 hover:bg-slate-900 transition-colors"
+                            className="flex items-center justify-between p-2 rounded bg-slate-950 border border-slate-850 hover:bg-gray-950 transition-colors"
                           >
                             <div className="min-w-0">
                               <p className="text-[10px] font-bold text-slate-350 truncate pr-2">
                                 {doc.file_name}
                               </p>
-                              <p className="text-[8px] text-slate-550 mt-0.5">
+                              <p className="text-[8px] text-gray-500 mt-0.5">
                                 {new Date(doc.created_at).toLocaleDateString()}
                               </p>
                             </div>
-                            <ExternalLink className="h-3 w-3 text-slate-500 flex-shrink-0" />
+                            <ExternalLink className="h-3 w-3 text-gray-500 flex-shrink-0" />
                           </a>
                         ))
                       )}
@@ -488,7 +488,7 @@ export default function ClientDashboard() {
                           placeholder="e.g. Identity Proof"
                           value={docName}
                           onChange={(e) => setDocName(e.target.value)}
-                          className="px-2 py-1.5 bg-slate-950 border border-slate-800 rounded text-[10px] text-white focus:outline-none focus:border-secondary"
+                          className="px-2 py-1.5 bg-slate-950 border border-gray-800 rounded text-[10px] text-white focus:outline-none focus:border-secondary"
                         />
                         <input
                           type="url"
@@ -496,12 +496,12 @@ export default function ClientDashboard() {
                           placeholder="URL Link (mock PDF)"
                           value={docUrl}
                           onChange={(e) => setDocUrl(e.target.value)}
-                          className="px-2 py-1.5 bg-slate-950 border border-slate-800 rounded text-[10px] text-white focus:outline-none focus:border-secondary"
+                          className="px-2 py-1.5 bg-slate-950 border border-gray-800 rounded text-[10px] text-white focus:outline-none focus:border-secondary"
                         />
                       </div>
                       <button
                         type="submit"
-                        className="w-full flex items-center justify-center gap-1 py-1.5 bg-slate-800 hover:bg-slate-705 border border-slate-700 rounded text-[10px] font-bold text-white transition-colors"
+                        className="w-full flex items-center justify-center gap-1 py-1.5 bg-slate-800 hover:bg-slate-705 border border-gray-800 rounded text-[10px] font-bold text-white transition-colors"
                       >
                         <Upload className="h-3 w-3" /> Save Document
                       </button>
@@ -512,8 +512,8 @@ export default function ClientDashboard() {
                   </section>
 
                   {/* Consultation Scheduler */}
-                  <section className="bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col gap-3">
-                    <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5 border-b border-slate-800 pb-2">
+                  <section className="bg-gray-950 border border-gray-800 rounded-xl p-4 flex flex-col gap-3">
+                    <h3 className="text-xs font-bold text-gray-450 uppercase tracking-wider flex items-center gap-1.5 border-b border-gray-800 pb-2">
                       <Calendar className="h-4 w-4 text-secondary" />
                       Book Advisory Session
                     </h3>
@@ -521,7 +521,7 @@ export default function ClientDashboard() {
                     {/* Next Session Display */}
                     {selectedApp.consultations.length > 0 && (
                       <div className="p-3 bg-slate-950 rounded border border-slate-850">
-                        <p className="text-[9px] text-slate-500 font-bold uppercase tracking-wider">Booked Meeting:</p>
+                        <p className="text-[9px] text-gray-500 font-bold uppercase tracking-wider">Booked Meeting:</p>
                         <p className="text-xs font-bold text-white mt-1">
                           {selectedApp.consultations[0].consultant_name}
                         </p>
@@ -544,11 +544,11 @@ export default function ClientDashboard() {
                     <form onSubmit={handleBookConsultation} className="space-y-2">
                       <div className="grid grid-cols-2 gap-2">
                         <div>
-                          <label className="text-[8px] text-slate-400 font-bold uppercase block mb-1">Advisor</label>
+                          <label className="text-[8px] text-gray-450 font-bold uppercase block mb-1">Advisor</label>
                           <select
                             value={consultant}
                             onChange={(e) => setConsultant(e.target.value)}
-                            className="w-full px-2 py-1.5 bg-slate-950 border border-slate-800 rounded text-[10px] text-white focus:outline-none focus:border-secondary"
+                            className="w-full px-2 py-1.5 bg-slate-950 border border-gray-800 rounded text-[10px] text-white focus:outline-none focus:border-secondary"
                           >
                             <option value="Siddharth Reddy">Siddharth Reddy</option>
                             <option value="Anjali Mehta">Anjali Mehta</option>
@@ -557,33 +557,33 @@ export default function ClientDashboard() {
                         </div>
 
                         <div>
-                          <label className="text-[8px] text-slate-400 font-bold uppercase block mb-1">Date</label>
+                          <label className="text-[8px] text-gray-450 font-bold uppercase block mb-1">Date</label>
                           <input
                             type="date"
                             required
                             value={consultDate}
                             onChange={(e) => setConsultDate(e.target.value)}
-                            className="w-full px-2 py-1.5 bg-slate-950 border border-slate-800 rounded text-[10px] text-white focus:outline-none focus:border-secondary"
+                            className="w-full px-2 py-1.5 bg-slate-950 border border-gray-800 rounded text-[10px] text-white focus:outline-none focus:border-secondary"
                           />
                         </div>
                       </div>
 
                       <div className="grid grid-cols-2 gap-2">
                         <div>
-                          <label className="text-[8px] text-slate-400 font-bold uppercase block mb-1">Time</label>
+                          <label className="text-[8px] text-gray-450 font-bold uppercase block mb-1">Time</label>
                           <input
                             type="time"
                             required
                             value={consultTime}
                             onChange={(e) => setConsultTime(e.target.value)}
-                            className="w-full px-2 py-1.5 bg-slate-950 border border-slate-800 rounded text-[10px] text-white focus:outline-none focus:border-secondary"
+                            className="w-full px-2 py-1.5 bg-slate-950 border border-gray-800 rounded text-[10px] text-white focus:outline-none focus:border-secondary"
                           />
                         </div>
 
                         <div className="flex items-end">
                           <button
                             type="submit"
-                            className="w-full py-1.5 bg-secondary hover:bg-secondary-dark text-slate-900 rounded text-[10px] font-bold transition-all"
+                            className="w-full py-1.5 bg-secondary hover:bg-secondary-dark text-gray-900 rounded text-[10px] font-bold transition-all"
                           >
                             Confirm Booking
                           </button>
@@ -599,8 +599,8 @@ export default function ClientDashboard() {
               </div>
             </main>
           ) : (
-            <div className="lg:col-span-9 flex flex-col items-center justify-center bg-slate-900 border border-slate-800 rounded-xl p-12 text-center text-slate-500">
-              <Building className="h-12 w-12 text-slate-700 mb-4 animate-pulse" />
+            <div className="lg:col-span-9 flex flex-col items-center justify-center bg-gray-950 border border-gray-800 rounded-xl p-12 text-center text-gray-500">
+              <Building className="h-12 w-12 text-gray-700 mb-4 animate-pulse" />
               <p className="text-sm">No applications registered to this account.</p>
               <p className="text-xs mt-1 text-slate-650">Submit a lead query on our contact page to open an pipeline!</p>
             </div>

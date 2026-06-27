@@ -119,16 +119,16 @@ export default function AboutUs() {
       </Head>
 
       {/* Hero Section */}
-      <section className="py-20 bg-slate-900 text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary-dark to-slate-900 opacity-95"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
-          <span className="inline-flex px-3 py-1 rounded-full bg-secondary/10 text-secondary text-xs font-bold uppercase tracking-wider mb-4 border border-secondary/20">
+      <section className="py-20 bg-gray-950 text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:4rem_4rem] opacity-25"></div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 text-center z-10 fade-in">
+          <span className="inline-flex px-3 py-1 rounded-full bg-secondary/15 text-secondary text-xs font-bold uppercase tracking-wider mb-4 border border-secondary/20">
             About PSR ONE
           </span>
-          <h1 className="text-4xl sm:text-5xl font-display font-extrabold mb-4">
+          <h1 className="text-4xl sm:text-5xl font-display font-extrabold mb-4 leading-tight">
             {content.hero_title}
           </h1>
-          <p className="text-slate-300 text-sm sm:text-base max-w-xl mx-auto">
+          <p className="text-gray-300 text-sm max-w-xl mx-auto leading-relaxed">
             {content.hero_subtitle}
           </p>
         </div>
@@ -138,25 +138,25 @@ export default function AboutUs() {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <div className="bg-slate-50 border border-slate-100 rounded-3xl p-8 sm:p-12">
+            <div className="bg-gray-50 border border-gray-100 rounded-3xl p-8 sm:p-12 hover:shadow-md transition-shadow">
               <div className="h-12 w-12 rounded-xl bg-blue-50 text-primary flex items-center justify-center mb-6 shadow-sm">
                 <Target className="h-6 w-6" />
               </div>
-              <h2 className="text-2xl font-bold text-slate-950 mb-4 font-heading">
+              <h2 className="text-2xl font-bold text-gray-900 mb-4 font-heading">
                 {content.mission_title}
               </h2>
-              <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
+              <p className="text-gray-650 text-xs sm:text-sm leading-relaxed">
                 {content.mission_desc}
               </p>
             </div>
-            <div className="bg-slate-50 border border-slate-100 rounded-3xl p-8 sm:p-12">
+            <div className="bg-gray-50 border border-gray-100 rounded-3xl p-8 sm:p-12 hover:shadow-md transition-shadow">
               <div className="h-12 w-12 rounded-xl bg-amber-50 text-secondary flex items-center justify-center mb-6 shadow-sm">
                 <Compass className="h-6 w-6" />
               </div>
-              <h2 className="text-2xl font-bold text-slate-950 mb-4 font-heading">
+              <h2 className="text-2xl font-bold text-gray-900 mb-4 font-heading">
                 {content.vision_title}
               </h2>
-              <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
+              <p className="text-gray-650 text-xs sm:text-sm leading-relaxed">
                 {content.vision_desc}
               </p>
             </div>
@@ -165,29 +165,29 @@ export default function AboutUs() {
       </section>
 
       {/* Values Section */}
-      <section className="py-20 bg-slate-50 border-y border-slate-100">
+      <section className="py-20 bg-gray-50 border-y border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl font-display font-extrabold text-slate-900 mb-4">
+          <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
+            <h2 className="text-3xl font-display font-extrabold text-gray-900">
               {content.values_title}
             </h2>
-            <p className="text-slate-500 font-body text-base">
+            <p className="text-gray-500 text-xs leading-relaxed">
               {content.values_subtitle}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {values.map((val, idx) => {
               const IconComp = val.icon;
               return (
-                <div key={idx} className="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm flex flex-col items-center text-center">
-                  <div className="h-10 w-10 rounded-lg bg-slate-50 text-primary flex items-center justify-center mb-4">
+                <div key={idx} className="bg-white rounded-2xl border border-gray-150 p-6 shadow-sm flex flex-col items-center text-center hover:-translate-y-1 transition-all">
+                  <div className="h-10 w-10 rounded-lg bg-gray-50 text-primary flex items-center justify-center mb-4 shadow-inner">
                     <IconComp className="h-5 w-5" />
                   </div>
-                  <h3 className="font-heading font-bold text-slate-900 text-base mb-2">
+                  <h3 className="font-heading font-bold text-gray-900 text-sm mb-2">
                     {val.title}
                   </h3>
-                  <p className="text-slate-500 text-xs sm:text-sm leading-relaxed">
+                  <p className="text-gray-500 text-xs leading-relaxed">
                     {val.desc}
                   </p>
                 </div>
@@ -200,31 +200,29 @@ export default function AboutUs() {
       {/* History Timeline */}
       <section className="py-20 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-display font-extrabold text-slate-900 mb-4">
+          <div className="text-center mb-16 space-y-3">
+            <h2 className="text-3xl font-display font-extrabold text-gray-900">
               Our Journey
             </h2>
-            <p className="text-slate-500 font-body text-base">
+            <p className="text-gray-500 text-xs leading-relaxed">
               Reflecting on two decades of growth and financial partnership.
             </p>
           </div>
 
-          <div className="space-y-12 relative before:absolute before:left-4 md:before:left-1/2 before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-200">
+          <div className="space-y-12 relative before:absolute before:left-4 md:before:left-1/2 before:top-2 before:bottom-2 before:w-0.5 before:bg-gray-200">
             {timeline.map((item, idx) => (
               <div key={idx} className="relative flex flex-col md:flex-row md:justify-between items-start md:items-center">
-                {/* Year Marker */}
-                <div className="absolute left-4 md:left-1/2 -translate-x-1/2 h-8 w-8 rounded-full bg-white border-2 border-primary flex items-center justify-center z-10">
-                  <span className="h-2 w-2 rounded-full bg-primary" />
+                <div className="absolute left-4 md:left-1/2 -translate-x-1/2 h-8 w-8 rounded-full bg-white border-2 border-primary flex items-center justify-center z-10 shadow-sm">
+                  <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
                 </div>
-                {/* Content Block */}
                 <div className={`pl-12 md:pl-0 w-full md:w-[45%] ${idx % 2 === 0 ? "md:text-right" : "md:order-2 md:text-left"}`}>
                   <span className="text-2xl font-black text-secondary font-display block mb-1">
                     {item.year}
                   </span>
-                  <h3 className="font-heading font-bold text-slate-950 text-base mb-1">
+                  <h3 className="font-heading font-bold text-gray-900 text-sm mb-1">
                     {item.title}
                   </h3>
-                  <p className="text-slate-500 text-xs sm:text-sm leading-relaxed">
+                  <p className="text-gray-550 text-xs leading-relaxed">
                     {item.desc}
                   </p>
                 </div>
@@ -235,30 +233,30 @@ export default function AboutUs() {
       </section>
 
       {/* Leadership Team Grid */}
-      <section className="py-20 bg-slate-50 border-t border-slate-100">
+      <section className="py-20 bg-gray-50 border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl font-display font-extrabold text-slate-900 mb-4">
+          <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
+            <h2 className="text-3xl font-display font-extrabold text-gray-900">
               Leadership Team
             </h2>
-            <p className="text-slate-500 font-body text-base">
+            <p className="text-gray-500 text-xs leading-relaxed">
               Senior advisors overseeing all business divisions.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {team.map((member, idx) => (
-              <div key={idx} className="bg-white rounded-2xl border border-slate-100 p-8 shadow-sm flex flex-col items-center text-center">
+              <div key={idx} className="bg-white rounded-2xl border border-gray-150 p-8 shadow-sm flex flex-col items-center text-center group hover:-translate-y-1.5 transition-all">
                 <div className="h-16 w-16 rounded-full gradient-primary text-white flex items-center justify-center text-xl font-bold mb-4 border border-secondary/20 shadow-md">
                   {member.name.charAt(0)}
                 </div>
-                <h3 className="font-heading font-bold text-slate-950 text-lg mb-1">
+                <h3 className="font-heading font-bold text-gray-900 text-sm mb-1">
                   {member.name}
                 </h3>
-                <span className="text-xs text-slate-400 font-bold uppercase tracking-wider block mb-4">
+                <span className="text-[10px] text-gray-450 font-bold uppercase tracking-wider block mb-4">
                   {member.role}
                 </span>
-                <p className="text-slate-500 text-xs sm:text-sm leading-relaxed">
+                <p className="text-gray-550 text-xs leading-relaxed">
                   {member.bio}
                 </p>
               </div>
@@ -268,15 +266,15 @@ export default function AboutUs() {
       </section>
 
       {/* Certifications Section */}
-      <section className="py-16 bg-white border-t border-slate-100 text-center">
+      <section className="py-16 bg-white border-t border-gray-100 text-center">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h3 className="text-slate-400 text-xs font-bold uppercase tracking-wider mb-8">
+          <h3 className="text-gray-400 text-[10px] font-bold uppercase tracking-wider mb-8">
             Accredited and Compliant
           </h3>
-          <div className="flex flex-wrap items-center justify-center gap-12 opacity-60">
-            <span className="text-base sm:text-lg font-bold text-slate-500 font-heading">ISO 9001:2015 REGISTERED</span>
-            <span className="text-base sm:text-lg font-bold text-slate-500 font-heading">IRDAI CORPORATE LICENSE</span>
-            <span className="text-base sm:text-lg font-bold text-slate-500 font-heading">RERA REGISTERED ADVISORY</span>
+          <div className="flex flex-wrap items-center justify-center gap-12 opacity-70">
+            <span className="text-xs sm:text-sm font-bold text-gray-600 font-heading tracking-wide">ISO 9001:2015 REGISTERED</span>
+            <span className="text-xs sm:text-sm font-bold text-gray-600 font-heading tracking-wide">IRDAI CORPORATE LICENSE</span>
+            <span className="text-xs sm:text-sm font-bold text-gray-600 font-heading tracking-wide">RERA REGISTERED ADVISORY</span>
           </div>
         </div>
       </section>
@@ -284,17 +282,17 @@ export default function AboutUs() {
       {/* CTA Section */}
       <section className="py-20 gradient-primary text-white text-center relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[250px] bg-secondary/15 rounded-full blur-[100px]"></div>
-        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-display font-extrabold text-white mb-4">
+        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+          <h2 className="text-3xl font-display font-extrabold text-white">
             Partner with PSR ONE Today
           </h2>
-          <p className="text-slate-300 font-body text-sm sm:text-base mb-8 max-w-xl mx-auto">
+          <p className="text-slate-350 text-xs sm:text-sm max-w-xl mx-auto leading-relaxed">
             Let&apos;s start building your business solutions. Schedule a consultation with our advisors.
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
             <Link
               href="/contact"
-              className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3 rounded-lg text-sm font-bold text-slate-900 bg-secondary hover:bg-secondary-light transition-colors"
+              className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3.5 rounded-lg text-xs font-bold text-gray-900 bg-secondary hover:bg-secondary-light transition-all shadow-sm"
             >
               Get Started
             </Link>

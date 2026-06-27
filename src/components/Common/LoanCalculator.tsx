@@ -45,14 +45,14 @@ export default function LoanCalculator() {
   const eligibleAmount = calculateEligibility();
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-150 shadow-md p-6 sm:p-8 max-w-3xl mx-auto">
-      <div className="flex border-b border-slate-100 mb-6">
+    <div className="bg-white rounded-2xl border border-gray-150 shadow-md p-6 sm:p-8 max-w-3xl mx-auto">
+      <div className="flex border-b border-gray-100 mb-6">
         <button
           onClick={() => setActiveTab("emi")}
           className={`flex-1 pb-4 text-center font-semibold text-sm sm:text-base border-b-2 transition-all ${
             activeTab === "emi"
               ? "border-primary text-primary"
-              : "border-transparent text-slate-400 hover:text-slate-600"
+              : "border-transparent text-gray-450 hover:text-gray-650"
           }`}
         >
           EMI Calculator
@@ -62,7 +62,7 @@ export default function LoanCalculator() {
           className={`flex-1 pb-4 text-center font-semibold text-sm sm:text-base border-b-2 transition-all ${
             activeTab === "eligibility"
               ? "border-primary text-primary"
-              : "border-transparent text-slate-400 hover:text-slate-600"
+              : "border-transparent text-gray-450 hover:text-gray-650"
           }`}
         >
           Loan Eligibility Calculator
@@ -74,7 +74,7 @@ export default function LoanCalculator() {
           {/* Inputs */}
           <div className="space-y-6">
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+              <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">
                 Loan Amount (₹) - {amount.toLocaleString("en-IN")}
               </label>
               <input
@@ -86,14 +86,14 @@ export default function LoanCalculator() {
                 onChange={(e) => setAmount(Number(e.target.value))}
                 className="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-primary"
               />
-              <div className="flex justify-between text-xs text-slate-400 mt-1">
+              <div className="flex justify-between text-xs text-gray-450 mt-1">
                 <span>₹1 Lakh</span>
                 <span>₹5 Cr</span>
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+              <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">
                 Interest Rate (%) - {rate}%
               </label>
               <input
@@ -105,14 +105,14 @@ export default function LoanCalculator() {
                 onChange={(e) => setRate(Number(e.target.value))}
                 className="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-primary"
               />
-              <div className="flex justify-between text-xs text-slate-400 mt-1">
+              <div className="flex justify-between text-xs text-gray-450 mt-1">
                 <span>5%</span>
                 <span>20%</span>
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+              <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">
                 Tenure (Years) - {tenure} Yrs
               </label>
               <input
@@ -124,7 +124,7 @@ export default function LoanCalculator() {
                 onChange={(e) => setTenure(Number(e.target.value))}
                 className="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-primary"
               />
-              <div className="flex justify-between text-xs text-slate-400 mt-1">
+              <div className="flex justify-between text-xs text-gray-450 mt-1">
                 <span>1 Yr</span>
                 <span>30 Yrs</span>
               </div>
@@ -132,10 +132,10 @@ export default function LoanCalculator() {
           </div>
 
           {/* Results */}
-          <div className="bg-slate-50 rounded-xl p-6 flex flex-col justify-between border border-slate-100">
+          <div className="bg-gray-50 rounded-xl p-6 flex flex-col justify-between border border-gray-100">
             <div className="space-y-4">
               <div>
-                <span className="block text-xs font-bold uppercase tracking-wider text-slate-400">
+                <span className="block text-xs font-bold uppercase tracking-wider text-gray-450">
                   Estimated Monthly EMI
                 </span>
                 <span className="text-3xl font-extrabold text-primary font-display flex items-center">
@@ -143,9 +143,9 @@ export default function LoanCalculator() {
                   {emi.toLocaleString("en-IN")}
                 </span>
               </div>
-              <div className="border-t border-slate-200/80 pt-4 grid grid-cols-2 gap-4">
+              <div className="border-t border-gray-200/80 pt-4 grid grid-cols-2 gap-4">
                 <div>
-                  <span className="block text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                  <span className="block text-[10px] font-bold uppercase tracking-wider text-gray-450">
                     Principal Amount
                   </span>
                   <span className="text-sm font-bold text-slate-800">
@@ -153,7 +153,7 @@ export default function LoanCalculator() {
                   </span>
                 </div>
                 <div>
-                  <span className="block text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                  <span className="block text-[10px] font-bold uppercase tracking-wider text-gray-450">
                     Total Interest Payable
                   </span>
                   <span className="text-sm font-bold text-slate-800">
@@ -163,10 +163,10 @@ export default function LoanCalculator() {
               </div>
             </div>
             <div className="mt-6">
-              <span className="block text-[10px] font-bold uppercase tracking-wider text-slate-400">
+              <span className="block text-[10px] font-bold uppercase tracking-wider text-gray-450">
                 Total Payment (Principal + Int)
               </span>
-              <span className="text-lg font-bold text-slate-900">
+              <span className="text-lg font-bold text-gray-900">
                 ₹{totalPayment.toLocaleString("en-IN")}
               </span>
             </div>
@@ -177,7 +177,7 @@ export default function LoanCalculator() {
           {/* Inputs */}
           <div className="space-y-6">
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+              <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">
                 Net Monthly Income (₹) - {income.toLocaleString("en-IN")}
               </label>
               <input
@@ -189,14 +189,14 @@ export default function LoanCalculator() {
                 onChange={(e) => setIncome(Number(e.target.value))}
                 className="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-primary"
               />
-              <div className="flex justify-between text-xs text-slate-400 mt-1">
+              <div className="flex justify-between text-xs text-gray-450 mt-1">
                 <span>₹10k</span>
                 <span>₹10 Lakhs</span>
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+              <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">
                 Existing Monthly Obligations (₹) - {obligations.toLocaleString("en-IN")}
               </label>
               <input
@@ -208,7 +208,7 @@ export default function LoanCalculator() {
                 onChange={(e) => setObligations(Number(e.target.value))}
                 className="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-primary"
               />
-              <div className="flex justify-between text-xs text-slate-400 mt-1">
+              <div className="flex justify-between text-xs text-gray-450 mt-1">
                 <span>₹0</span>
                 <span>₹5 Lakhs</span>
               </div>
@@ -216,13 +216,13 @@ export default function LoanCalculator() {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">
+                <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-1">
                   Tenure (Yrs)
                 </label>
                 <select
                   value={eligibleTenure}
                   onChange={(e) => setEligibleTenure(Number(e.target.value))}
-                  className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm focus:outline-none focus:border-primary"
+                  className="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm focus:outline-none focus:border-primary"
                 >
                   {[5, 10, 15, 20, 25, 30].map((y) => (
                     <option key={y} value={y}>
@@ -232,7 +232,7 @@ export default function LoanCalculator() {
                 </select>
               </div>
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">
+                <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-1">
                   Interest Rate (%)
                 </label>
                 <input
@@ -240,17 +240,17 @@ export default function LoanCalculator() {
                   step="0.1"
                   value={eligibleRate}
                   onChange={(e) => setEligibleRate(Number(e.target.value))}
-                  className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm focus:outline-none focus:border-primary"
+                  className="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm focus:outline-none focus:border-primary"
                 />
               </div>
             </div>
           </div>
 
           {/* Results */}
-          <div className="bg-slate-50 rounded-xl p-6 flex flex-col justify-between border border-slate-100">
+          <div className="bg-gray-50 rounded-xl p-6 flex flex-col justify-between border border-gray-100">
             <div className="space-y-4">
               <div>
-                <span className="block text-xs font-bold uppercase tracking-wider text-slate-400">
+                <span className="block text-xs font-bold uppercase tracking-wider text-gray-450">
                   Maximum Eligible Loan Amount
                 </span>
                 <span className="text-3xl font-extrabold text-accent font-display flex items-center mt-1">
@@ -258,12 +258,12 @@ export default function LoanCalculator() {
                   {eligibleAmount > 0 ? eligibleAmount.toLocaleString("en-IN") : "0"}
                 </span>
               </div>
-              <p className="text-xs text-slate-400 leading-relaxed">
+              <p className="text-xs text-gray-450 leading-relaxed">
                 *Eligibility calculations are based on a standard 55% FOIR (Fixed Obligation to Income Ratio). Actual bank limits vary depending on credit scores and project profile.
               </p>
             </div>
-            <div className="mt-6 pt-4 border-t border-slate-200">
-              <span className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">
+            <div className="mt-6 pt-4 border-t border-gray-200">
+              <span className="block text-[10px] font-bold uppercase tracking-wider text-gray-450 mb-2">
                 Ready to apply for pre-approval?
               </span>
               <Link

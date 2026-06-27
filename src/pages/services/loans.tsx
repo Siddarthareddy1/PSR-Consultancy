@@ -69,7 +69,7 @@ export default function LoansFinancing() {
       </Head>
 
       {/* Hero Section */}
-      <section className="relative py-20 bg-slate-900 text-white overflow-hidden">
+      <section className="relative py-20 bg-gray-950 text-white overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-primary-dark to-slate-900 opacity-95"></div>
         <div className="absolute top-0 right-0 w-96 h-96 bg-accent/15 rounded-full blur-[100px]"></div>
 
@@ -81,19 +81,19 @@ export default function LoansFinancing() {
             <h1 className="text-4xl sm:text-5xl font-display font-extrabold mb-6 leading-tight">
               {content.hero_title}
             </h1>
-            <p className="text-slate-300 text-base sm:text-lg mb-8 max-w-xl font-body font-light">
+            <p className="text-gray-300 text-base sm:text-lg mb-8 max-w-xl font-body font-light">
               {content.hero_subtitle}
             </p>
             <div className="flex flex-col sm:flex-row items-center gap-4">
               <Link
                 href="/contact?service=loans"
-                className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 rounded-lg text-sm font-bold text-slate-900 bg-secondary hover:bg-secondary-light transition-colors"
+                className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 rounded-lg text-sm font-bold text-gray-900 bg-secondary hover:bg-secondary-light transition-colors"
               >
                 Apply for Funding
               </Link>
               <a
                 href="#calculator"
-                className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 rounded-lg text-sm font-bold text-white border border-slate-700 hover:bg-slate-800 transition-colors"
+                className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 rounded-lg text-sm font-bold text-white border border-gray-800 hover:bg-slate-800 transition-colors"
               >
                 Calculate EMI
               </a>
@@ -101,24 +101,24 @@ export default function LoansFinancing() {
           </div>
           {/* Hero Side Metrics */}
           <div className="hidden lg:grid grid-cols-2 gap-4">
-            <div className="bg-slate-800/40 rounded-xl border border-slate-700 p-6 shadow-lg">
+            <div className="bg-slate-800/40 rounded-xl border border-gray-800 p-6 shadow-lg">
               <Percent className="h-8 w-8 text-secondary mb-3" />
-              <h3 className="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-1">Interest Rates</h3>
+              <h3 className="text-gray-450 text-xs font-semibold uppercase tracking-wider mb-1">Interest Rates</h3>
               <span className="text-xl font-bold text-white block">From 8.15% p.a.</span>
             </div>
-            <div className="bg-slate-800/40 rounded-xl border border-slate-700 p-6 shadow-lg">
+            <div className="bg-slate-800/40 rounded-xl border border-gray-800 p-6 shadow-lg">
               <Clock className="h-8 w-8 text-accent mb-3" />
-              <h3 className="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-1">Approval Speed</h3>
+              <h3 className="text-gray-450 text-xs font-semibold uppercase tracking-wider mb-1">Approval Speed</h3>
               <span className="text-xl font-bold text-white block">Within 72 Hours</span>
             </div>
-            <div className="bg-slate-800/40 rounded-xl border border-slate-700 p-6 shadow-lg">
+            <div className="bg-slate-800/40 rounded-xl border border-gray-800 p-6 shadow-lg">
               <FileCheck2 className="h-8 w-8 text-emerald-400 mb-3" />
-              <h3 className="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-1">Disbursement</h3>
+              <h3 className="text-gray-450 text-xs font-semibold uppercase tracking-wider mb-1">Disbursement</h3>
               <span className="text-xl font-bold text-white block">98% Success Rate</span>
             </div>
-            <div className="bg-slate-800/40 rounded-xl border border-slate-700 p-6 shadow-lg">
+            <div className="bg-slate-800/40 rounded-xl border border-gray-800 p-6 shadow-lg">
               <ShieldAlert className="h-8 w-8 text-rose-400 mb-3" />
-              <h3 className="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-1">Transparency</h3>
+              <h3 className="text-gray-450 text-xs font-semibold uppercase tracking-wider mb-1">Transparency</h3>
               <span className="text-xl font-bold text-white block">Zero Hidden Fees</span>
             </div>
           </div>
@@ -126,13 +126,13 @@ export default function LoansFinancing() {
       </section>
 
       {/* Calculator Section */}
-      <section id="calculator" className="py-24 bg-slate-50">
+      <section id="calculator" className="py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl font-display font-extrabold text-slate-900 mb-4">
+            <h2 className="text-3xl font-display font-extrabold text-gray-900 mb-4">
               Plan Your Borrowing
             </h2>
-            <p className="text-slate-500 font-body text-base">
+            <p className="text-gray-500 font-body text-base">
               Use our interactive tool to calculate monthly EMI installments or estimate your maximum loan eligibility limits.
             </p>
           </div>
@@ -142,31 +142,31 @@ export default function LoansFinancing() {
       </section>
 
       {/* Loan Types Grid */}
-      <section className="py-24 bg-white border-t border-slate-100">
+      <section className="py-24 bg-white border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl font-display font-extrabold text-slate-900 mb-4">
+            <h2 className="text-3xl font-display font-extrabold text-gray-900 mb-4">
               Financing Programs
             </h2>
-            <p className="text-slate-500 font-body text-base">
+            <p className="text-gray-500 font-body text-base">
               A comprehensive selection of debt packages tailored for corporate, retail, and mortgage requirements.
             </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {loanTypes.map((loan, idx) => (
-              <div key={idx} className="bg-slate-50 rounded-2xl border border-slate-100 p-8 flex flex-col justify-between">
+              <div key={idx} className="bg-gray-50 rounded-2xl border border-gray-100 p-8 flex flex-col justify-between">
                 <div>
-                  <h3 className="text-xl font-bold text-slate-900 mb-2 font-heading">{loan.title}</h3>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2 font-heading">{loan.title}</h3>
                   <span className="inline-block px-2.5 py-1 rounded bg-secondary/10 text-secondary-dark text-xs font-bold mb-4">
                     {loan.rate}
                   </span>
-                  <p className="text-slate-500 text-sm leading-relaxed mb-6">
+                  <p className="text-gray-500 text-sm leading-relaxed mb-6">
                     {loan.desc}
                   </p>
-                  <ul className="space-y-2 border-t border-slate-200/60 pt-4 mb-8">
+                  <ul className="space-y-2 border-t border-gray-200/60 pt-4 mb-8">
                     {loan.features.map((feat, fIdx) => (
-                      <li key={fIdx} className="flex items-center text-xs text-slate-600">
+                      <li key={fIdx} className="flex items-center text-xs text-gray-650">
                         <CheckCircle2 className="h-4 w-4 text-accent mr-2 flex-shrink-0" />
                         <span>{feat}</span>
                       </li>
@@ -175,7 +175,7 @@ export default function LoansFinancing() {
                 </div>
                 <Link
                   href={`/contact?service=loans&type=${loan.title.toLowerCase().replace(/\s+/g, "-")}`}
-                  className="w-full inline-flex items-center justify-center py-2.5 rounded-lg text-sm font-bold text-slate-800 bg-white border border-slate-200 hover:bg-slate-100 transition-colors shadow-sm"
+                  className="w-full inline-flex items-center justify-center py-2.5 rounded-lg text-sm font-bold text-slate-800 bg-white border border-gray-200 hover:bg-slate-100 transition-colors shadow-sm"
                 >
                   Request Callback
                 </Link>
@@ -186,13 +186,13 @@ export default function LoansFinancing() {
       </section>
 
       {/* How it Works */}
-      <section className="py-24 bg-slate-50 border-y border-slate-100">
+      <section className="py-24 bg-gray-50 border-y border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl font-display font-extrabold text-slate-900 mb-4">
+            <h2 className="text-3xl font-display font-extrabold text-gray-900 mb-4">
               Disbursement Process Roadmap
             </h2>
-            <p className="text-slate-500 text-sm sm:text-base font-body">
+            <p className="text-gray-500 text-sm sm:text-base font-body">
               How we fast-track your application to payout.
             </p>
           </div>
@@ -204,10 +204,10 @@ export default function LoansFinancing() {
               { step: "03", title: "Legal Vetting", desc: "Compile documentation, complete KYC, and secure bank sanction letters." },
               { step: "04", title: "Disbursement", desc: "Final agreement execution and funds credit directly into your business bank account." },
             ].map((step, idx) => (
-              <div key={idx} className="bg-white p-6 rounded-2xl border border-slate-100 relative shadow-sm">
+              <div key={idx} className="bg-white p-6 rounded-2xl border border-gray-100 relative shadow-sm">
                 <span className="text-3xl font-black text-slate-200 block mb-2 font-display">{step.step}</span>
-                <h3 className="font-heading font-bold text-slate-900 text-base mb-2">{step.title}</h3>
-                <p className="text-slate-500 text-xs sm:text-sm leading-relaxed">{step.desc}</p>
+                <h3 className="font-heading font-bold text-gray-900 text-base mb-2">{step.title}</h3>
+                <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">{step.desc}</p>
               </div>
             ))}
           </div>
@@ -218,11 +218,11 @@ export default function LoansFinancing() {
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <div className="inline-flex items-center space-x-1 bg-slate-50 border border-slate-100 px-3 py-1 rounded-full text-xs font-bold text-primary mb-3">
+            <div className="inline-flex items-center space-x-1 bg-gray-50 border border-gray-100 px-3 py-1 rounded-full text-xs font-bold text-primary mb-3">
               <HelpCircle className="h-3.5 w-3.5 text-secondary" />
               <span>FREQUENTLY ASKED QUESTIONS</span>
             </div>
-            <h2 className="text-3xl font-display font-extrabold text-slate-900 mb-4">
+            <h2 className="text-3xl font-display font-extrabold text-gray-900 mb-4">
               Loans & Financing FAQs
             </h2>
           </div>
@@ -238,20 +238,20 @@ export default function LoansFinancing() {
           <h2 className="text-3xl font-display font-extrabold text-white mb-4">
             Maximize Your Eligible Loan Threshold
           </h2>
-          <p className="text-slate-300 font-body text-sm sm:text-base mb-8 max-w-xl mx-auto">
+          <p className="text-gray-300 font-body text-sm sm:text-base mb-8 max-w-xl mx-auto">
             Consult with our credit underwriting team to structure your business financials for seamless bank approvals.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/contact?service=loans"
-              className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3 rounded-lg text-sm font-bold text-slate-900 bg-secondary hover:bg-secondary-light transition-colors"
+              className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3 rounded-lg text-sm font-bold text-gray-900 bg-secondary hover:bg-secondary-light transition-colors"
             >
               Get Sanction Checklist
             </Link>
             <Link
               href="https://wa.me/919110326887"
               target="_blank"
-              className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3 rounded-lg text-sm font-bold text-white border border-slate-700 hover:bg-slate-800 transition-colors"
+              className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3 rounded-lg text-sm font-bold text-white border border-gray-800 hover:bg-slate-800 transition-colors"
             >
               WhatsApp Support
             </Link>

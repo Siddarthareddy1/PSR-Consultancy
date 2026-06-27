@@ -72,7 +72,7 @@ export default function InsuranceCalculator() {
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-150 shadow-md p-6 sm:p-8 max-w-3xl mx-auto">
+    <div className="bg-white rounded-2xl border border-gray-150 shadow-md p-6 sm:p-8 max-w-3xl mx-auto">
       {/* Selector */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-8">
         {[
@@ -95,7 +95,7 @@ export default function InsuranceCalculator() {
             className={`px-3 py-2.5 rounded-lg font-semibold text-xs sm:text-sm text-center border transition-all ${
               coverageType === tab.id
                 ? "bg-primary border-primary text-white shadow-sm"
-                : "bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100"
+                : "bg-gray-50 border-gray-200 text-gray-650 hover:bg-slate-100"
             }`}
           >
             {tab.label}
@@ -107,13 +107,13 @@ export default function InsuranceCalculator() {
         {/* Form Inputs */}
         <div className="space-y-6">
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+            <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">
               Sum Assured / Coverage
             </label>
             <select
               value={coverageAmount}
               onChange={(e) => setCoverageAmount(Number(e.target.value))}
-              className="w-full px-3 py-2.5 rounded-lg border border-slate-200 text-sm focus:outline-none focus:border-primary"
+              className="w-full px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:border-primary"
             >
               {getCoverOptions().map((opt) => (
                 <option key={opt.value} value={opt.value}>
@@ -126,7 +126,7 @@ export default function InsuranceCalculator() {
           {coverageType !== "asset" && (
             <>
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+                <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">
                   Proposer Age - {age} Yrs
                 </label>
                 <input
@@ -138,23 +138,23 @@ export default function InsuranceCalculator() {
                   onChange={(e) => setAge(Number(e.target.value))}
                   className="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-primary"
                 />
-                <div className="flex justify-between text-xs text-slate-400 mt-1">
+                <div className="flex justify-between text-xs text-gray-450 mt-1">
                   <span>18 Yrs</span>
                   <span>65 Yrs</span>
                 </div>
               </div>
 
-              <div className="pt-2 border-t border-slate-100">
+              <div className="pt-2 border-t border-gray-100">
                 {coverageType === "health" ? (
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-semibold text-slate-700">Family Type</span>
+                    <span className="text-sm font-semibold text-gray-700">Family Type</span>
                     <div className="flex space-x-2">
                       <button
                         onClick={() => setFamilyType("individual")}
                         className={`px-3 py-1 rounded text-xs font-bold border transition-colors ${
                           familyType === "individual"
-                            ? "bg-slate-900 border-slate-900 text-white"
-                            : "bg-white border-slate-200 text-slate-600"
+                            ? "bg-gray-950 border-slate-900 text-white"
+                            : "bg-white border-gray-200 text-gray-650"
                         }`}
                       >
                         Individual
@@ -163,8 +163,8 @@ export default function InsuranceCalculator() {
                         onClick={() => setFamilyType("floater")}
                         className={`px-3 py-1 rounded text-xs font-bold border transition-colors ${
                           familyType === "floater"
-                            ? "bg-slate-900 border-slate-900 text-white"
-                            : "bg-white border-slate-200 text-slate-600"
+                            ? "bg-gray-950 border-slate-900 text-white"
+                            : "bg-white border-gray-200 text-gray-650"
                         }`}
                       >
                         Floater (Self+Spouse)
@@ -173,13 +173,13 @@ export default function InsuranceCalculator() {
                   </div>
                 ) : (
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-semibold text-slate-700">Tobacco Consumer</span>
+                    <span className="text-sm font-semibold text-gray-700">Tobacco Consumer</span>
                     <button
                       onClick={() => setTobaccoUser(!tobaccoUser)}
                       className={`px-4 py-1.5 rounded-full text-xs font-bold border transition-all ${
                         tobaccoUser
                           ? "bg-rose-50 border-rose-200 text-rose-600"
-                          : "bg-slate-50 border-slate-200 text-slate-600"
+                          : "bg-gray-50 border-gray-200 text-gray-650"
                       }`}
                     >
                       {tobaccoUser ? "Yes" : "No"}
@@ -192,13 +192,13 @@ export default function InsuranceCalculator() {
         </div>
 
         {/* Estimation Results */}
-        <div className="bg-slate-50 rounded-xl p-6 flex flex-col justify-between border border-slate-100">
+        <div className="bg-gray-50 rounded-xl p-6 flex flex-col justify-between border border-gray-100">
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
               <span className="p-1 rounded bg-blue-50 text-primary">
                 <Shield className="h-5 w-5" />
               </span>
-              <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+              <span className="text-xs font-bold text-gray-450 uppercase tracking-wider">
                 Estimated Premium
               </span>
             </div>
@@ -207,19 +207,19 @@ export default function InsuranceCalculator() {
               <span className="text-3xl font-extrabold text-primary font-display flex items-center">
                 <IndianRupee className="h-6 w-6 stroke-[3]" />
                 {premiums.annual.toLocaleString("en-IN")}
-                <span className="text-xs text-slate-400 font-normal ml-1">/ Yr</span>
+                <span className="text-xs text-gray-450 font-normal ml-1">/ Yr</span>
               </span>
-              <span className="block text-sm text-slate-500 font-semibold mt-1">
+              <span className="block text-sm text-gray-500 font-semibold mt-1">
                 Approx. ₹{premiums.monthly.toLocaleString("en-IN")} / month
               </span>
             </div>
 
-            <p className="text-[11px] text-slate-400 leading-relaxed">
+            <p className="text-[11px] text-gray-450 leading-relaxed">
               *Premium figures are purely indicative estimations. Actual underwriting takes into account pre-existing conditions, family medical history, and insurer guidelines.
             </p>
           </div>
 
-          <div className="mt-6 pt-4 border-t border-slate-200">
+          <div className="mt-6 pt-4 border-t border-gray-200">
             <Link
               href="/contact?service=insurance"
               className="w-full inline-flex items-center justify-center py-2.5 rounded-lg text-sm font-bold text-white bg-accent hover:bg-accent-dark transition-colors shadow-sm"

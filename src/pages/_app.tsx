@@ -23,7 +23,7 @@ const openSans = Open_Sans({
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <div className={`${poppins.variable} ${inter.variable} ${openSans.variable} font-body text-neutralDark bg-slate-50 min-h-screen flex flex-col`}>
+    <div className={`${poppins.variable} ${inter.variable} ${openSans.variable} font-body text-neutralDark bg-gray-50 min-h-screen flex flex-col`}>
       <Layout>
         <Component {...pageProps} />
       </Layout>
