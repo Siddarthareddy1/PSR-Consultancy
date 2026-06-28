@@ -530,7 +530,7 @@ export default function AdminDashboard() {
                 <div>
                   <p className="font-bold text-amber-950">Database Connection Not Configured</p>
                   <p className="text-amber-700/95 mt-0.5 font-normal leading-relaxed">
-                    The application is running in **Local Fallback Mode**. Edits will only persist temporarily on the server instance cache (<code className="bg-amber-100 px-1 py-0.5 rounded font-mono">/tmp</code>). To enable permanent settings storage across all users, configure the <code className="bg-amber-100 px-1 py-0.5 rounded font-mono">SUPABASE_URL</code> and <code className="bg-amber-100 px-1 py-0.5 rounded font-mono">SUPABASE_ANON_KEY</code> environment variables in Vercel.
+                    The application is running in **Local Fallback Mode**. Edits will only persist temporarily on the server instance cache (<code className="bg-amber-100 px-1 py-0.5 rounded font-mono">/tmp</code>). To enable permanent settings storage across all users, configure the <code className="bg-amber-100 px-1 py-0.5 rounded font-mono">NEXT_PUBLIC_FIREBASE_API_KEY</code> and <code className="bg-amber-100 px-1 py-0.5 rounded font-mono">NEXT_PUBLIC_FIREBASE_PROJECT_ID</code> environment variables in Vercel.
                   </p>
                 </div>
               </div>
