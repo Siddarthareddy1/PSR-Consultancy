@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { supabase, isSupabaseConfigured } from "@/lib/supabase";
+import { db, isFirebaseConfigured } from "@/lib/firebase";
+import { doc, setDoc } from "firebase/firestore";
 import { getWritablePath } from "@/lib/db-fallback";
 import fs from "fs";
 
@@ -20,9 +21,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   };
 
   try {
-    if (isSupabaseConfigured && supabase) {
-      const { error } = await supabase.from("subscribers").insert([subscriberData]);
-      if (error) throw error;
+    if (isFirebaseConfigured && db) {
+      // Use sanitized email as document ID to enforce uniqueness in Firestore
+      const docId = email.replace(/[^a-zA-Z0-9]/g, "_");
+      const subRef = doc(db, "subscribers", docId);
+      await setDoc(subRef, subscriberData);
       return res.status(200).json({ success: true, message: "Email subscribed to newsletter" });
     } else {
       // Fallback: append to local file

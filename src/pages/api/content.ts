@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { supabase, isSupabaseConfigured } from "@/lib/supabase";
+import { db, isFirebaseConfigured } from "@/lib/firebase";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { getWritablePath } from "@/lib/db-fallback";
 import fs from "fs";
 
@@ -84,18 +85,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const defaultContent = DEFAULT_PAGE_CONTENT[page] || {};
 
     try {
-      if (isSupabaseConfigured && supabase) {
-        // Fetch custom page content from Supabase
-        const { data, error } = await supabase
-          .from("site_content")
-          .select("key, value")
-          .eq("page", page);
+      if (isFirebaseConfigured && db) {
+        const docRef = doc(db, "site_content", page);
+        const docSnap = await getDoc(docRef);
         
-        if (!error && data && data.length > 0) {
-          const customContent: Record<string, string> = {};
-          data.forEach((row: { key: string; value: string }) => {
-            customContent[row.key] = row.value;
-          });
+        if (docSnap.exists()) {
+          const customContent = docSnap.data() as Record<string, string>;
           return res.status(200).json({ ...defaultContent, ...customContent });
         }
       }
@@ -126,20 +121,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     try {
-      if (isSupabaseConfigured && supabase) {
-        // Upsert keys into Supabase site_content table
-        const upsertData = Object.entries(content).map(([key, value]) => ({
-          page,
-          key,
-          value: String(value),
-        }));
-
-        const { error } = await supabase
-          .from("site_content")
-          .upsert(upsertData, { onConflict: "page,key" });
-        
-        if (error) throw error;
-        return res.status(200).json({ success: true, message: "Content updated in Supabase" });
+      if (isFirebaseConfigured && db) {
+        const docRef = doc(db, "site_content", page);
+        await setDoc(docRef, content, { merge: true });
+        return res.status(200).json({ success: true, message: "Content updated in Firebase" });
       } else {
         // Local file fallback
         let allData: Record<string, Record<string, string>> = {};
@@ -158,10 +143,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
     } catch (err) {
       console.error(`Error saving content for ${page}:`, err);
-      const errMsg = err instanceof Error ? err.message : "Failed to save content";
-      return res.status(500).json({ message: errMsg });
+      return res.status(500).json({ message: "Failed to save content" });
     }
-  } else {
-    return res.status(405).json({ message: "Method not allowed" });
   }
+
+  return res.status(405).json({ message: "Method not allowed" });
 }

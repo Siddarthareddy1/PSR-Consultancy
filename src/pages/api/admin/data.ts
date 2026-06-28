@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { supabase, isSupabaseConfigured } from "@/lib/supabase";
+import { db, isFirebaseConfigured } from "@/lib/firebase";
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { getWritablePath } from "@/lib/db-fallback";
 import fs from "fs";
 
@@ -15,32 +16,32 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    let leads = [];
-    let subscribers = [];
+    let leads: Record<string, unknown>[] = [];
+    let subscribers: Record<string, unknown>[] = [];
 
-    if (isSupabaseConfigured && supabase) {
-      // Fetch leads from Supabase
-      const { data: leadsData, error: leadsError } = await supabase
-        .from("leads")
-        .select("*")
-        .order("created_at", { ascending: false });
-
-      if (leadsError) {
-        console.error("Error fetching leads from Supabase:", leadsError);
-      } else {
-        leads = leadsData || [];
+    if (isFirebaseConfigured && db) {
+      try {
+        // Fetch leads from Firestore
+        const leadsQuery = query(collection(db, "leads"), orderBy("created_at", "desc"));
+        const leadsSnap = await getDocs(leadsQuery);
+        leads = leadsSnap.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        } as Record<string, unknown>));
+      } catch (err) {
+        console.error("Firestore leads fetch error:", err);
       }
 
-      // Fetch subscribers from Supabase
-      const { data: subsData, error: subsError } = await supabase
-        .from("subscribers")
-        .select("*")
-        .order("created_at", { ascending: false });
-
-      if (subsError) {
-        console.error("Error fetching subscribers from Supabase:", subsError);
-      } else {
-        subscribers = subsData || [];
+      try {
+        // Fetch subscribers from Firestore
+        const subsQuery = query(collection(db, "subscribers"), orderBy("created_at", "desc"));
+        const subsSnap = await getDocs(subsQuery);
+        subscribers = subsSnap.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        } as Record<string, unknown>));
+      } catch (err) {
+        console.error("Firestore subscribers fetch error:", err);
       }
     } else {
       // Fallback: read from local files

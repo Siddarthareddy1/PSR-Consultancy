@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { supabase, isSupabaseConfigured } from "@/lib/supabase";
+import { db, isFirebaseConfigured } from "@/lib/firebase";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { getWritablePath } from "@/lib/db-fallback";
 import fs from "fs";
 
@@ -16,16 +17,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   if (req.method === "GET") {
     try {
-      if (isSupabaseConfigured && supabase) {
-        // Try fetching from Supabase site_settings table
-        const { data, error } = await supabase
-          .from("site_settings")
-          .select("*")
-          .eq("id", 1)
-          .maybeSingle();
+      if (isFirebaseConfigured && db) {
+        const docRef = doc(db, "site_settings", "global");
+        const docSnap = await getDoc(docRef);
         
         const isMailConfigured = !!process.env.SENDGRID_API_KEY;
-        if (!error && data) {
+        if (docSnap.exists()) {
+          const data = docSnap.data();
           return res.status(200).json({
             phone: data.phone,
             email: data.email,
@@ -36,8 +34,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             isMailConfigured,
           });
         }
-        // If table doesn't exist or is empty, we fall back
-        console.warn("Supabase site_settings fetch error or empty, trying local file fallback:", error);
+        console.warn("Firebase site_settings document does not exist, trying local file fallback");
       }
 
       const isMailConfigured = !!process.env.SENDGRID_API_KEY;
@@ -48,7 +45,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const parsed = JSON.parse(fileData);
         return res.status(200).json({
           ...parsed,
-          isDatabaseConnected: isSupabaseConfigured,
+          isDatabaseConnected: isFirebaseConfigured,
           isMailConfigured,
         });
       }
@@ -56,7 +53,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       // Default fallback
       return res.status(200).json({
         ...DEFAULT_SETTINGS,
-        isDatabaseConnected: isSupabaseConfigured,
+        isDatabaseConnected: isFirebaseConfigured,
         isMailConfigured,
       });
     } catch (err) {
@@ -78,16 +75,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const newSettings = { phone, email, address, hours, instagram };
 
     try {
-      if (isSupabaseConfigured && supabase) {
-        // Try upserting in Supabase
-        const { error } = await supabase
-          .from("site_settings")
-          .upsert([{ id: 1, ...newSettings }]);
-        
-        if (!error) {
-          return res.status(200).json({ success: true, message: "Settings saved to Supabase" });
-        }
-        console.warn("Supabase site_settings upsert error, falling back to local file:", error);
+      if (isFirebaseConfigured && db) {
+        const docRef = doc(db, "site_settings", "global");
+        await setDoc(docRef, newSettings);
+        return res.status(200).json({ success: true, message: "Settings saved to Firebase" });
       }
 
       // Local file fallback

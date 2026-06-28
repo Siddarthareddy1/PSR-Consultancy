@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { supabase, isSupabaseConfigured } from "@/lib/supabase";
+import { db, isFirebaseConfigured } from "@/lib/firebase";
+import { doc, setDoc, updateDoc, deleteDoc } from "firebase/firestore";
 import { getWritablePath } from "@/lib/db-fallback";
 import fs from "fs";
 
@@ -27,12 +28,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     };
 
     try {
-      if (isSupabaseConfigured && supabase) {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { id, ...supabaseData } = leadData;
-        const { error } = await supabase.from("leads").insert([supabaseData]);
-        if (error) throw error;
-        return res.status(200).json({ success: true, message: "Lead captured to Supabase" });
+      if (isFirebaseConfigured && db) {
+        const leadRef = doc(db, "leads", leadId);
+        await setDoc(leadRef, leadData);
+        return res.status(200).json({ success: true, message: "Lead captured to Firebase" });
       } else {
         // Fallback: append to local file
         const filePath = getWritablePath("leads_captured.json");
@@ -77,13 +76,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       if (admin_notes !== undefined) updateData.admin_notes = admin_notes;
       updateData.updated_at = new Date().toISOString();
 
-      if (isSupabaseConfigured && supabase) {
-        const { error } = await supabase
-          .from("leads")
-          .update(updateData)
-          .eq("id", id);
-        if (error) throw error;
-        return res.status(200).json({ success: true, message: "Lead updated in Supabase" });
+      if (isFirebaseConfigured && db) {
+        const leadRef = doc(db, "leads", id);
+        await updateDoc(leadRef, updateData);
+        return res.status(200).json({ success: true, message: "Lead updated in Firebase" });
       } else {
         const filePath = getWritablePath("leads_captured.json");
         if (fs.existsSync(filePath)) {
@@ -113,13 +109,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     try {
-      if (isSupabaseConfigured && supabase) {
-        const { error } = await supabase
-          .from("leads")
-          .delete()
-          .eq("id", id);
-        if (error) throw error;
-        return res.status(200).json({ success: true, message: "Lead deleted from Supabase" });
+      if (isFirebaseConfigured && db) {
+        const leadRef = doc(db, "leads", String(id));
+        await deleteDoc(leadRef);
+        return res.status(200).json({ success: true, message: "Lead deleted from Firebase" });
       } else {
         const filePath = getWritablePath("leads_captured.json");
         if (fs.existsSync(filePath)) {
