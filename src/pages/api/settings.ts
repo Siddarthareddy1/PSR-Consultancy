@@ -4,6 +4,7 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 import { getWritablePath } from "@/lib/db-fallback";
 import fs from "fs";
 
+// Default site contact details and social media links
 const DEFAULT_SETTINGS = {
   phone: "+91 9110326887",
   email: "sandeepsunnycool7@gmail.com",
